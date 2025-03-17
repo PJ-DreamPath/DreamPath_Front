@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../../components/common/Header/Header';
 import MainLeftlayout from '../../components/common/MainLeftlayout/MainLeftlayout';
 import SideMenuBox from '../../components/common/SIdeMenuBox/SIdeMenuBox';
+import Footer from '../../components/common/Footer/Footer';
 
 export default function MainRoute({}) {
   return (
@@ -14,6 +15,7 @@ export default function MainRoute({}) {
       </MainLeftlayout>
 
       {/* 푸터 여기 위치 */}
+      <Footer/>
     </>
   );
 }

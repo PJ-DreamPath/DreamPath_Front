@@ -4,7 +4,7 @@ export const layout = css`
   box-sizing: border-box;
   padding: 3rem;
   width: 30rem;
-  height: 100%;
+  height: auto;
   overflow: hidden;
 
   background-color: #fff;
