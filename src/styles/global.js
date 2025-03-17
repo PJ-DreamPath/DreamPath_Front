@@ -28,9 +28,4 @@ export const global = css`
 
     background-color: #fafafa;
   }
-
-  html,
-  body {
-    font-size: 1.6rem;
-  }
 `;
