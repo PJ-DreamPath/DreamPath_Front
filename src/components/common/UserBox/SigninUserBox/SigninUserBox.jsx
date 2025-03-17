@@ -9,7 +9,7 @@ function SigninUserBox(props) {
 
     return (
         <body css={s.body}>
-            <div css={s.mainBox}>
+            <div css={s.signinUserBox}>
                 <form>
                     <label for="username">아이디</label>
                     <input type="text" id="username" placeholder="아이디 입력"/>
