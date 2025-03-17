@@ -3,6 +3,7 @@ import * as s from './style';
 import React from 'react';
 
 function Footer(props) {
+
     return (
         <footer css={s.layout}>
             
@@ -15,22 +16,27 @@ function Footer(props) {
                 <div>김시욱</div>
                 <div>email@naver.com</div>
             </div>
+
             <div css ={s.nameAndEmail}>
                 <div>김선혜</div>
                 <div>email@naver.com</div>
             </div>
+
             <div css ={s.nameAndEmail}>
                 <div>김수환</div>
                 <div>email@naver.com</div>
             </div>
+            
             <div css ={s.nameAndEmail}>
                 <div>홍문일</div>
                 <div>email@naver.com</div>
             </div>
+
             <div css ={s.nameAndEmailLast}>
                 <div>차정민</div>
                 <div>susua6536@naver.com</div>
             </div>
+
         </footer>
     
     );
