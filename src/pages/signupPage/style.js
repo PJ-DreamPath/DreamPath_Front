@@ -61,6 +61,8 @@ export const inputBox = css`
     }
 
     input, select {
+      
+      box-sizing: border-box;
         padding: 1rem;
         font-size: 1.6rem;
         border: 1px solid #ccc;
