@@ -2,43 +2,53 @@ import { css } from "@emotion/react";
 
 
 
+
 export const layout = css`
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
-    width: 170rem;
-    height: 8rem;
+    width: 175rem;
+    height: 10rem;
     background-color: #303740;
 `;
 
 export const job = css`
-    font-size: 1.5rem;
-    margin-left: 8rem;
-    margin-right: 2rem;
-    line-height: 2.5rem;
-    color: #ffffff;
+
+    & div {
+        font-size: 1.5rem;
+        margin-left: 8rem;
+        line-height: 2.5rem;
+        color: #ffffff;
+    }
 `;
 
-export const dreamPath = css`
-    font-size: 2.5rem;
-    letter-spacing: -0.1rem;
-    font-weight: bold;
-    color: #ffffff;
-`;
+export const dreamPath =css`
+        text-align: center;
+        font-size: 3rem !important;
+        letter-spacing: -0.1rem;
+        font-weight: bold;
+        color: #ffffff;
+    `;
+
 
 export const nameAndEmail = css`
-    font-size: 1.5rem;
-    margin-left: 2rem;
-    text-align: left;
-    line-height: 2rem;
-    color: #ffffff;
+
+    & div {
+        font-size: 1.8rem;
+       
+        text-align: left;
+        line-height: 2rem;
+        color: #ffffff;
+    }
 `;
 export const nameAndEmailLast = css`
-    font-size: 1.5rem;
-    margin-left: 2rem;
-    margin-right: 8rem;
-    text-align: left;
-    line-height: 2rem;
-    color: #ffffff;
+
+    & div {
+            font-size: 1.8rem;
+            margin-right: 14rem;
+            text-align: left;
+            line-height: 2rem;
+            color: #ffffff;
+    }
 `;
