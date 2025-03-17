@@ -8,7 +8,7 @@ export const layout = css`
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
-    width: 175rem;
+    width: 100%;
     height: 10rem;
     background-color: #303740;
 `;
