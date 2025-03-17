@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import * as s from './style';
 
-export default function MentiMyPage() {
+export default function MyPage() {
   return (
     <>
       
