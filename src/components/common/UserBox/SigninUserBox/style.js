@@ -4,11 +4,11 @@ export const body = css`
     display: flex;
     justify-content: center;
     box-sizing: border-box;
-    height: 50%;
+    height: 320px;
     width: 100%;
 `
 
-export const mainBox = css`
+export const signinUserBox = css`
     box-sizing: border-box;
     background: #007bff;
     color: white;
