@@ -17,8 +17,7 @@ export default function MainRoute({}) {
         <SideMenuBox />
       </MainLeftlayout>
 
-      {/* 푸터 여기 위치 */}
-      <Footer/>
+  
     </>
   );
 }
