@@ -3,6 +3,8 @@ import { Global } from '@emotion/react';
 import { global } from './styles/global';
 import Mainlayout from './components/common/Mainlayout/Mainlayout';
 import MainRoute from './routes/mainRoute/mainRoute';
+import AuthRoute from './routes/authRoute/authRoute';
+import Footer from './components/common/Footer/Footer';
 
 function App() {
   return (
@@ -11,8 +13,10 @@ function App() {
 
       <Mainlayout>
         <Routes>
+          <Route path="/auth/*" element={<AuthRoute />} />
           <Route path="/*" element={<MainRoute />} />
         </Routes>
+        <Footer />
       </Mainlayout>
     </>
   );
