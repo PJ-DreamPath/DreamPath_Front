@@ -10,5 +10,7 @@ export const container = css`
   overflow-x: hidden;
   overflow-y: auto;
 
+  border-radius: 0 20rem 0 0;
+
   background-color: #fff;
 `;

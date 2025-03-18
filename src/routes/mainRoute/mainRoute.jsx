@@ -11,6 +11,7 @@ import MainUserBox from '../../components/common/UserBox/MainUserBox/MainUserBox
 import MentoringPage from '../../pages/MentoringPage/MentoringPage';
 import MyPage from '../../pages/MyPage/MyPage';
 import MainContainer from '../../components/common/MainContainer/MainContainer';
+import PurchaseSectionPage from '../../pages/PurchaseSectionPage/PurchaseSectionPage';
 
 export default function MainRoute({ }) {
   return (
@@ -30,7 +31,8 @@ export default function MainRoute({ }) {
         <MainRightLayout>
           <Routes>
             <Route path="/mypage" element={<MyPage />} />          
-            <Route path="/mentoring" element={<MentoringPage />} />          
+            <Route path="/mentoring" element={<MentoringPage />} />
+            <Route path="/purchaseSection" element={<PurchaseSectionPage />} />    
           </Routes>
         </MainRightLayout>
 
