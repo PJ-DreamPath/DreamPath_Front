@@ -9,6 +9,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 
 export default function MentoringPage({}) {
+    const navigation = useNavigate();
+
     // 셀렉트 박스 옵션
     const orderSelectOptions = [
         { value: 'desc', label: '최신순' },
@@ -139,7 +141,14 @@ export default function MentoringPage({}) {
                         }}
                     />
 
-                    <button type="button">글쓰기</button>
+                    <button
+                        type="button"
+                        onClick={() => {
+                            navigation('/mentoring/regist');
+                        }}
+                    >
+                        글쓰기
+                    </button>
                 </div>
             </div>
 
