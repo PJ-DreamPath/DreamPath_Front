@@ -70,5 +70,12 @@ export const optionButton = css`
         color: white;
         width: 100%;
         height: 3rem;
+        cursor: pointer;
+        &:hover {
+            background-color: #007bff;
+        }
+        &:active {
+            background-color: #007bdd;
+        }
     }
 `;
