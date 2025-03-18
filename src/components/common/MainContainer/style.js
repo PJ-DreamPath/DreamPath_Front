@@ -3,8 +3,10 @@ import { css } from '@emotion/react';
 export const container = css`
   display: flex;
   box-sizing: border-box;
-  width: 80%;
-  height: 80%;
+  justify-content: space-between;
+  padding: 0 6rem;
+  width: 100%;
+  height: auto;
   overflow-x: hidden;
   overflow-y: auto;
 
