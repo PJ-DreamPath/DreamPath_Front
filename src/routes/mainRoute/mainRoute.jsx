@@ -13,32 +13,36 @@ import MyPage from '../../pages/MyPage/MyPage';
 import MainContainer from '../../components/common/MainContainer/MainContainer';
 import PurchaseSectionPage from '../../pages/PurchaseSectionPage/PurchaseSectionPage';
 import NoticeUpdatePage from '../../pages/NoticeUpdatePage/NoticeUpdatePage';
+import BoardRegistPage from '../../pages/BoardRegistPage/BoardRegistPage';
 
-export default function MainRoute({ }) {
-  return (
-    <>
-      <Header />
+export default function MainRoute({}) {
+    return (
+        <>
+            <Header />
 
+            <MainContainer>
+                <MainLeftlayout>
+                    {/* 유저 박스 여기 위치 */}
+                    <SigninUserBox /> 로그인 유저 박스
+                    {/* <MainUserBox /> */}
+                    <SideMenuBox />
+                </MainLeftlayout>
 
-      <MainContainer>
-
-        <MainLeftlayout>
-          {/* 유저 박스 여기 위치 */}
-          <SigninUserBox /> 로그인 유저 박스
-          {/* <MainUserBox /> */}
-          <SideMenuBox />
-        </MainLeftlayout>
-
-        <MainRightLayout>
-          <Routes>
-            <Route path="/mypage" element={<MyPage />} />          
-            <Route path="/mentoring" element={<MentoringPage />} />
-            <Route path="/purchaseSection" element={<PurchaseSectionPage />} />  
-            <Route path="/notice/update" element={<NoticeUpdatePage />} />  
-          </Routes>
-        </MainRightLayout>
-
-      </MainContainer>
-    </>
-  );
+                <MainRightLayout>
+                    <Routes>
+                        <Route path="/mypage" element={<MyPage />} />
+                        <Route path="/mentoring" element={<MentoringPage />} />
+                        <Route
+                            path="/purchaseSection"
+                            element={<PurchaseSectionPage />}
+                        />
+                        <Route
+                            path="/:boardName/regist"
+                            element={<BoardRegistPage />}
+                        />
+                    </Routes>
+                </MainRightLayout>
+            </MainContainer>
+        </>
+    );
 }
