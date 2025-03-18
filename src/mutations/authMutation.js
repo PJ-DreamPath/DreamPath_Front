@@ -5,4 +5,5 @@ export const useSignupMutation = () => useMutation({
     mutationKey: ["signupMutation"],
     mutationFn: signupApi,
     retry: 0,
-})
+});
+
