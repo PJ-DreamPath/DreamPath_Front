@@ -4,20 +4,15 @@ import Quill from 'quill';
 
 import "quill/dist/quill.snow.css";
 import Swal from 'sweetalert2';
+import { useNoticeUpdateMutation } from '../../mutations/postMutation';
 
 function NoticeUpdatePage(props) {
-    const params = useParams();
     const noticeUpdateMutation = useNoticeUpdateMutation();
 
     const [quill, setQuill] = useState(null);
     const [title, setTitle ] = useState("");
     const [quillContent, setQuillContent] = useState("");
 
-useEffect(() => {
-    console.log(params.categoryName);
-    console.log(quillContent);
-
-},[quillContent])
 
     const containerRef = useRef();
 
@@ -59,19 +54,19 @@ useEffect(() => {
         }
         if(!quill.root.innerText.trim()){
             await Swal.fire({
-                titleText: "게시판 내용을을 입력하세요.",
+                titleText: "게시판 내용을 입력하세요.",
                 confirmButtonText: "확인",
             });
             return ;
         }
 
-        const board = {
+        const notice = {
             title,
             content: quillContent,
-            categoryName: params.categoryName,
         }
+        const { postId } = useParams();
 
-        const response = await createBoardMutation.mutateAsync(board);
+        const response = await noticeUpdateMutation.mutateAsync({ postId, ...notice });
         await Swal.fire({
             titleText: "게시글 작성완료",
             confirmButtonText: "확인",
@@ -82,7 +77,7 @@ useEffect(() => {
     return (
         <div css={s.quillEditor}>
                 <div css={s.quillTop}>
-                    <input type="text"  placeholder='Enter board title...' 
+                    <input type="text"  placeholder='Enter notice title...' 
                     value={title} onChange={handleTitleOnChange}/>   
                     <button css={s.saveButton} onClick={handleSaveOnClick}>Save</button>
                 </div>
