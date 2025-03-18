@@ -6,7 +6,7 @@ export default function MyPage() {
     <>
       
 
-      <div css={s.pageContainer}>
+      
         <section css={s.profileSection}>
           <h2>내 프로필</h2>
           <div css={s.profileContent}>
@@ -46,7 +46,7 @@ export default function MyPage() {
             </div>
           </div>
         </section>
-      </div>
+   
     </>
   );
 }

@@ -1,11 +1,5 @@
 import { css } from '@emotion/react';
 
-export const pageContainer = css`
-  padding: 8rem;
-  width: 50%;
-  margin: 3rem 3rem 3rem 3rem;
-  
-`;
 
 export const profileSection = css`
   background: #fff;
