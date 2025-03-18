@@ -17,6 +17,7 @@ export const updateProfileImgApi = async (formData) => {
     );
 }
 
+export const updateProfileImageApi = async (profileImge) => await api.put("/api/user/profile/profileImge", {profileImge});
 export const updateNicknameApi = async (nickname) => await api.put("/api/user/profile/nickname", {nickname});
 export const updatePasswordApi = async (password) => await api.put("/api/user/profile/password", {password});
 export const updateEmailApi = async (email) => await api.put("/api/user/profile/email", {email});
