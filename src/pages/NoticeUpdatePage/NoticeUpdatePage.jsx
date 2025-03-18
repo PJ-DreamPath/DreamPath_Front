@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import Quill from 'quill';
+
+import "quill/dist/quill.snow.css";
+import Swal from 'sweetalert2';
 
 function NoticeUpdatePage(props) {
     const params = useParams();
-    const createBoardMutation = useCreateBoardMutation();
+    const noticeUpdateMutation = useNoticeUpdateMutation();
 
     const [quill, setQuill] = useState(null);
     const [title, setTitle ] = useState("");
