@@ -14,15 +14,16 @@ export const useGetPosts = (mentoring, params) =>
     });
 
 // 페이지 무한 스크롤 조회
-export const useGetPostsInfinityScroll = (mentoring, params) =>
+export const useGetPostsInfinityScroll = (mentoring, search) =>
     useInfiniteQuery({
-        queryKey: ['useGetPosts', mentoring, params],
+        queryKey: ['useGetPostsInfinityScroll', mentoring, search],
         queryFn: async ({ pageParam = 1 }) => {
             const params = {
                 page: pageParam,
                 limitCount: 16,
+                order: search.order,
+                searchTxt: search.searchTxt,
             };
-            console.log('params', params);
             return await postsApi(mentoring, params);
         },
         retry: 0,
