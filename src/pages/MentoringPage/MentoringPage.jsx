@@ -3,9 +3,13 @@ import * as s from './style';
 import React, { useEffect, useRef, useState } from 'react';
 import PostCard from '../../components/common/PostCard/PostCard';
 import Select from 'react-select';
-import { useGetPosts } from '../../queries/postQuery';
+import { useGetPostsInfinityScroll } from '../../queries/postQuery';
+import { IoSearch } from 'react-icons/io5';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function MentoringPage({}) {
+    // 셀렉트 박스 옵션
     const orderSelectOptions = [
         { value: 'desc', label: '최신순' },
         { value: 'asc', label: '오래된순' },
@@ -16,60 +20,94 @@ export default function MentoringPage({}) {
         { value: 'likeDesc', label: '좋아요많은순' },
     ];
 
-    const { params, setParams } = useState({
-        page: 1,
-        limitCount: 16,
-        order: 'desc',
-        searchTxt: '',
+    // 검색 조건
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const order = searchParams.get('order') || 'desc';
+    const searchTxt = searchParams.get('searchTxt') || '';
+
+    const [searchTxtValue, setSearchTxtValue] = useState(searchTxt);
+
+    const [search, setSearch] = useState({
+        searchTxt: searchTxt,
+        order: order,
     });
 
-    const getPostList = useGetPosts('mentoring', params);
+    function handleSearchOnClick() {
+        searchParams.set('page', 1);
+        searchParams.set('searchTxt', searchTxtValue);
+        setSearchParams(searchParams);
+    }
+
+    // 리스트 데이터
+    const getPostList = useGetPostsInfinityScroll('mentoring', search);
     const [postList, setPostList] = useState([]);
 
     useEffect(() => {
         if (
             getPostList.data &&
-            getPostList.data.data &&
-            getPostList.data.data.postList
+            getPostList.data.pages &&
+            getPostList.data.pages.length > 0
         ) {
-            setPostList(getPostList.data.data.postList);
+            const newArray = [];
+
+            getPostList.data.pages.map((list) =>
+                list.data.postList.map((post) => {
+                    newArray.push(post);
+                })
+            );
+
+            setPostList(newArray);
         }
     }, [getPostList.data]);
-
+    useEffect(() => {
+        console.log('search', search);
+        getPostList.refetch();
+    }, [searchParams]);
 
     // observer
     const loadMoreRef = useRef(null);
     useEffect(() => {
-        const observerCallback = (entries) => {
-            console.log(entries);
-            const [entry] = entries;
-            if (entry.isIntersecting) {
-                console.log('다음페이지 불러오기');
-                getCategoryBaordList.fetchNextPage();
-            }
-        };
-        const observerOption = {
-            threshold: 1.0,
-        };
-        const observer = new IntersectionObserver(
-            observerCallback,
-            observerOption
-        );
+        if (postList.length > 0) {
+            const observerCallback = (entries) => {
+                const [entry] = entries;
+                if (entry.isIntersecting) {
+                    getPostList.fetchNextPage();
+                }
+            };
+            const observerOption = {
+                threshold: 1.0,
+            };
+            const observer = new IntersectionObserver(
+                observerCallback,
+                observerOption
+            );
 
-        observer.observe(loadMoreRef.current);
-    }, []);
+            observer.observe(loadMoreRef.current);
+        }
+    }, [postList]);
 
     return (
         <>
             <div css={s.titleBox}>
                 <h3>멘토링</h3>
                 <div css={s.searchWrap}>
-                    <input
-                        type="text"
-                        name="search"
-                        id="search"
-                        placeholder="검색어 입력"
-                    />
+                    <div css={s.searchBox}>
+                        <input
+                            type="text"
+                            name="search"
+                            id="search"
+                            placeholder="검색어 입력"
+                            value={searchTxtValue}
+                            onChange={(e) => setSearchTxtValue(e.target.value)}
+                            onKeyUp={(e) => {
+                                if (e.key === 'Enter') {
+                                    handleSearchOnClick();
+                                }
+                            }}
+                        />
+                        <IoSearch onClick={handleSearchOnClick} />
+                    </div>
 
                     <Select
                         options={orderSelectOptions}
@@ -87,9 +125,18 @@ export default function MentoringPage({}) {
                                 padding: '0.3rem',
                             }),
                         }}
-                        value={''}
-                        onChange={(option) => {}}
+                        value={orderSelectOptions.find(
+                            (option) => option.value === order
+                        )}
+                        onChange={(option) => {
+                            setSearch((prev) => ({
+                                ...prev,
+                                order: option.value,
+                            }));
+                        }}
                     />
+
+                    <button type="button">글쓰기</button>
                 </div>
             </div>
 
