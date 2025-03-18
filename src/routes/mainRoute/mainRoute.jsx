@@ -12,6 +12,7 @@ import MentoringPage from '../../pages/MentoringPage/MentoringPage';
 import MyPage from '../../pages/MyPage/MyPage';
 import MainContainer from '../../components/common/MainContainer/MainContainer';
 import PurchaseSectionPage from '../../pages/PurchaseSectionPage/PurchaseSectionPage';
+import NoticeUpdatePage from '../../pages/NoticeUpdatePage/NoticeUpdatePage';
 
 export default function MainRoute({ }) {
   return (
@@ -32,7 +33,8 @@ export default function MainRoute({ }) {
           <Routes>
             <Route path="/mypage" element={<MyPage />} />          
             <Route path="/mentoring" element={<MentoringPage />} />
-            <Route path="/purchaseSection" element={<PurchaseSectionPage />} />    
+            <Route path="/purchaseSection" element={<PurchaseSectionPage />} />  
+            <Route path="/notice/update" element={<NoticeUpdatePage />} />  
           </Routes>
         </MainRightLayout>
 
