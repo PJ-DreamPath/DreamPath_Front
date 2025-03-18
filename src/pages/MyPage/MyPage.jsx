@@ -34,7 +34,9 @@ export default function MyPage() {
 
             <div css={s.infoRow}>
               <span>비밀번호</span>
-              <input type="password" placeholder="비밀번호를 설정해주세요." />
+              <input type="password" placeholder="비밀번호를 설정해주세요." 
+              name="password"
+              />
               <button>설정</button>
             </div>
 
