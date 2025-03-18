@@ -38,6 +38,7 @@ export const signinUserBox = css`
         font-size: 10px;
         background-color: transparent;
         color: white;
+        outline: none;
         font-weight: 600;
     }
 `

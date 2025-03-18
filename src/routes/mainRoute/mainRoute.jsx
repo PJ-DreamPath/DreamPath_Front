@@ -23,8 +23,8 @@ export default function MainRoute({ }) {
 
         <MainLeftlayout>
           {/* 유저 박스 여기 위치 */}
-          {/* <SigninUserBox /> 로그인 유저 박스 */}
-          <MainUserBox />
+          <SigninUserBox /> 로그인 유저 박스
+          {/* <MainUserBox /> */}
           <SideMenuBox />
         </MainLeftlayout>
 
