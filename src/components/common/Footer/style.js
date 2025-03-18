@@ -25,7 +25,7 @@ export const job = css`
 
 export const dreamPath =css`
         text-align: center;
-        font-size: 3rem !important;
+        font-size: 2.5rem !important;
         letter-spacing: -0.1rem;
         font-weight: bold;
         color: #ffffff;
@@ -35,7 +35,7 @@ export const dreamPath =css`
 export const nameAndEmail = css`
 
     & div {
-        font-size: 1.8rem;
+        font-size: 1.3rem;
        
         text-align: left;
         line-height: 2rem;
@@ -45,7 +45,7 @@ export const nameAndEmail = css`
 export const nameAndEmailLast = css`
 
     & div {
-            font-size: 1.8rem;
+            font-size: 1.3rem;
             margin-right: 14rem;
             text-align: left;
             line-height: 2rem;
