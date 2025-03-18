@@ -40,8 +40,8 @@ export default function MentoringPage({}) {
 
     useEffect(() => {
         setSearch({
-            order: searchParams.get('order'),
-            searchTxt: searchParams.get('searchTxt'),
+            order: searchParams.get('order') || 'desc',
+            searchTxt: searchParams.get('searchTxt') || '',
         });
     }, [searchParams]);
 
