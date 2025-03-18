@@ -18,7 +18,7 @@ export default function MentoringPage({}) {
 
     const params = {
         page: 1,
-        limitCount: 15,
+        limitCount: 16,
         order: 'desc',
         searchTxt: '',
     };
@@ -27,8 +27,6 @@ export default function MentoringPage({}) {
     const [postList, setPostList] = useState([]);
 
     useEffect(() => {
-        console.log('getPostList.data', getPostList.data);
-
         if (
             getPostList.data &&
             getPostList.data.data &&
@@ -37,6 +35,10 @@ export default function MentoringPage({}) {
             setPostList(getPostList.data.data.postList);
         }
     }, [getPostList.data]);
+
+    useEffect(() => {
+        console.log('postList', postList);
+    }, [postList]);
 
     return (
         <>
@@ -74,7 +76,18 @@ export default function MentoringPage({}) {
 
             <div css={s.listBox}>
                 {postList.map((post, idx) => {
-                    return <PostCard key={`post_${idx}`} />;
+                    return (
+                        <PostCard
+                            key={`post_${idx}`}
+                            status={post.status}
+                            viewCount={post.viewCount}
+                            title={post.title}
+                            content={post.content}
+                            nickname={post.user.nickname}
+                            starPoint={post.user.starPoint}
+                            createdAt={post.createdAt}
+                        />
+                    );
                 })}
             </div>
         </>
