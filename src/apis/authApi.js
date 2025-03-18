@@ -6,5 +6,5 @@ export const signupApi = async (signupInfo) => {
 }
 
 export const loginApi = async (loginInfo) => {
-    return await api.post("/api/auth/login", loginInfo);
+    return await api.post("/", loginInfo);
 }

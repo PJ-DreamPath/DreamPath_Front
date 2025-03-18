@@ -1,10 +1,63 @@
 /**@jsxImportSource @emotion/react */
 import * as s from './style';
-import React from 'react';
+import React, { useState } from 'react';
 import { SiNaver } from 'react-icons/si';
 import { FcGoogle } from 'react-icons/fc';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+import { useLoginMutation } from '../../../../mutations/authMutation';
+
+
+
 
 function SigninUserBox(props) {
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
+    const loginMutation = useLoginMutation();
+
+    const [ searchParams, setSearchParams ] = useSearchParams();
+
+    const [ inputValue, setInputValue ] = useState({
+        username: searchParams.get("username") || "",
+        password: ""
+    }); 
+
+    const handleInputOnChange = (e) => {
+        setInputValue(prev => ({
+            ...prev,
+            [e.target.name]: e.target.value,
+        }));
+    }
+
+    const handleSignupOnClick = () => {
+        navigate("/auth/signup"); 
+    };
+
+    const handleLoginOnClick = async () => {
+        try {
+            const response = await loginMutation.mutateAsync(inputValue);
+            const tokenName = response.data.name;
+            const accessToken = response.data.token;
+            setTokenLocalStorage(tokenName, accessToken);
+            await Swal.fire({
+                icon: "success",
+                text: "로그인 성공",
+                timer: 1000,
+                position: "center",
+                showConfirmButton: false,
+            });
+            await queryClient.invalidateQueries({ queryKey: ["userMeQuery"] });
+            navigate("/");
+        } catch (error) {
+            await Swal.fire({
+                title: "로그인 실패",
+                text: "사용자 정보를 다시 확인해주세요.",
+                confirmButtonText: "확인",
+                confirmButtonColor: "#e22323",
+            });
+        }
+    };
+    
     return (
         <div css={s.body}>
             <div css={s.signinUserBox}>
@@ -14,6 +67,7 @@ function SigninUserBox(props) {
                         type="text"
                         id="username"
                         placeholder="아이디 입력"
+                        onChange={handleInputOnChange}
                     />
 
                     <label htmlFor="password">비밀번호</label>
@@ -21,6 +75,7 @@ function SigninUserBox(props) {
                         type="password"
                         id="password"
                         placeholder="비밀번호 입력"
+                        onChange={handleInputOnChange}
                     />
 
                     <div css={s.buttonContainer}>
@@ -34,11 +89,11 @@ function SigninUserBox(props) {
                     </div>
 
                     <div>
-                        <button css={s.loginButton}>로그인</button>
+                        <button css={s.loginButton} onClick={handleLoginOnClick}>로그인</button>
                     </div>
 
                     <div>
-                        <button css={s.signupButton}>회원가입</button>
+                        <button css={s.signupButton} onClick={handleSignupOnClick}>회원가입</button>
                     </div>
                 </form>
             </div>
