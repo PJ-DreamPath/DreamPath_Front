@@ -1,26 +1,32 @@
 /** @jsxImportSource @emotion/react */
 import * as s from './style';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaHeart, FaStar } from 'react-icons/fa';
 
 export default function PostCard({
     status,
+    viewCount,
     title,
     content,
     nickname,
     starPoint,
+    createdAt,
 }) {
-    const [isRecruiting, setIsRecruiting] = useState(
-        status === 'recruiting' ? true : false
-    );
+    const [isRecruiting, setIsRecruiting] = useState();
+
+    useEffect(() => {
+        setIsRecruiting(status === 'recruiting' ? true : false);
+    }, [status]);
 
     return (
         <div css={s.cardBox}>
             <div css={s.top}>
-                <span css={s.chip(isRecruiting)}>{status}</span>
+                <span css={s.chip(isRecruiting)}>
+                    {status === 'recruiting' ? '모집중' : '모집마감'}
+                </span>
                 <div css={s.heartBox}>
                     <FaHeart />
-                    <span>13</span>
+                    <span>{viewCount}</span>
                 </div>
             </div>
             <div css={s.titleBox}>
@@ -39,7 +45,7 @@ export default function PostCard({
                         ))}
                     </div>
                 </div>
-                <p>2025-12-22</p>
+                <p>{createdAt}</p>
             </div>
         </div>
     );
