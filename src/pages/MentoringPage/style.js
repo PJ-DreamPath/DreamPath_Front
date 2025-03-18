@@ -77,4 +77,11 @@ export const listBox = css`
     gap: 1rem;
 
     width: 100%;
+    min-height: 30rem;
+`;
+
+export const noPost = css`
+    text-align: center;
+    font-size: 1.8rem;
+    color: #aaa;
 `;
