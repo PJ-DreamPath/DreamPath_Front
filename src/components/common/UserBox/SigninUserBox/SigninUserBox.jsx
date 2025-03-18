@@ -6,39 +6,46 @@ import { FcGoogle } from 'react-icons/fc';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { useLoginMutation } from '../../../../mutations/authMutation';
+import MainUserBox from '../MainUserBox/MainUserBox';
+import Swal from 'sweetalert2';
+import { setTokenLocalStorage } from '../../../../configs/axiosConfig';
 
-
-
-
-function SigninUserBox(props) {
+function SigninUserBox() {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const loginMutation = useLoginMutation();
 
-    const [ searchParams, setSearchParams ] = useSearchParams();
+    const [searchParams] = useSearchParams();
+    const [isLoggedIn, setIsLoggedIn] = useState(false); 
 
-    const [ inputValue, setInputValue ] = useState({
+    const [inputValue, setInputValue] = useState({
         username: searchParams.get("username") || "",
         password: ""
-    }); 
+    });
 
     const handleInputOnChange = (e) => {
         setInputValue(prev => ({
             ...prev,
             [e.target.name]: e.target.value,
         }));
-    }
+    };
 
     const handleSignupOnClick = () => {
-        navigate("/auth/signup"); 
+        navigate("/auth/signup");
     };
 
     const handleLoginOnClick = async () => {
         try {
             const response = await loginMutation.mutateAsync(inputValue);
+    
+    
             const tokenName = response.data.name;
             const accessToken = response.data.token;
+    
+    
             setTokenLocalStorage(tokenName, accessToken);
+    
+    
             await Swal.fire({
                 icon: "success",
                 text: "로그인 성공",
@@ -46,8 +53,9 @@ function SigninUserBox(props) {
                 position: "center",
                 showConfirmButton: false,
             });
+    
             await queryClient.invalidateQueries({ queryKey: ["userMeQuery"] });
-            navigate("/");
+            setIsLoggedIn(true);
         } catch (error) {
             await Swal.fire({
                 title: "로그인 실패",
@@ -58,6 +66,11 @@ function SigninUserBox(props) {
         }
     };
     
+
+    if (isLoggedIn) {
+        return <MainUserBox />;  
+    }
+
     return (
         <div css={s.body}>
             <div css={s.signinUserBox}>
@@ -66,6 +79,7 @@ function SigninUserBox(props) {
                     <input
                         type="text"
                         id="username"
+                        name="username"
                         placeholder="아이디 입력"
                         onChange={handleInputOnChange}
                     />
@@ -74,6 +88,7 @@ function SigninUserBox(props) {
                     <input
                         type="password"
                         id="password"
+                        name="password"
                         placeholder="비밀번호 입력"
                         onChange={handleInputOnChange}
                     />
@@ -83,17 +98,20 @@ function SigninUserBox(props) {
                             <FcGoogle /> Continue with Google
                         </button>
                         <button css={s.naverButton}>
-                            <SiNaver />
-                            Continue with Naver
+                            <SiNaver /> Continue with Naver
                         </button>
                     </div>
 
                     <div>
-                        <button css={s.loginButton} onClick={handleLoginOnClick}>로그인</button>
+                        <button css={s.loginButton} type="button" onClick={handleLoginOnClick}>
+                            로그인
+                        </button>
                     </div>
 
                     <div>
-                        <button css={s.signupButton} onClick={handleSignupOnClick}>회원가입</button>
+                        <button css={s.signupButton} type="button" onClick={handleSignupOnClick}>
+                            회원가입
+                        </button>
                     </div>
                 </form>
             </div>
