@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import * as s from './style';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PostCard from '../../components/common/PostCard/PostCard';
 import Select from 'react-select';
 import { useGetPosts } from '../../queries/postQuery';
@@ -16,12 +16,12 @@ export default function MentoringPage({}) {
         { value: 'likeDesc', label: '좋아요많은순' },
     ];
 
-    const params = {
+    const { params, setParams } = useState({
         page: 1,
         limitCount: 16,
         order: 'desc',
         searchTxt: '',
-    };
+    });
 
     const getPostList = useGetPosts('mentoring', params);
     const [postList, setPostList] = useState([]);
@@ -36,9 +36,28 @@ export default function MentoringPage({}) {
         }
     }, [getPostList.data]);
 
+
+    // observer
+    const loadMoreRef = useRef(null);
     useEffect(() => {
-        console.log('postList', postList);
-    }, [postList]);
+        const observerCallback = (entries) => {
+            console.log(entries);
+            const [entry] = entries;
+            if (entry.isIntersecting) {
+                console.log('다음페이지 불러오기');
+                getCategoryBaordList.fetchNextPage();
+            }
+        };
+        const observerOption = {
+            threshold: 1.0,
+        };
+        const observer = new IntersectionObserver(
+            observerCallback,
+            observerOption
+        );
+
+        observer.observe(loadMoreRef.current);
+    }, []);
 
     return (
         <>
@@ -79,6 +98,9 @@ export default function MentoringPage({}) {
                     return (
                         <PostCard
                             key={`post_${idx}`}
+                            ref={
+                                idx === postList.length - 1 ? loadMoreRef : null
+                            }
                             status={post.status}
                             viewCount={post.viewCount}
                             title={post.title}
