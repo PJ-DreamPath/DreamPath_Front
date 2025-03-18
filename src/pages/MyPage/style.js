@@ -4,8 +4,10 @@ import { css } from '@emotion/react';
 export const profileSection = css`
   background: #fff;
   padding: 7rem;
+  margin-right: 15rem;
+  margin-top: 4rem;
   border-radius: 1.5rem;
-  box-shadow: 0.2rem 0.2rem 1rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0.2rem 0.2rem 3rem rgba(0, 0, 0.2, 0.2);
 `;
 
 export const profileContent = css`
@@ -47,11 +49,13 @@ export const nicknameBox = css`
 `;
 
 export const infoSection = css`
-  margin-top: 2rem;
+  margin-top: 3rem;
+  margin-right: 15rem;
   background: #fff;
-  padding: 8rem;
+  padding: 5rem;
   border-radius: 1.5rem;
-  box-shadow: 0.2rem 0.2rem 1rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0.2rem 0.2rem 3rem rgba(0, 0, 0.2, 0.2);
+
 `;
 
 export const infoHeader = css`
@@ -77,7 +81,7 @@ export const infoRow = css`
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin: 0 30rem 1rem 1rem;
 
   input {
     flex: 1;
@@ -89,7 +93,8 @@ export const infoRow = css`
 
   button {
     background: #3b82f6;
-    color: white;
+    color: white ;
+    font-weight: 500;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     cursor: pointer;
