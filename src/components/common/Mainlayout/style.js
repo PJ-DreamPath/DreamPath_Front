@@ -6,5 +6,7 @@ export const layout = css`
   overflow-x: hidden;
   overflow-y: auto;
 
-  background-color: #fff;
+  /* background-color: #fff; */
+  
+  background-color: #3b82f6;
 `;
