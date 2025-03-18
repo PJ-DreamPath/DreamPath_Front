@@ -26,16 +26,46 @@ export const searchWrap = css`
 
     height: 4rem;
 
-    input {
+    button {
         display: inline-block;
 
         box-sizing: border-box;
-        padding: 0.5rem 1rem;
-        border: 1px solid #cccccc;
+        outline: none;
+        border: none;
         border-radius: 0.5rem;
 
-        width: 40rem;
-        height: 100%;
+        width: 10rem;
+        height: 4rem;
+
+        color: #fff;
+
+        background-color: #1681ff;
+    }
+`;
+
+export const searchBox = css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    box-sizing: border-box;
+    padding: 0.5rem 1rem;
+    border: 1px solid #cccccc;
+    border-radius: 0.5rem;
+
+    width: 40rem;
+    height: 100%;
+
+    input {
+        display: inline-block;
+        outline: none;
+        border: none;
+
+        width: calc(100% - 2.5rem);
+    }
+
+    svg {
+        font-size: 2rem;
     }
 `;
 
