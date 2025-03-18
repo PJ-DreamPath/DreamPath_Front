@@ -24,6 +24,7 @@ export const useGetPostsInfinityScroll = (mentoring, search) =>
                 order: search.order,
                 searchTxt: search.searchTxt,
             };
+            console.log('params', params);
             return await postsApi(mentoring, params);
         },
         retry: 0,

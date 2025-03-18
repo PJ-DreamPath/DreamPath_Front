@@ -23,25 +23,35 @@ export default function MentoringPage({}) {
     // 검색 조건
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const order = searchParams.get('order') || 'desc';
-    const searchTxt = searchParams.get('searchTxt') || '';
-
-    const [searchTxtValue, setSearchTxtValue] = useState(searchTxt);
-
     const [search, setSearch] = useState({
-        searchTxt: searchTxt,
-        order: order,
+        order: searchParams.get('order') || 'desc',
+        searchTxt: searchParams.get('searchTxt') || '',
     });
+    const [searchTxtValue, setSearchTxtValue] = useState(search.searchTxt);
 
     function handleSearchOnClick() {
-        searchParams.set('page', 1);
         searchParams.set('searchTxt', searchTxtValue);
         setSearchParams(searchParams);
     }
+    function handleOrderOnClick(value) {
+        searchParams.set('order', value);
+        setSearchParams(searchParams);
+    }
+
+    useEffect(() => {
+        setSearch({
+            order: searchParams.get('order'),
+            searchTxt: searchParams.get('searchTxt'),
+        });
+    }, [searchParams]);
 
     // 리스트 데이터
     const getPostList = useGetPostsInfinityScroll('mentoring', search);
     const [postList, setPostList] = useState([]);
+
+    useEffect(() => {
+        console.log('postList', postList);
+    }, [postList]);
 
     useEffect(() => {
         if (
@@ -60,10 +70,6 @@ export default function MentoringPage({}) {
             setPostList(newArray);
         }
     }, [getPostList.data]);
-    useEffect(() => {
-        console.log('search', search);
-        getPostList.refetch();
-    }, [searchParams]);
 
     // observer
     const loadMoreRef = useRef(null);
@@ -126,13 +132,10 @@ export default function MentoringPage({}) {
                             }),
                         }}
                         value={orderSelectOptions.find(
-                            (option) => option.value === order
+                            (option) => option.value === search.order
                         )}
                         onChange={(option) => {
-                            setSearch((prev) => ({
-                                ...prev,
-                                order: option.value,
-                            }));
+                            handleOrderOnClick(option.value);
                         }}
                     />
 
@@ -141,23 +144,29 @@ export default function MentoringPage({}) {
             </div>
 
             <div css={s.listBox}>
-                {postList.map((post, idx) => {
-                    return (
-                        <PostCard
-                            key={`post_${idx}`}
-                            ref={
-                                idx === postList.length - 1 ? loadMoreRef : null
-                            }
-                            status={post.status}
-                            viewCount={post.viewCount}
-                            title={post.title}
-                            content={post.content}
-                            nickname={post.user.nickname}
-                            starPoint={post.user.starPoint}
-                            createdAt={post.createdAt}
-                        />
-                    );
-                })}
+                {postList.length > 0 ? (
+                    postList.map((post, idx) => {
+                        return (
+                            <PostCard
+                                key={`post_${idx}`}
+                                ref={
+                                    idx === postList.length - 1
+                                        ? loadMoreRef
+                                        : null
+                                }
+                                status={post.status}
+                                viewCount={post.viewCount}
+                                title={post.title}
+                                content={post.content}
+                                nickname={post.user.nickname}
+                                starPoint={post.user.starPoint}
+                                createdAt={post.createdAt}
+                            />
+                        );
+                    })
+                ) : (
+                    <p css={s.noPost}>등록된 게시글이 없습니다.</p>
+                )}
             </div>
         </>
     );
