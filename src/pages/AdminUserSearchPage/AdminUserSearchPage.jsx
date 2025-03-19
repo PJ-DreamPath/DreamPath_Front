@@ -26,7 +26,7 @@ const AdminUserSearchPage = () => {
         if (!window.confirm("정말 삭제하시겠습니까?")) return;
     
         try {
-            await axios.delete("http://localhost:8080/admin/users/{userId}");
+            await axios.delete(`http://localhost:8080/admin/users/${userId}`);
             alert("삭제되었습니다.");
             setUsers(users.filter(user => user.userId !== userId));
         } catch (error) {
@@ -80,5 +80,6 @@ const AdminUserSearchPage = () => {
         </div>
     );
 };
+
 
 export default AdminUserSearchPage;
