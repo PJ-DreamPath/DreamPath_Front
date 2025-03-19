@@ -17,3 +17,11 @@ export const setTokenLocalStorage = (name, token) => {
         localStorage.removeItem(name);
     }
 }
+
+export const getTokenFromLocalStorage = () => {
+    return localStorage.getItem("AccessToken"); 
+};
+
+export const removeTokenFromLocalStorage = () => {
+    localStorage.removeItem("AccessToken"); 
+};

@@ -1,6 +1,5 @@
-/**@jsxImportSource @emotion/react */
+import React, { useEffect, useState } from 'react';
 import * as s from './style';
-import React, { useState } from 'react';
 import { SiNaver } from 'react-icons/si';
 import { FcGoogle } from 'react-icons/fc';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -8,20 +7,26 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useLoginMutation } from '../../../../mutations/authMutation';
 import MainUserBox from '../MainUserBox/MainUserBox';
 import Swal from 'sweetalert2';
-import { setTokenLocalStorage } from '../../../../configs/axiosConfig';
+import { setTokenLocalStorage, getTokenFromLocalStorage } from '../../../../configs/axiosConfig';
 
 function SigninUserBox() {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const loginMutation = useLoginMutation();
-
+    
     const [searchParams] = useSearchParams();
-    const [isLoggedIn, setIsLoggedIn] = useState(false); 
+    const [isLoggedIn, setIsLoggedIn] = useState(!!getTokenFromLocalStorage()); 
 
     const [inputValue, setInputValue] = useState({
         username: searchParams.get("username") || "",
         password: ""
     });
+
+    useEffect(() => {
+        if (getTokenFromLocalStorage()) {
+            setIsLoggedIn(true);
+        }
+    }, []);
 
     const handleInputOnChange = (e) => {
         setInputValue(prev => ({
@@ -37,15 +42,13 @@ function SigninUserBox() {
     const handleLoginOnClick = async () => {
         try {
             const response = await loginMutation.mutateAsync(inputValue);
-    
-    
+
             const tokenName = response.data.name;
             const accessToken = response.data.token;
-    
-    
+
             setTokenLocalStorage(tokenName, accessToken);
-    
-    
+            setIsLoggedIn(true);
+
             await Swal.fire({
                 icon: "success",
                 text: "로그인 성공",
@@ -53,9 +56,8 @@ function SigninUserBox() {
                 position: "center",
                 showConfirmButton: false,
             });
-    
+
             await queryClient.invalidateQueries({ queryKey: ["userMeQuery"] });
-            setIsLoggedIn(true);
         } catch (error) {
             await Swal.fire({
                 title: "로그인 실패",
@@ -65,10 +67,9 @@ function SigninUserBox() {
             });
         }
     };
-    
 
     if (isLoggedIn) {
-        return <MainUserBox />;  
+        return <MainUserBox />;
     }
 
     return (
