@@ -1,31 +1,31 @@
 import React, { useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import SignupPage from '../../pages/signupPage/SignupPage';
 import SigninUserBox from '../../components/common/UserBox/SigninUserBox/SigninUserBox';
 import { useQueryClient } from '@tanstack/react-query';
+import OAuth2LoginPage from '../../pages/OAuth2LoginPage/OAuth2LoginPage';
 
 function AuthRoute(props) {
 
 
     const navigate = useNavigate();
+    const location = useLocation();
     const queryClient = useQueryClient();
     const queryState = queryClient.getQueryState(["userMeQuery"]);
+    
 
     useEffect(() => {
-        // queryState가 없거나 에러 상태면 최상위 페이지("/")로 이동
-        if (!queryState || queryState.status === "error") {
+        if (queryState.status === "success") {
             navigate("/");
         }
-    }, [queryState, navigate]);
-
+    }, [queryState, location]);
 
     return (
         <>
             {
-                queryState.status === "success" &&
+                queryState.status === "error" &&
                 <Routes>
-
-                    <Route path="/login" element={<SigninUserBox />}></Route>
+                    <Route path='/login/oauth2' element={<OAuth2LoginPage />}></Route>
                     <Route path="/signup" element={<SignupPage />} />
                 </Routes>
 

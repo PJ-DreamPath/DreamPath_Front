@@ -1,3 +1,3 @@
 export default function NoticePage({}) {
-    return <></>;
+    return <>공지사항</>;
 }

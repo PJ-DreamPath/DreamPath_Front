@@ -17,7 +17,7 @@ const MainUserBox = () => {
     }
 
     const handleMentoringRegistButtonOnClick = () => {
-        navigate("/:boardName/regist");
+        navigate("/mentoring/regist");
     }
 
     const handleLogoutButtonOnClick = async () => {

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import * as s from './style';
 import { SiNaver } from 'react-icons/si';
 import { FcGoogle } from 'react-icons/fc';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { useLoginMutation } from '../../../../mutations/authMutation';
 import MainUserBox from '../MainUserBox/MainUserBox';
@@ -37,6 +37,7 @@ function SigninUserBox() {
     };
 
     const handleSignupOnClick = () => {
+        console.log("회원가입 버튼 클릭됨!");
         navigate("/auth/signup");
     };
 
