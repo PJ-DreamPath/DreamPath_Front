@@ -1,179 +1,85 @@
-import { css } from '@emotion/react';
+import { css } from "@emotion/react";
 
-export const body = css`
-    display: flex;
-    justify-content: center;
-    box-sizing: border-box;
-    height: 320px;
-    width: 100%;
-`;
-
-export const mainUserBox = css`
-    box-sizing: border-box;
-    background: #007bff;
+export const userBoxContainer = css`
+    width: auto;
+    background-color: #007aff;
     color: white;
-    padding: 10px ;
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    width: 100%;
+    padding: 20px;
     text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
-export const profileImg = css`
-    display: flex;
-    align-items: center;
-    margin-bottom: 1px;
-    padding: 10px 15px;
-
-    img {
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        background-color: white;
-        margin-right: 20px;
-    }
-
-    p {
-        color: #eeeeee;
-        font-size: 12px;
-        margin-bottom: 10px;
-        font-weight: 800;
-    }
-`
-
-export const starPoint = css`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    p { 
-        font-size: 15px;
-        font-weight: 500;
-        color: #eeeeee;
-        padding-left: 25px;
-        padding-right: 3px;
-    }
+export const profileImage = css`
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin: 0 auto;
 `;
 
-export const mentoringButton = css`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-
-    button {
-        background-color: transparent;
-        border: none;
-        color: white;
-        font-size: 15px;
-        font-weight: 500;
-        padding: 3px 5px 5px 0;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        span {
-            padding-left: 5px;
-            color: white;
-            flex: 1;
-        }
-
-        svg {
-            padding: 0 5px 0 5px;
-            fill: #eeeeee;
-            width: 16px;
-            height: 16px;
-        }
-    }
+export const nickname = css`
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 8px;
 `;
 
-export const footerButton = css`
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 10px; 
-
-    button {
-        margin-top: 30px;
-        background-color: white;
-        border: none;
-        color: black;
-        font-size: 13px;
-        font-weight: 700;
-        padding: 8px 16px;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background-color 0.2s ease-in-out;
-
-        &:hover {
-            background-color: #e0e0e0;
-        }
-    }
-`;
-
-export const logoutButton = css`
-    text-align: center;
-    color: #eeeeee;
+export const joinDate = css`
     font-size: 12px;
+    color: #ddd;
+    margin-top: 4px;
+`;
+
+export const mentorSection = css`
     margin-top: 10px;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-`
+    font-size: 14px;
+`;
 
-export const mentiBox = css`
+export const starRating = css`
+    color: gold;
+    font-size: 18px;
+    margin-top: 4px;
+`;
+
+export const mentoringInfo = css`
+    font-size: 12px;
+    margin-top: 6px;
+`;
+
+export const buttonContainer = css`
     display: flex;
-    justify-content: center;
-    flex-direction: column;
-    
-    p {
-        font-size: 15px;
-        font-weight: 500;
-        color: #eeeeee;
+    justify-content: space-between;
+    margin-top: 10px;
+`;
+
+export const styledButton = css`
+    flex: 1;
+    background-color: white;
+    color: #007aff;
+    border: none;
+    padding: 8px;
+    margin: 5px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition:0.3s;
+
+    &:hover {
+        background-color: #e0e0e0;
     }
-`
+`;
 
-export const mentiMentoringButton = css`
-        background-color: transparent;
-        border: none;
-        color: white;
-        font-size: 15px;
-        font-weight: 500;
-        padding: 3px 5px 5px 0;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        cursor: pointer;
-
-        span {
-            padding-left: 50px;
-            color: white;
-            flex: 1;
-        }
-
-        svg {
-            padding: 0 5px 0 5px;
-            fill: #eeeeee;
-            width: 16px;
-            height: 16px;
-        }    
-`
-
-export const myPageButton = css`
-        width: 80%; 
-        margin: 50px auto 0 auto;
-        background-color: white;
-        border: none;
-        color: black;
-        font-size: 13px;
-        font-weight: 700;
-        padding: 10px 20px;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background-color 0.2s ease-in-out;
-`
-
-
-
-
+export const logoutLink = css`
+    display: block;
+    margin-top: 10px;
+    font-size: 12px;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: 0.8;
+    
+    &:hover {
+        opacity: 1;
+        text-decoration: underline;
+    }
+`;

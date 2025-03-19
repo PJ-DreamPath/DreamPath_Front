@@ -1,3 +1,4 @@
+
 import { css } from '@emotion/react';
 
 export const body = css`
@@ -103,7 +104,7 @@ export const signupButton = css`
     background-color: transparent;
     font-weight: 500;
     cursor: pointer;
-`
 
+`;
 
 

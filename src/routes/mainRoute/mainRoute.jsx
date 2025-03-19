@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../../components/common/Header/Header';
 import MainLeftlayout from '../../components/common/MainLeftlayout/MainLeftlayout';
 
@@ -18,13 +18,18 @@ import NoticePage from '../../pages/NoticePage/NoticePage';
 import CommunityBoardPage from '../../pages/CommunityBoardPage/CommunityBoardPage';
 
 function MainRoute({}) {
-    
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    
     const queryState = queryClient.getQueryState(["userMeQuery"]);
 
-    return (
+    useEffect(() => {
+        // queryState가 없거나 에러 상태면 최상위 페이지("/")로 이동
+        if (!queryState || queryState.status === "error") {
+            navigate("/");
+        }
+    }, [queryState, navigate]);
+
+    return(
         <>
             <Header />
 
