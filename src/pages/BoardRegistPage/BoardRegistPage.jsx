@@ -12,6 +12,7 @@ import { IoClose } from 'react-icons/io5';
 import { DatePicker } from '@mui/x-date-pickers';
 import moment from 'moment/moment';
 import { useRegistPostMutation } from '../../mutations/postMutation';
+import Swal from 'sweetalert2';
 
 export default function BoardRegistPage({}) {
     const navigation = useNavigate();
@@ -96,11 +97,15 @@ export default function BoardRegistPage({}) {
         content: '',
         mentoringAddress: '',
         mentoringAddressDetail: '',
-        startDate: moment('YYYY-MM-DD'),
-        endDate: moment('YYYY-MM-DD'),
-        status: '',
-        attachedFiles: '',
+        startDate: moment(),
+        endDate: moment(),
     });
+
+    useEffect(() => {
+        console.log('registData', registData);
+    }, [registData]);
+
+    const [attacheFile, setAttachedFile] = useState(null);
 
     function handleInpOnChange(e) {
         setRegistData((prev) => ({
@@ -110,12 +115,77 @@ export default function BoardRegistPage({}) {
     }
 
     const registPostMutation = useRegistPostMutation();
-    function handleRegistPostBtnOnClick() {
-        if (board.boardId == 1) {
-            // 멘토링이면
-        } else {
-            // 자유게시판 또는 공지사항일 경우
+    async function handleRegistPostBtnOnClick() {
+        if (!registData.title) {
+            await Swal.fire({
+                titleText: '게시글 제목을 입력하세요.',
+                icon: 'error',
+                timer: 1000,
+                showConfirmButton: false,
+            });
+        } else if (!registData.content) {
+            await Swal.fire({
+                titleText: '게시글을 입력하세요.',
+                icon: 'error',
+                timer: 1000,
+                showConfirmButton: false,
+            });
         }
+
+        if (board.boardName === 'mentoring') {
+            // 멘토링이면
+            if (
+                !registData.mentoringCategoryId ||
+                registData.mentoringCategoryId === 0
+            ) {
+                await Swal.fire({
+                    titleText: '카테고리를 선택해주세요.',
+                    icon: 'error',
+                    timer: 1000,
+                    showConfirmButton: false,
+                });
+            } else if (!registData.startDate || !registData.endDate) {
+                await Swal.fire({
+                    titleText: '멘토링 날짜를 선택해주세요.',
+                    icon: 'error',
+                    timer: 1000,
+                    showConfirmButton: false,
+                });
+            } else if (registData.startDate > registData.endDate) {
+                await Swal.fire({
+                    titleText:
+                        '멘토링 종료 날짜는 시작 날짜 이전일 수 없습니다.',
+                    icon: 'error',
+                    timer: 1000,
+                    showConfirmButton: false,
+                });
+            }
+        }
+
+        const finalData = {
+            boardId: registData.boardId,
+            mentoringCategoryId: registData.mentoringCategoryId,
+            title: registData.title,
+            content: registData.content,
+            mentoringAddress: !!registData.mentoringAddress
+                ? `${registData.mentoringAddress}#${registData.mentoringAddressDetail}`
+                : '',
+            startDate: registData.startDate.format('YYYY-MM-DD'),
+            endDate: registData.endDate.format('YYYY-MM-DD'),
+        };
+
+        console.log(finalData);
+
+        const formData = new FormData();
+        Object.entries(finalData).forEach((entry) =>
+            formData.append(entry[0], entry[1])
+        );
+
+        if (!!attacheFile) {
+            formData.append('file', attacheFile);
+        }
+        const resp = await registPostMutation.mutateAsync(formData);
+        console.log('resp', resp);
     }
 
     useEffect(() => {
@@ -206,19 +276,31 @@ export default function BoardRegistPage({}) {
                                     id="startDate"
                                     format="YYYY-MM-DD"
                                     value={registData.startDate}
-                                    onChange={handleInpOnChange}
+                                    onChange={(e) => {
+                                        setRegistData((prev) => ({
+                                            ...prev,
+                                            startDate: e,
+                                        }));
+                                    }}
                                 />
                                 <DatePicker
                                     name="endDate"
                                     id="endDate"
                                     format="YYYY-MM-DD"
                                     value={registData.endDate}
-                                    onChange={handleInpOnChange}
+                                    onChange={(e) => {
+                                        setRegistData((prev) => ({
+                                            ...prev,
+                                            endDate: e,
+                                        }));
+                                    }}
                                 />
                             </div>
                         </div>
                         <div css={s.addressBox}>
-                            <label htmlFor="address">주소</label>
+                            <label htmlFor="address" className="choice">
+                                주소
+                            </label>
                             <input
                                 type="text"
                                 name="mentoringAddress"
@@ -240,11 +322,16 @@ export default function BoardRegistPage({}) {
                             />
                         </div>
                         <div>
-                            <label htmlFor="attachedFile">첨부파일</label>
+                            <label htmlFor="attachedFile" className="choice">
+                                첨부파일
+                            </label>
                             <input
                                 type="text"
                                 name="attachedFile"
                                 id="attachedFile"
+                                onChange={(e) => {
+                                    setAttachedFile(e.target.files[0]);
+                                }}
                             />
                         </div>
                     </>
