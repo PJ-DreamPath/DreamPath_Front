@@ -4,7 +4,7 @@ import MainLeftlayout from '../../components/common/MainLeftlayout/MainLeftlayou
 
 import MainRightLayout from '../../components/common/MainRightLayout/MainRightLayout';
 import SideMenuBox from '../../components/common/SIdeMenuBox/SIdeMenuBox';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import SigninUserBox from '../../components/common/UserBox/SigninUserBox/SigninUserBox';
 import MentoringPage from '../../pages/MentoringPage/MentoringPage';
 import MyPage from '../../pages/MyPage/MyPage';
@@ -12,8 +12,15 @@ import MainContainer from '../../components/common/MainContainer/MainContainer';
 import PurchaseSectionPage from '../../pages/PurchaseSectionPage/PurchaseSectionPage';
 import BoardRegistPage from '../../pages/BoardRegistPage/BoardRegistPage';
 import AdminUserSearchPage from '../../pages/AdminUserSearchPage/AdminUserSearchPage';
+import { useQueryClient } from '@tanstack/react-query';
 
-export default function MainRoute({}) {
+function MainRoute({}) {
+    
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
+    
+    const queryState = queryClient.getQueryState(["userMeQuery"]);
+
     return (
         <>
             <Header />
@@ -45,3 +52,5 @@ export default function MainRoute({}) {
         </>
     );
 }
+
+export default MainRoute;
