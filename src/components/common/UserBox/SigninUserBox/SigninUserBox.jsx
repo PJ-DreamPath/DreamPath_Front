@@ -1,3 +1,4 @@
+/**@jsxImportSource @emotion/react */
 import React, { useEffect, useState } from 'react';
 import * as s from './style';
 import { SiNaver } from 'react-icons/si';

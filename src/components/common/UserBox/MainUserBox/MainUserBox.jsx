@@ -1,46 +1,50 @@
 /** @jsxImportSource @emotion/react */
-import * as s from "./style";
-import { TiAttachmentOutline } from "react-icons/ti";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { css } from "@emotion/react";
 
-function MainUserBox() {
-   
+import * as s from './style';
+import { useNavigate } from "react-router-dom";
 
+const MainUserBox = () => {
+    const navigate = useNavigate();
+
+    const handleMyPageButtonOnClick = () => {
+        navigate("/mypage");
+    }
+
+    const handleMentoringRegistButtonOnClick = () => {
+        navigate("/:boardName/regist");
+    }
     return (
-        <div css={s.body}>
-            <div css={s.mainUserBox}>
+        <div css={s.userBoxContainer}>
+         
+            <div css={s.profileImage}></div>
 
-               
-                    <div>
-                        <div css={s.starPoint}>
-                            <p>멘토</p>
-                            <p>⭐️⭐️⭐️⭐️⭐️</p>
-                        </div>
-                        <div css={s.mentoringButton}>
-                            <button><TiAttachmentOutline /> 내가 등록한 멘토링 <span>3</span></button>
-                            <button><TiAttachmentOutline /> 등록 가능한 멘토링 개수 <span>17</span></button>
-                        </div>
-                        <div css={s.footerButton}>
-                            <button>마이페이지</button>
-                            <button>멘토링 등록</button>
-                        </div>
-                    </div>
-                 (
-                    // 멘티 UI
-                    <div css={s.mentiBox}>
-                        <p>멘티</p>
-                        <button css={s.mentiMentoringButton}><TiAttachmentOutline /> 멘토링 신청 내역 <span>3</span></button>
-                        <button css={s.myPageButton}>마이페이지</button>
-                    </div>
-                )
+           
+            <div css={s.nickname}>닉네임</div>
+            <div css={s.joinDate}>2025.01.11 가입</div>
 
-                <button css={s.logoutButton} onClick={() => localStorage.removeItem("AccessToken")}>
-                    로그아웃
-                </button>
+            
+            <div css={s.mentorSection}>
+                <div>멘토</div>
+                <div css={s.starRating}>★★★★★</div>
             </div>
+
+           
+            <div css={s.mentoringInfo}>
+                <div>✏️ 내가 등록한 멘토링 <strong>3</strong></div>
+                <div>✏️ 등록 가능한 멘토링 갯수 <strong>17</strong></div>
+            </div>
+
+         
+            <div css={s.buttonContainer}>
+                <button css={s.styledButton} onClick={handleMyPageButtonOnClick}>마이페이지</button>
+                <button css={s.styledButton} onClick={handleMentoringRegistButtonOnClick}>멘토링 등록</button>
+            </div>
+
+         
+            <a href="#" css={s.logoutLink}>로그아웃</a>
         </div>
     );
-}
+};
 
 export default MainUserBox;
