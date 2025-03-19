@@ -11,6 +11,7 @@ import MyPage from '../../pages/MyPage/MyPage';
 import MainContainer from '../../components/common/MainContainer/MainContainer';
 import PurchaseSectionPage from '../../pages/PurchaseSectionPage/PurchaseSectionPage';
 import BoardRegistPage from '../../pages/BoardRegistPage/BoardRegistPage';
+import AdminUserSearchPage from '../../pages/AdminUserSearchPage/AdminUserSearchPage';
 
 export default function MainRoute({}) {
     return (
@@ -37,6 +38,7 @@ export default function MainRoute({}) {
                             path="/:boardName/regist"
                             element={<BoardRegistPage />}
                         />
+                        <Route path="/admin/users" element={<AdminUserSearchPage />} />
                     </Routes>
                 </MainRightLayout>
             </MainContainer>
