@@ -127,6 +127,15 @@ export const dtBox = css`
     gap: 1rem;
 
     width: 100%;
+
+    input {
+        border: none !important;
+        font-size: 1.6rem;
+
+        & + div {
+            width: auto !important;
+        }
+    }
 `;
 
 export const addressBox = css`
@@ -152,6 +161,31 @@ export const addressBox = css`
 
         background-color: #1681ff;
         cursor: pointer;
+    }
+`;
+
+export const btnBox = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+
+    button {
+        display: inline-block;
+        box-sizing: border-box;
+        padding: 1rem 5rem;
+        outline: none;
+        border: none;
+        border-radius: 1rem;
+
+        font-size: 1.6rem;
+        color: #fff;
+        background-color: red;
+
+        &:first-of-type {
+            background-color: #1681ff;
+        }
     }
 `;
 

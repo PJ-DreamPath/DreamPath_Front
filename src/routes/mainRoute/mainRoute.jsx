@@ -14,6 +14,8 @@ import BoardRegistPage from '../../pages/BoardRegistPage/BoardRegistPage';
 import AdminUserSearchPage from '../../pages/AdminUserSearchPage/AdminUserSearchPage';
 import { useQueryClient } from '@tanstack/react-query';
 import PointPurchasePage from '../../pages/PointPurchasePage/PointPurchasePage';
+import NoticePage from '../../pages/NoticePage/NoticePage';
+import CommunityBoardPage from '../../pages/CommunityBoardPage/CommunityBoardPage';
 
 function MainRoute({}) {
     
@@ -37,17 +39,13 @@ function MainRoute({}) {
                 <MainRightLayout>
                     <Routes>
                         <Route path="/mypage" element={<MyPage />} />
-                        <Route path="/mypage/point/purchase" element={<PointPurchasePage />} />
+                        <Route path="/mypage/point/purchase" element={<PointPurchasePage />}/>
                         <Route path="/mentoring" element={<MentoringPage />} />
-                        <Route
-                            path="/purchaseSection"
-                            element={<PurchaseSectionPage />}
-                        />
-                        <Route
-                            path="/:boardName/regist"
-                            element={<BoardRegistPage />}
-                        />
-                        <Route path="/admin/users" element={<AdminUserSearchPage />} />
+                        <Route path="/notice" element={<NoticePage />} />
+                        <Route path="/communityBoard" element={<CommunityBoardPage />}/>
+                        <Route path="/purchaseSection" element={<PurchaseSectionPage />}/>
+                        <Route path="/:boardName/regist" element={<BoardRegistPage />}/>
+                        <Route path="/admin/users" element={<AdminUserSearchPage />}/>
                     </Routes>
                 </MainRightLayout>
             </MainContainer>

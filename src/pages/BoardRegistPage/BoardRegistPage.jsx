@@ -10,6 +10,8 @@ import { useGetMentoringCategories } from '../../queries/mentoringQuery';
 import DaumPostcode from 'react-daum-postcode';
 import { IoClose } from 'react-icons/io5';
 import { DatePicker } from '@mui/x-date-pickers';
+import moment from 'moment/moment';
+import { useRegistPostMutation } from '../../mutations/postMutation';
 
 export default function BoardRegistPage({}) {
     const navigation = useNavigate();
@@ -94,15 +96,27 @@ export default function BoardRegistPage({}) {
         content: '',
         mentoringAddress: '',
         mentoringAddressDetail: '',
-        startDate: '',
-        endDate: '',
+        startDate: moment('YYYY-MM-DD'),
+        endDate: moment('YYYY-MM-DD'),
         status: '',
         attachedFiles: '',
     });
 
-    useEffect(() => {
-        console.log('registData', registData);
-    }, [registData]);
+    function handleInpOnChange(e) {
+        setRegistData((prev) => ({
+            ...prev,
+            [e.target.name]: e.target.value,
+        }));
+    }
+
+    const registPostMutation = useRegistPostMutation();
+    function handleRegistPostBtnOnClick() {
+        if (board.boardId == 1) {
+            // 멘토링이면
+        } else {
+            // 자유게시판 또는 공지사항일 경우
+        }
+    }
 
     useEffect(() => {
         // 권한 체크 및 페이지 체크
@@ -122,13 +136,6 @@ export default function BoardRegistPage({}) {
             boardId: board.boardId,
         }));
     }, [board]);
-
-    function handleInpOnChange(e) {
-        setRegistData((prev) => ({
-            ...prev,
-            [e.target.name]: e.target.value,
-        }));
-    }
 
     return (
         <>
@@ -178,7 +185,7 @@ export default function BoardRegistPage({}) {
                                         padding: '0.3rem',
                                     }),
                                 }}
-                                value={categoriesSelectOption.find(
+                                value={categoriesSelectOption?.find(
                                     (option) =>
                                         option.value ===
                                         registData.mentoringCategoryId
@@ -197,14 +204,16 @@ export default function BoardRegistPage({}) {
                                 <DatePicker
                                     name="startDate"
                                     id="startDate"
-                                    // value={registData.startDate}
-                                    // onChange={handleInpOnChange}
+                                    format="YYYY-MM-DD"
+                                    value={registData.startDate}
+                                    onChange={handleInpOnChange}
                                 />
                                 <DatePicker
                                     name="endDate"
                                     id="endDate"
-                                    // value={registData.endDate}
-                                    // onChange={handleInpOnChange}
+                                    format="YYYY-MM-DD"
+                                    value={registData.endDate}
+                                    onChange={handleInpOnChange}
                                 />
                             </div>
                         </div>
@@ -242,6 +251,20 @@ export default function BoardRegistPage({}) {
                 ) : (
                     <input type="file" name="" id="" />
                 )}
+
+                <div css={s.btnBox}>
+                    <button type="button" onClick={handleRegistPostBtnOnClick}>
+                        등록
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => {
+                            navigation(`/${board.boardName}`);
+                        }}
+                    >
+                        취소
+                    </button>
+                </div>
             </div>
 
             {/* 주소 찾기 모달창 */}

@@ -1,7 +1,9 @@
-import { useMutation } from "@tanstack/react-query";
-import { updateNoticePostApi } from "../apis/postApi";
+import { useMutation } from '@tanstack/react-query';
+import { registPostApi } from '../apis/postApi';
 
-export const useNoticeUpdateMutation = () => useMutation(
-    ({ postId, ...notice }) => updateNoticePostApi(postId, notice),
-    { mutationKey: ["useNoticeUpdateMutation"], retry: 0 }
-);
+export const useRegistPostMutation = (notice) =>
+    useMutation({
+        mutationKey: ['useRegistPostMutation', notice],
+        mutationFn: async () => await registPostApi(notice),
+        retry: 0,
+    });
