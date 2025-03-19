@@ -174,8 +174,6 @@ export default function BoardRegistPage({}) {
             endDate: registData.endDate.format('YYYY-MM-DD'),
         };
 
-        console.log(finalData);
-
         const formData = new FormData();
         Object.entries(finalData).forEach((entry) =>
             formData.append(entry[0], entry[1])
@@ -185,7 +183,17 @@ export default function BoardRegistPage({}) {
             formData.append('file', attacheFile);
         }
         const resp = await registPostMutation.mutateAsync(formData);
-        console.log('resp', resp);
+
+        if (resp.status == 200) {
+            navigation(`/${board.boardName}`);
+        } else {
+            await Swal.fire({
+                titleText: '등록할 수 없습니다.',
+                icon: 'error',
+                timer: 1000,
+                showConfirmButton: false,
+            });
+        }
     }
 
     useEffect(() => {

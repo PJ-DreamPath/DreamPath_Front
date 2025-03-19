@@ -52,10 +52,6 @@ export default function MentoringPage({}) {
     const [postList, setPostList] = useState([]);
 
     useEffect(() => {
-        console.log('postList', postList);
-    }, [postList]);
-
-    useEffect(() => {
         if (
             getPostList.data &&
             getPostList.data.pages &&
