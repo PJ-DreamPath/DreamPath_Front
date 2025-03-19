@@ -3,9 +3,14 @@ import { css } from "@emotion/react";
 
 import * as s from './style';
 import { useNavigate } from "react-router-dom";
+import { setTokenLocalStorage } from "../../../../configs/axiosConfig";
+import { useQueryClient } from "@tanstack/react-query";
 
 const MainUserBox = () => {
     const navigate = useNavigate();
+    
+    const queryClient = useQueryClient();
+    const loginUserData = queryClient.getQueryData(["userMeQuery"]);
 
     const handleMyPageButtonOnClick = () => {
         navigate("/mypage");
@@ -13,6 +18,13 @@ const MainUserBox = () => {
 
     const handleMentoringRegistButtonOnClick = () => {
         navigate("/:boardName/regist");
+    }
+
+    const handleLogoutButtonOnClick = async () => {
+        setTokenLocalStorage("AccessToken", null);
+        await queryClient.invalidateQueries({queryKey: ["userMeQuery"]});
+        window.location.reload();
+        
     }
     return (
         <div css={s.userBoxContainer}>
@@ -42,7 +54,7 @@ const MainUserBox = () => {
             </div>
 
          
-            <a href="#" css={s.logoutLink}>로그아웃</a>
+            <a href="#" css={s.logoutLink} onClick={handleLogoutButtonOnClick}>로그아웃</a>
         </div>
     );
 };
