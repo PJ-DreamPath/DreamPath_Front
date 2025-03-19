@@ -53,7 +53,7 @@ export const titleBox = css`
     margin-bottom: 2rem;
     border-bottom: 1px solid #ccc;
 
-    p {
+    & > p {
         display: -webkit-box;
 
         height: 3.7rem;

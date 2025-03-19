@@ -3,6 +3,7 @@ import moment from 'moment/moment';
 import * as s from './style';
 import React, { useEffect, useState } from 'react';
 import { FaHeart, FaStar } from 'react-icons/fa';
+import parse from 'html-react-parser';
 
 const PostCard = React.forwardRef(
     (
@@ -28,7 +29,7 @@ const PostCard = React.forwardRef(
                 </div>
                 <div css={s.titleBox}>
                     <p>{title}</p>
-                    <p>{content}</p>
+                    <p>{parse(content)}</p>
                 </div>
 
                 <div css={s.infoBox}>
