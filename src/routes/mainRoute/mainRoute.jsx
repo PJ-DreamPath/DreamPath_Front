@@ -13,6 +13,7 @@ import PurchaseSectionPage from '../../pages/PurchaseSectionPage/PurchaseSection
 import BoardRegistPage from '../../pages/BoardRegistPage/BoardRegistPage';
 import AdminUserSearchPage from '../../pages/AdminUserSearchPage/AdminUserSearchPage';
 import { useQueryClient } from '@tanstack/react-query';
+import PointPurchasePage from '../../pages/PointPurchasePage/PointPurchasePage';
 
 function MainRoute({}) {
     
@@ -36,6 +37,7 @@ function MainRoute({}) {
                 <MainRightLayout>
                     <Routes>
                         <Route path="/mypage" element={<MyPage />} />
+                        <Route path="/mypage/point/purchase" element={<PointPurchasePage />} />
                         <Route path="/mentoring" element={<MentoringPage />} />
                         <Route
                             path="/purchaseSection"
