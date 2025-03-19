@@ -3,10 +3,11 @@ import * as s from './style';
 import React, { useEffect, useRef, useState } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useGetBoards } from '../../queries/boardQuery';
 
 export default function BoardRegistPage({}) {
+    const navigation = useNavigate();
     const pathNm = useParams();
 
     // boardList
@@ -54,6 +55,11 @@ export default function BoardRegistPage({}) {
         quill.on('text-change', () => {
             setQuillContent(quill.root.innerHTML);
         });
+
+        // 권한 체크 및 페이지 체크
+        if (!localStorage.getItem('AccessToken') || board.boardId > 3) {
+            navigation('/');
+        }
     }, []);
 
     return (

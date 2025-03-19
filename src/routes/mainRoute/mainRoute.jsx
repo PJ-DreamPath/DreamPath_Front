@@ -6,13 +6,10 @@ import MainRightLayout from '../../components/common/MainRightLayout/MainRightLa
 import SideMenuBox from '../../components/common/SIdeMenuBox/SIdeMenuBox';
 import { Route, Routes } from 'react-router-dom';
 import SigninUserBox from '../../components/common/UserBox/SigninUserBox/SigninUserBox';
-import Footer from '../../components/common/Footer/Footer';
-import MainUserBox from '../../components/common/UserBox/MainUserBox/MainUserBox';
 import MentoringPage from '../../pages/MentoringPage/MentoringPage';
 import MyPage from '../../pages/MyPage/MyPage';
 import MainContainer from '../../components/common/MainContainer/MainContainer';
 import PurchaseSectionPage from '../../pages/PurchaseSectionPage/PurchaseSectionPage';
-import NoticeUpdatePage from '../../pages/NoticeUpdatePage/NoticeUpdatePage';
 import BoardRegistPage from '../../pages/BoardRegistPage/BoardRegistPage';
 
 export default function MainRoute({}) {
