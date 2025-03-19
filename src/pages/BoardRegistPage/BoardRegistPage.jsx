@@ -25,6 +25,19 @@ export default function BoardRegistPage({}) {
         }
     }, [boardList.data]);
 
+    useEffect(() => {
+        // 권한 체크 및 페이지 체크
+        if (!!localStorage.getItem('AccessToken')) {
+            if (board.boardId > 3) {
+                // 로그인 되어 있지만 등록 페이지가 없는 게시판일 경우 무조건 메인으로
+                navigation('/');
+            }
+        } else {
+            // 로그인 전이면 무조건 메인으로
+            navigation('/');
+        }
+    }, [board]);
+
     // quill
     const contaiinerQuillRef = useRef();
 
@@ -55,11 +68,6 @@ export default function BoardRegistPage({}) {
         quill.on('text-change', () => {
             setQuillContent(quill.root.innerHTML);
         });
-
-        // 권한 체크 및 페이지 체크
-        if (!localStorage.getItem('AccessToken') || board.boardId > 3) {
-            navigation('/');
-        }
     }, []);
 
     return (
