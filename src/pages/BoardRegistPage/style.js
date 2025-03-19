@@ -40,7 +40,7 @@ export const contentBox = css`
                 font-size: 1.6rem;
                 font-weight: bold;
 
-                &::before {
+                &:not(.choice):before {
                     content: '*';
                     color: red;
                     margin-right: 0.5rem;
@@ -181,7 +181,9 @@ export const btnBox = css`
 
         font-size: 1.6rem;
         color: #fff;
+
         background-color: red;
+        cursor: pointer;
 
         &:first-of-type {
             background-color: #1681ff;
