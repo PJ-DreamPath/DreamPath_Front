@@ -4,7 +4,7 @@ import MainLeftlayout from '../../components/common/MainLeftlayout/MainLeftlayou
 
 import MainRightLayout from '../../components/common/MainRightLayout/MainRightLayout';
 import SideMenuBox from '../../components/common/SIdeMenuBox/SIdeMenuBox';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import SigninUserBox from '../../components/common/UserBox/SigninUserBox/SigninUserBox';
 import MentoringPage from '../../pages/MentoringPage/MentoringPage';
 import MyPage from '../../pages/MyPage/MyPage';
@@ -16,23 +16,13 @@ import { useQueryClient } from '@tanstack/react-query';
 import PointPurchasePage from '../../pages/PointPurchasePage/PointPurchasePage';
 import NoticePage from '../../pages/NoticePage/NoticePage';
 import CommunityBoardPage from '../../pages/CommunityBoardPage/CommunityBoardPage';
+import AuthenticatedRoute from '../AuthenticatedRoute/AuthenticatedRoute';
 
-function MainRoute({}) {
-    const navigate = useNavigate();
-    const queryClient = useQueryClient();
-    const queryState = queryClient.getQueryState(["userMeQuery"]);
-
-    useEffect(() => {
-        // queryState가 없거나 에러 상태면 최상위 페이지("/")로 이동
-        if (!queryState || queryState.status === "error") {
-            navigate("/");
-        }
-    }, [queryState, navigate]);
+function MainRoute() {
 
     return(
         <>
             <Header />
-
             <MainContainer>
                 <MainLeftlayout>
                     {/* 유저 박스 여기 위치 */}
@@ -43,18 +33,17 @@ function MainRoute({}) {
 
                 <MainRightLayout>
                     <Routes>
-                        <Route path="/mypage" element={<MyPage />} />
-                        <Route path="/mypage/point/purchase" element={<PointPurchasePage />}/>
-                        <Route path="/mentoring" element={<MentoringPage />} />
+                        <Route path="/" element={<></>} />
                         <Route path="/notice" element={<NoticePage />} />
-                        <Route path="/communityBoard" element={<CommunityBoardPage />}/>
-                        <Route path="/purchaseSection" element={<PurchaseSectionPage />}/>
-                        <Route path="/:boardName/regist" element={<BoardRegistPage />}/>
-                        <Route path="/admin/users" element={<AdminUserSearchPage />}/>
+                        <Route path="/communityBoard" element={<CommunityBoardPage />} />
+                        <Route path="/service/*" element={<AuthenticatedRoute />} />
+                        <Route path="/*" element={<>찾을 수 없는 페이지입니다.</>} />
                     </Routes>
                 </MainRightLayout>
             </MainContainer>
+        
         </>
+        
     );
 }
 

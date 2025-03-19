@@ -1,3 +1,3 @@
 export default function CommunityBoardPage({}) {
-    return <></>;
+    return <>커뮤니티</>;
 }
