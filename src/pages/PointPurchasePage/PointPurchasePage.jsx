@@ -96,7 +96,7 @@ function PointPurchasePage(props) {
                             searchPointPurchaseList?.data?.data.pointPurchaseSearchList.map((point, index) => (
                                 <tr key={index} css={s.tableRow}>
                                     <td css={s.tableCell}>{point.pointName}</td>
-                                    <td css={s.tableCell}>{point.pointPrice}</td>
+                                    <td css={s.tableCell}>{Number(point.pointPrice).toLocaleString()}원</td>
                                     <td css={s.tableCell}>{point.createdAt}</td>                      
                                 </tr>
                             ))
