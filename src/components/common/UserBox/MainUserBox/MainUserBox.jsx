@@ -5,17 +5,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 function MainUserBox() {
-    const [user, setUser] = useState({});
-    const [roleId, setRoleId] = useState(1); // 기본값: 멘티
-
-    useEffect(() => {
-        axios.get("/api/user/me")
-            .then((response) => {
-                setUser(response.data);
-                setRoleId(response.data.roleId); // roleId 저장
-            })
-            .catch((error) => console.error("사용자 정보 불러오기 실패:", error));
-    }, []);
+   
 
     return (
         <div css={s.body}>

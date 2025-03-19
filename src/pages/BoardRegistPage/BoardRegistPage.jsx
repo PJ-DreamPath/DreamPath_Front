@@ -3,10 +3,11 @@ import * as s from './style';
 import React, { useEffect, useRef, useState } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useGetBoards } from '../../queries/boardQuery';
 
 export default function BoardRegistPage({}) {
+    const navigation = useNavigate();
     const pathNm = useParams();
 
     // boardList
@@ -23,6 +24,19 @@ export default function BoardRegistPage({}) {
             setBoard(newArray);
         }
     }, [boardList.data]);
+
+    useEffect(() => {
+        // 권한 체크 및 페이지 체크
+        if (!!localStorage.getItem('AccessToken')) {
+            if (board.boardId > 3) {
+                // 로그인 되어 있지만 등록 페이지가 없는 게시판일 경우 무조건 메인으로
+                navigation('/');
+            }
+        } else {
+            // 로그인 전이면 무조건 메인으로
+            navigation('/');
+        }
+    }, [board]);
 
     // quill
     const contaiinerQuillRef = useRef();
