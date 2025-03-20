@@ -50,6 +50,14 @@ export const tableRow = css`
 export const tableCell = css`
     padding: 12px;
     text-align: center;
+
+    &.name {
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 10rem;
+    }
 `;
 
 export const deleteButton = css`
@@ -69,15 +77,47 @@ export const pagination = css`
     margin-top: 20px;
 `;
 
-export const pageButton = css`
-    padding: 8px 12px;
-    margin: 0 4px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    cursor: pointer;
+export const footer = css`
+    display: flex;
+    justify-content: center;
+    margin-right: 5rem;
+    margin-top: 5rem;
+    
+`;
 
-    &:hover {
-        background-color: #1681ff;
-        color: white;
+export const pageNumbers = css`
+    display: flex;
+
+    & > button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        margin-right: 0.5rem;
+        border: 0.1rem solid #dbdbdb;
+        border-radius: 0.5rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        font-weight: 600;
+        font-size: 1.2rem;
+        cursor: pointer;
+        background-color: #ffffff;
+
+        &:hover {
+            background-color: #eeeeee;
+        }
+
+        &:disabled {
+            background-color: #fafafa;
+        }
+
+        & > span {
+            margin-bottom: 0.1rem;
+        }
     }
 `;
+
+export const pageNum = (isSelect) => css`
+    background-color: ${isSelect ? "#eeeeee" : "#ffffff"} !important;
+`;
+
