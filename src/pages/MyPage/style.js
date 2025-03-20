@@ -17,10 +17,20 @@ export const profileContent = css`
 `;
 
 export const profileImage = css`
+  overflow: hidden;
+  cursor: pointer;
   width: 6rem;
   height: 6rem;
   border-radius: 50%;
   background: #ccc;
+
+  & > img {
+    width: 100%;
+  }
+
+  & > input[type="file"] {
+    display: none;
+  }
 `;
 
 export const nicknameBox = css`
