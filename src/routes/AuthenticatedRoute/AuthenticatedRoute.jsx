@@ -7,8 +7,8 @@ import MentoringPage from '../../pages/MentoringPage/MentoringPage';
 import PurchaseSectionPage from '../../pages/PurchaseSectionPage/PurchaseSectionPage';
 import BoardRegistPage from '../../pages/BoardRegistPage/BoardRegistPage';
 import AdminUserSearchPage from '../../pages/AdminUserSearchPage/AdminUserSearchPage';
-import MentoringDetailPage from '../../pages/MentoringDetailPage/MentoringDetailPage';
 import TicketPurchasePage from '../../pages/TicketPurchasePage/TicketPurchasePage';
+import PostDetailPage from '../../pages/PostDetailPage/PostDetailPage';
 
 function AuthenticatedRoute(props) {
     const navigate = useNavigate();
@@ -35,7 +35,7 @@ function AuthenticatedRoute(props) {
                 <Route path="/:boardName/regist" element={<BoardRegistPage />} />
                 <Route path="/:boardName/update" element={<></>} /> 
                 <Route path="/mentoring" element={<MentoringPage />} />
-                <Route path="/mentoring/:postId" element={<MentoringDetailPage />} />
+                <Route path="/mentoring/:postId" element={<PostDetailPage />} />
                 <Route path="/admin/users" element={<AdminUserSearchPage />} />
             </Routes>
           }  
