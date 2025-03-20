@@ -36,7 +36,7 @@ const PostCard = React.forwardRef(
                     <div>
                         <p>{nickname}</p>
                         <div css={s.starBox}>
-                            {Array.from({ length: starPoint }, (index) => (
+                            {Array.from({ length: starPoint }, (_, index) => (
                                 <p key={`starPont_${index}`}>
                                     <FaStar />
                                 </p>
