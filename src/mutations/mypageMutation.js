@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
-import { updateEmailApi, updateNicknameApi, updateProfileImageApi,  } from "../apis/userApi";
+import { updateEmailApi, updateNicknameApi, updatePasswordApi, updateProfileImgApi,  } from "../apis/userApi";
 
 export const useUpdateProfileImageMutation = () => useMutation({
     mutationKey: ["useUpdateProfileImageMutation"],
-    mutationFn: updateProfileImageApi,
+    mutationFn: updateProfileImgApi,
     retry: 0,
 });
 
@@ -16,5 +16,11 @@ export const useUpdateNicknameMutation = () => useMutation({
 export const useUpdateEmailMutation = () => useMutation({
     mutationKey: ["useUpdateEmailMutation"],
     mutationFn: updateEmailApi,
+    retry: 0,
+});
+
+export const useUpdatePasswordMutation = () => useMutation({
+    mutationKey: ["useUpdatePasswordMutation"],
+    mutationFn: updatePasswordApi,
     retry: 0,
 });
