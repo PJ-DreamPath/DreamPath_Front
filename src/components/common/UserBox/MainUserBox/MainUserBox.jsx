@@ -54,7 +54,7 @@ const MainUserBox = () => {
             </div>
 
          
-            <a href="#" css={s.logoutLink} onClick={handleLogoutButtonOnClick}>로그아웃</a>
+            <a href="/" css={s.logoutLink} onClick={handleLogoutButtonOnClick}>로그아웃</a>
         </div>
     );
 };

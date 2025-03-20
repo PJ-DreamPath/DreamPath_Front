@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import SignupPage from '../../pages/signupPage/SignupPage';
-import SigninUserBox from '../../components/common/UserBox/SigninUserBox/SigninUserBox';
 import { useQueryClient } from '@tanstack/react-query';
 import OAuth2LoginPage from '../../pages/OAuth2LoginPage/OAuth2LoginPage';
 

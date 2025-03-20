@@ -9,13 +9,14 @@ function OAuth2LoginPage(props) {
     const [ searchParams ] = useSearchParams();         
 
     const setAccessToken = async() => {
+        
         const accessToken = searchParams.get("accessToken"); 
         setTokenLocalStorage("AccessToken", accessToken);
         await queryClient.invalidateQueries({queryKey: ["useMeQuery"]});
         navigate("/");
     }
 
-    
+
 
     useEffect(() => {
         setAccessToken();
