@@ -8,6 +8,7 @@ import PurchaseSectionPage from '../../pages/PurchaseSectionPage/PurchaseSection
 import BoardRegistPage from '../../pages/BoardRegistPage/BoardRegistPage';
 import AdminUserSearchPage from '../../pages/AdminUserSearchPage/AdminUserSearchPage';
 import MentoringDetailPage from '../../pages/MentoringDetailPage/MentoringDetailPage';
+import TicketPurchasePage from '../../pages/TicketPurchasePage/TicketPurchasePage';
 
 function AuthenticatedRoute(props) {
     const navigate = useNavigate();
@@ -29,6 +30,7 @@ function AuthenticatedRoute(props) {
             <Routes>
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/mypage/point/purchase" element={<PointPurchasePage />} />
+                <Route path="/mypage/ticket/purchase" element={<TicketPurchasePage />} />
                 <Route path="/mentoring" element={<MentoringPage />} />
                 <Route path="/mentoring/:postId" element={<MentoringDetailPage />} />
                 <Route path="/purchaseSection" element={<PurchaseSectionPage />} />
