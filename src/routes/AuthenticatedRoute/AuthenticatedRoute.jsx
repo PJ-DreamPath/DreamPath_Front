@@ -1,6 +1,12 @@
 import { useQueryClient } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import PointPurchasePage from '../../pages/PointPurchasePage/PointPurchasePage';
+import MyPage from '../../pages/MyPage/MyPage';
+import MentoringPage from '../../pages/MentoringPage/MentoringPage';
+import PurchaseSectionPage from '../../pages/PurchaseSectionPage/PurchaseSectionPage';
+import BoardRegistPage from '../../pages/BoardRegistPage/BoardRegistPage';
+import AdminUserSearchPage from '../../pages/AdminUserSearchPage/AdminUserSearchPage';
 
 function AuthenticatedRoute(props) {
     const navigate = useNavigate();
