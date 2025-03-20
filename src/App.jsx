@@ -18,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/auth/*" element={<AuthRoute />} />
           <Route path="/*" element={<MainRoute />} />
+          
         </Routes>
         <Footer />
       </Mainlayout>

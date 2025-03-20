@@ -10,13 +10,13 @@ export const userBoxContainer = css`
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
-export const profileImage = css`
-    width: 60px;
-    height: 60px;
+export const profileImgStyle = css`
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     border-radius: 50%;
-    background-color: #ccc;
-    margin: 0 auto;
 `;
+
 
 export const nickname = css`
     font-size: 16px;
