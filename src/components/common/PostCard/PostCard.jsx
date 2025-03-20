@@ -7,7 +7,7 @@ import parse from 'html-react-parser';
 
 const PostCard = React.forwardRef(
     (
-        { status, viewCount, title, content, nickname, starPoint, createdAt },
+        { status, likeCount, title, content, nickname, starPoint, createdAt, onClick },
         ref
     ) => {
         const [isRecruiting, setIsRecruiting] = useState();
@@ -17,14 +17,14 @@ const PostCard = React.forwardRef(
         }, [status]);
 
         return (
-            <div ref={ref} css={s.cardBox}>
+            <div ref={ref} css={s.cardBox} onClick={onClick}>
                 <div css={s.top}>
                     <span css={s.chip(isRecruiting)}>
                         {status === 'recruiting' ? '모집중' : '모집마감'}
                     </span>
                     <div css={s.heartBox}>
                         <FaHeart />
-                        <span>{viewCount}</span>
+                        <span>{likeCount}</span>
                     </div>
                 </div>
                 <div css={s.titleBox}>
