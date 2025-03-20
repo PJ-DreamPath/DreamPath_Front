@@ -11,7 +11,7 @@ export default function Header({}) {
       </h1>
 
       <nav css={s.nav}>
-        <Link to={'/mentoring'}>멘토링</Link>
+        <Link to={'/service/mentoring'}>멘토링</Link>
         <Link to={'/communityBoard'}>자유게시판</Link>
         <Link to={'/notice'}>공지사항</Link>
       </nav>
