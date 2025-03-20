@@ -1,22 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Header from '../../components/common/Header/Header';
 import MainLeftlayout from '../../components/common/MainLeftlayout/MainLeftlayout';
-
 import MainRightLayout from '../../components/common/MainRightLayout/MainRightLayout';
 import SideMenuBox from '../../components/common/SIdeMenuBox/SIdeMenuBox';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import SigninUserBox from '../../components/common/UserBox/SigninUserBox/SigninUserBox';
-import MentoringPage from '../../pages/MentoringPage/MentoringPage';
-import MyPage from '../../pages/MyPage/MyPage';
 import MainContainer from '../../components/common/MainContainer/MainContainer';
-import PurchaseSectionPage from '../../pages/PurchaseSectionPage/PurchaseSectionPage';
-import BoardRegistPage from '../../pages/BoardRegistPage/BoardRegistPage';
-import AdminUserSearchPage from '../../pages/AdminUserSearchPage/AdminUserSearchPage';
-import { useQueryClient } from '@tanstack/react-query';
-import PointPurchasePage from '../../pages/PointPurchasePage/PointPurchasePage';
 import NoticePage from '../../pages/NoticePage/NoticePage';
 import CommunityBoardPage from '../../pages/CommunityBoardPage/CommunityBoardPage';
 import AuthenticatedRoute from '../AuthenticatedRoute/AuthenticatedRoute';
+import PostDetailPage from '../../pages/PostDetailPage/PostDetailPage';
 
 function MainRoute() {
 
@@ -35,7 +28,9 @@ function MainRoute() {
                     <Routes>
                         <Route path="/" element={<></>} />
                         <Route path="/notice" element={<NoticePage />} />
+                        <Route path="/notice/:postId" element={<PostDetailPage />} />
                         <Route path="/communityBoard" element={<CommunityBoardPage />} />
+                        <Route path="/communityBoard/:postId" element={<PostDetailPage />} />
                         <Route path="/service/*" element={<AuthenticatedRoute />} />
                         <Route path="/*" element={<>찾을 수 없는 페이지입니다.</>} />
                     </Routes>
