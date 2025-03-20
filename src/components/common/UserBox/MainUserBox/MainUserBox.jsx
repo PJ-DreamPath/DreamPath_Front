@@ -13,11 +13,13 @@ const MainUserBox = () => {
     const loginUserData = queryClient.getQueryData(["userMeQuery"]);
 
     const handleMyPageButtonOnClick = () => {
-        navigate("/mypage");
+        console.log("!!!")
+        navigate("/service/mypage");
+        
     }
 
     const handleMentoringRegistButtonOnClick = () => {
-        navigate("/mentoring/regist");
+        navigate("/service/mentoring/regist");
     }
 
     const handleLogoutButtonOnClick = async () => {
@@ -26,10 +28,26 @@ const MainUserBox = () => {
         window.location.reload();
         
     }
+    const profileImg = loginUserData?.data?.profileImg;
+
     return (
         <div css={s.userBoxContainer}>
          
-            <div css={s.profileImage}></div>
+         <div css={s.profileImage}>
+    {profileImg ? (
+        <img 
+            src={`http://localhost:8080/image/user/profile/${profileImg}`} 
+            alt="프로필 이미지"
+            css={s.profileImgStyle} 
+        />
+    ) : (
+        <img 
+            src="/default.png" 
+            alt="기본 프로필 이미지"
+            css={s.profileImgStyle} 
+        />
+    )}
+</div>
 
            
             <div css={s.nickname}>닉네임</div>
