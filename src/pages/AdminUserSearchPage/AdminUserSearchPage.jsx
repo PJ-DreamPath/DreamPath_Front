@@ -6,26 +6,60 @@ import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
 import { api } from '../../configs/axiosConfig';
 import { useGetAdminUsers } from '../../queries/adminQuery';
 import { FaRegTrashCan } from "react-icons/fa6";
+import { useSearchParams } from 'react-router-dom';
 
 
 const AdminUserSearchPage = () => {
     const [users, setUsers] = useState([]);
-    const [totalPages, setTotalPages] = useState(1);
+
+        const [searchParams, setSearchParams] = useSearchParams();
+        const page = parseInt(searchParams.get("page") || "1");
 
 
     const [params, setParams] = useState ({
-         page: 1,
+         page: page,
          limitCount: 15,
          order: "desc",
          searchText: ""
     });
 
     useEffect(() => {
-        console.log(params)
-    }, [params])
+        setParams((prev) =>({
+            ...prev,
+            page: searchParams.get("page") || 1
+        }))
+    }, [searchParams])
+    
 
     const adminUserList = useGetAdminUsers(params);
-    useEffect(() => {console.log(adminUserList)}, [adminUserList]);
+
+
+ const [pageNumbers, setPageNumbers] = useState([]);
+
+
+    useEffect(() => {
+            if (!adminUserList?.isLoading) {
+                const currentPage = adminUserList?.data?.data.page || 1;
+                const totalPages = adminUserList?.data?.data.totalPages || 1;
+                const startIndex = Math.floor((currentPage - 1) / 5) * 5 + 1;
+                const endIndex = startIndex + 4 > totalPages ? totalPages : startIndex + 4;
+    
+                let newPageNumbers = [];
+                for (let i = startIndex; i <= endIndex; i++) {
+                    newPageNumbers = [...newPageNumbers, i];
+                }
+
+                setPageNumbers(newPageNumbers);
+    
+            }
+        }, [adminUserList?.data]);
+
+
+
+    const handlePageNumbersOnClick = (pageNumber) => {
+        searchParams.set("page", pageNumber);
+        setSearchParams(searchParams);
+    }
 
     const deleteUser = async (userId) => {
 
@@ -81,29 +115,16 @@ const AdminUserSearchPage = () => {
                 </table>
             </div>
             <div css={s.footer}>
-                <div css={s.pageNumbers}>
-                    <button onClick={() => {}}><GoChevronLeft /></button>
-                    {
-
-                          Array.from({ length: adminUserList?.data?.data?.totalPages }, (_, index) => <button
-                                    key={`adminUserPage${index}`}
-                                    css={s.pageNum(adminUserList?.data?.data?.page === index + 1)}
-                                    onClick={() => {
-                                        setParams((prev) => ({
-
-                                            ...prev,
-                                            page: index + 1
-                                        }));
-                                    }}
-                            >
-                                    <span>{index + 1}</span>
-                            </button>
-                          )
-                      
-                    }
-                    <button onClick={() => {}}><GoChevronRight /></button>
-                </div>
-            </div>
+                           <div css={s.pageNumbers}>
+                               <button disabled={adminUserList?.data?.data.firstPage} onClick={() => handlePageNumbersOnClick(page - 1)}><GoChevronLeft /></button>
+                               {
+                                   pageNumbers.map(number => 
+                                       <button key={`admimUserPage${number}`} css={s.pageNum(page === number)} onClick={() => handlePageNumbersOnClick(number)}><span>{number}</span></button>
+                                   )
+                               }
+                               <button disabled={adminUserList?.data?.data.lastPage} onClick={() => handlePageNumbersOnClick(page + 1)}><GoChevronRight /></button>
+                           </div>
+                       </div>
         </div>
     );
 };
