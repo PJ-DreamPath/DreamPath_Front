@@ -19,7 +19,7 @@ export const signinUserBox = css`
     width: 100%;
     text-align: center;
 
-    & > form > label {
+    & > div > label {
         display: flex;
         justify-content: flex-start;
         padding-left: 10px;
@@ -30,7 +30,7 @@ export const signinUserBox = css`
         font-weight: 600;
     }
 
-    & > form > input {
+    & > div > input {
         width: 85%;
         padding: 8px 0px 10px 5px;
         margin: 10px 0 10px;

@@ -70,6 +70,11 @@ function SigninUserBox() {
         }
     };
 
+    const handleOAuth2LoginOnClick = (provider) => {
+        window.location.href = `http://localhost:8080/oauth2/authorization/${provider}`;
+    }
+
+
     if (isLoggedIn) {
         return <MainUserBox />;
     }
@@ -77,7 +82,7 @@ function SigninUserBox() {
     return (
         <div css={s.body}>
             <div css={s.signinUserBox}>
-                <form>
+                <div>
                     <label htmlFor="username">아이디</label>
                     <input
                         type="text"
@@ -97,10 +102,10 @@ function SigninUserBox() {
                     />
 
                     <div css={s.buttonContainer}>
-                        <button css={s.googleButton}>
+                        <button css={s.googleButton} onClick={() => handleOAuth2LoginOnClick("google")}>
                             <FcGoogle /> Continue with Google
                         </button>
-                        <button css={s.naverButton}>
+                        <button css={s.naverButton} onClick={() => handleOAuth2LoginOnClick("naver")}>
                             <SiNaver /> Continue with Naver
                         </button>
                     </div>
@@ -116,7 +121,7 @@ function SigninUserBox() {
                             회원가입
                         </button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     );
