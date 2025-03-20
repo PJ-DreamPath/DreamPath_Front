@@ -41,8 +41,8 @@ function PointPurchasePage(props) {
     }, [searchPointPurchaseList.data]);
 
     useEffect(() => {
-        console.log(searchPointPurchaseList)
         searchPointPurchaseList.refetch();
+        console.log(searchPointPurchaseList);
     }, [searchParams])
 
     const handleSelectOnChange = (option) => {
@@ -109,7 +109,7 @@ function PointPurchasePage(props) {
                     <button disabled={searchPointPurchaseList?.data?.data.firstPage} onClick={() => handlePageNumbersOnClick(page - 1)}><GoChevronLeft /></button>
                     {
                         pageNumbers.map(number => 
-                            <button key={number} css={s.pageNum(page === number)} onClick={() => handlePageNumbersOnClick(number)}><span>{number}</span></button>
+                            <button key={`point${number}`} css={s.pageNum(page === number)} onClick={() => handlePageNumbersOnClick(number)}><span>{number}</span></button>
                         )
                     }
                     <button disabled={searchPointPurchaseList?.data?.data.lastPage} onClick={() => handlePageNumbersOnClick(page + 1)}><GoChevronRight /></button>
