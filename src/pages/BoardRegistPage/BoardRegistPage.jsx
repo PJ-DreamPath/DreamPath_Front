@@ -123,6 +123,7 @@ export default function BoardRegistPage({}) {
                 timer: 1000,
                 showConfirmButton: false,
             });
+            return;
         } else if (!registData.content) {
             await Swal.fire({
                 titleText: '게시글을 입력하세요.',
@@ -130,6 +131,7 @@ export default function BoardRegistPage({}) {
                 timer: 1000,
                 showConfirmButton: false,
             });
+            return;
         }
 
         if (board.boardName === 'mentoring') {
@@ -144,6 +146,7 @@ export default function BoardRegistPage({}) {
                     timer: 1000,
                     showConfirmButton: false,
                 });
+                return;
             } else if (!registData.startDate || !registData.endDate) {
                 await Swal.fire({
                     titleText: '멘토링 날짜를 선택해주세요.',
@@ -151,6 +154,7 @@ export default function BoardRegistPage({}) {
                     timer: 1000,
                     showConfirmButton: false,
                 });
+                return;
             } else if (registData.startDate > registData.endDate) {
                 await Swal.fire({
                     titleText:
@@ -159,6 +163,7 @@ export default function BoardRegistPage({}) {
                     timer: 1000,
                     showConfirmButton: false,
                 });
+                return;
             }
         }
 
@@ -185,7 +190,11 @@ export default function BoardRegistPage({}) {
         const resp = await registPostMutation.mutateAsync(formData);
 
         if (resp.status == 200) {
-            navigation(`/${board.boardName}`);
+            navigation(
+                board.boardName === 'mentoring'
+                    ? `/service/${board.boardName}`
+                    : `/${board.boardName}`
+            );
         } else {
             await Swal.fire({
                 titleText: '등록할 수 없습니다.',

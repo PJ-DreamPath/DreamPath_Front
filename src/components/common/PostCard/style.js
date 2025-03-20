@@ -53,8 +53,13 @@ export const titleBox = css`
     margin-bottom: 2rem;
     border-bottom: 1px solid #ccc;
 
+    & P {
+        margin: 0;
+    }
+
     & > p {
         display: -webkit-box;
+        margin-top: 3rem;
 
         height: 3.7rem;
         overflow: hidden;
@@ -65,6 +70,7 @@ export const titleBox = css`
         -webkit-line-clamp: 2;
 
         &:first-of-type {
+            margin: 0;
             height: 7rem;
             font-size: 1.6rem;
             font-weight: bold;

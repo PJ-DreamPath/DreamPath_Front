@@ -10,3 +10,6 @@ export const registPostApi = async (formData) =>
             'Content-Type': 'multipart/form-data',
         },
     });
+export const postDetailApi = async (postId) => {
+    return await api.get(`/api/post/${postId}`);
+};
