@@ -53,11 +53,13 @@ export const titleBox = css`
     margin-bottom: 2rem;
     border-bottom: 1px solid #ccc;
 
-    & P {
+    & P,
+    & > div {
         margin: 0;
     }
 
-    & > p {
+    & > p,
+    & > div {
         display: -webkit-box;
         margin-top: 3rem;
 

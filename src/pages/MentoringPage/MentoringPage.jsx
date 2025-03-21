@@ -7,6 +7,7 @@ import { useGetPostsInfinityScroll } from '../../queries/postQuery';
 import { IoSearch } from 'react-icons/io5';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
+import { useGetBoards } from '../../queries/boardQuery';
 
 export default function MentoringPage({}) {
     const navigation = useNavigate();
@@ -47,13 +48,22 @@ export default function MentoringPage({}) {
         });
     }, [searchParams]);
 
-    // 리스트 데이터
-    const getPostList = useGetPostsInfinityScroll('mentoring', search);
-    const [postList, setPostList] = useState([]);
+    // board 리스트
+    const boardList = useGetBoards();
+    const [board, setBoard] = useState({});
 
     useEffect(() => {
-        console.log('postList', postList);
-    }, [postList]);
+        if (boardList?.data?.data) {
+            let newArray = boardList.data.data.find(
+                (board) => board.boardName === 'mentoring'
+            );
+            setBoard(newArray || {});
+        }
+    }, [boardList.data]);
+
+    // 리스트 데이터
+    const getPostList = useGetPostsInfinityScroll(board.boardId, search);
+    const [postList, setPostList] = useState([]);
 
     useEffect(() => {
         if (

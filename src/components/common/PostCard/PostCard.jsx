@@ -7,7 +7,16 @@ import parse from 'html-react-parser';
 
 const PostCard = React.forwardRef(
     (
-        { status, likeCount, title, content, nickname, starPoint, createdAt, onClick },
+        {
+            status,
+            likeCount,
+            title,
+            content,
+            nickname,
+            starPoint,
+            createdAt,
+            onClick,
+        },
         ref
     ) => {
         const [isRecruiting, setIsRecruiting] = useState();
@@ -29,7 +38,7 @@ const PostCard = React.forwardRef(
                 </div>
                 <div css={s.titleBox}>
                     <p>{title}</p>
-                    <p>{parse(content)}</p>
+                    <div>{parse(content)}</div>
                 </div>
 
                 <div css={s.infoBox}>

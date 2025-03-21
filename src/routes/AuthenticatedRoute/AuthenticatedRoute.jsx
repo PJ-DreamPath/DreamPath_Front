@@ -17,11 +17,8 @@ function AuthenticatedRoute(props) {
     const queryClient = useQueryClient();
     const principalState = queryClient.getQueryState(["userMeQuery"]);
 
-    console.log("AuthenticatedRoute 렌더링됨");
-
     useEffect(() => {
-        
-    console.log("principalState:", principalState); 
+    
         if(principalState.status === "error") {
             alert("로그인 후 이용해주세요.");
             navigate("/")
@@ -38,7 +35,7 @@ function AuthenticatedRoute(props) {
                 <Route path="/mypage/point/purchase" element={<PointPurchasePage />} />
                 <Route path="/mypage/ticket/purchase" element={<TicketPurchasePage />} />
                 <Route path="/:boardName/regist" element={<BoardRegistPage />} />
-                <Route path="/:boardName/update" element={<></>} /> 
+                <Route path="/:boardName/update/:postId" element={<BoardRegistPage/>} /> 
                 <Route path="/mentoring" element={<MentoringPage />} />
                 <Route path="/mentoring/:postId" element={<PostDetailPage />} />
                 <Route path="/admin" element={<AdminPage />} />

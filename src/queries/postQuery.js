@@ -1,23 +1,23 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { postDetailApi, postsApi } from '../apis/postApi';
+import { postDetailApi, postsApi, postsMyLikes } from '../apis/postApi';
 
 // 페이지 조회
-export const useGetPosts = (boardName, params) =>
+export const useGetPosts = (boardId, params) =>
     useQuery({
-        queryKey: ['useGetPosts', boardName, params],
+        queryKey: ['useGetPosts', boardId, params],
         queryFn: async () => {
-            return await postsApi(boardName, params);
+            return await postsApi(boardId, params);
         },
         retry: 0,
-        enabled: !!boardName,
+        enabled: !!boardId,
         staleTime: 1000 * 60 * 20,
         gcTime: 1000 * 60 * 10,
     });
 
 // 페이지 무한 스크롤 조회
-export const useGetPostsInfinityScroll = (boardName, search) =>
+export const useGetPostsInfinityScroll = (boardId, search) =>
     useInfiniteQuery({
-        queryKey: ['useGetPostsInfinityScroll', boardName, search],
+        queryKey: ['useGetPostsInfinityScroll', boardId, search],
         queryFn: async ({ pageParam = 1 }) => {
             const params = {
                 page: pageParam,
@@ -25,10 +25,10 @@ export const useGetPostsInfinityScroll = (boardName, search) =>
                 order: search.order,
                 searchTxt: search.searchTxt,
             };
-            return await postsApi(boardName, params);
+            return await postsApi(boardId, params);
         },
         retry: 0,
-        enabled: !!boardName,
+        enabled: !!boardId,
         refetchOnWindowFocus: false,
         initialPageParam: 1,
         getNextPageParam: (lastPage) => {
@@ -40,10 +40,20 @@ export const useGetPostsInfinityScroll = (boardName, search) =>
 export const useGetPostDetail = (postId) =>
     useQuery({
         queryKey: ['useGetPostDetail', postId],
-        queryFn: async () => {
-            return await postDetailApi(postId);
-        },
+        queryFn: async () => await postDetailApi(postId),
         retry: 0,
+        enabled: !!postId,
+        staleTime: 1000 * 60 * 20,
+        gcTime: 1000 * 60 * 10,
+    });
+
+// 내 좋아요 리스트
+export const useGetMyLike = (postId) =>
+    useQuery({
+        queryKey: ['useGetMyLike', postId],
+        queryFn: async () => await postsMyLikes(postId),
+        retry: 0,
+        enabled: !!postId,
         staleTime: 1000 * 60 * 20,
         gcTime: 1000 * 60 * 10,
     });
