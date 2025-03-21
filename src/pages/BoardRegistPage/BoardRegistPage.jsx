@@ -13,10 +13,15 @@ import moment from 'moment/moment';
 import { useRegistPostMutation } from '../../mutations/postMutation';
 import Swal from 'sweetalert2';
 import { useGetCategories } from '../../queries/categoriesQuery';
+import { useGetPostDetail } from '../../queries/postQuery';
 
 export default function BoardRegistPage({}) {
     const navigation = useNavigate();
     const pathNm = useParams();
+
+    useEffect(() => {
+        console.log(pathNm);
+    }, [pathNm]);
 
     // boardList
     const boardList = useGetBoards();
@@ -31,6 +36,16 @@ export default function BoardRegistPage({}) {
             setBoard(newArray);
         }
     }, [boardList.data]);
+
+    // 상세 조회
+    const postDetail = useGetPostDetail(pathNm.postId);
+    const [post, setPost] = useState({});
+
+    useEffect(() => {
+        if (postDetail && postDetail.data && postDetail.data.data) {
+            setPost(postDetail.data.data);
+        }
+    }, [postDetail.data]);
 
     // quill
     const contaiinerQuillRef = useRef();
@@ -100,6 +115,32 @@ export default function BoardRegistPage({}) {
         startDate: moment(),
         endDate: moment(),
     });
+
+    useEffect(() => {
+        console.log('post', post);
+        if (!!post) {
+            setRegistData({
+                boardId: post.boardId,
+                mentoringCategoryId: post.categoryId,
+                title: post.title,
+                content: post.content,
+                mentoringAddress: String(post.mentoringAddress).split('#')[0],
+                mentoringAddressDetail: String(post.mentoringAddress).split(
+                    '#'
+                )[1],
+                startDate: moment(post.startDate),
+                endDate: moment(post.endDate),
+            });
+
+            // 여기에 작성해줘
+            if (!!pathNm.postId && contaiinerQuillRef.current) {
+                console.log(contaiinerQuillRef.current);
+                // contaiinerQuillRef.current.clipboard.dangerouslyPasteHTML(
+                //     post.content
+                // );
+            }
+        }
+    }, [post, quill]);
 
     const [attacheFile, setAttachedFile] = useState(null);
 
@@ -218,7 +259,9 @@ export default function BoardRegistPage({}) {
     return (
         <>
             <div css={s.titleBox}>
-                <h3>{board.boardNameKor} 등록</h3>
+                <h3>
+                    {board.boardNameKor} {!pathNm.postId ? '등록' : '수정'}
+                </h3>
             </div>
 
             <div css={s.contentBox}>
