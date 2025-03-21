@@ -8,7 +8,11 @@ import BoardRegistPage from '../../pages/BoardRegistPage/BoardRegistPage';
 import AdminUserSearchPage from '../../pages/AdminUserSearchPage/AdminUserSearchPage';
 import TicketPurchasePage from '../../pages/TicketPurchasePage/TicketPurchasePage';
 import PostDetailPage from '../../pages/PostDetailPage/PostDetailPage';
+<<<<<<< HEAD
+import AdminPostSearchPage from '../../pages/AdminPostSearchPage copy/AdminPostSearchPage';
+=======
 import MyPage from '../../pages/MyPage/MyPage';
+>>>>>>> f8cd16b81f010bc135254be417a20c5ac8de5807
 
 function AuthenticatedRoute(props) {
     const navigate = useNavigate();
@@ -40,6 +44,7 @@ function AuthenticatedRoute(props) {
                 <Route path="/mentoring" element={<MentoringPage />} />
                 <Route path="/mentoring/:postId" element={<PostDetailPage />} />
                 <Route path="/admin/users" element={<AdminUserSearchPage />} />
+                <Route path="/admin/posts" element={<AdminPostSearchPage />} />
             </Routes>
           }  
         </>
