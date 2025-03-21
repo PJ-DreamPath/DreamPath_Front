@@ -10,6 +10,7 @@ import TicketPurchasePage from '../../pages/TicketPurchasePage/TicketPurchasePag
 import PostDetailPage from '../../pages/PostDetailPage/PostDetailPage';
 import AdminPostSearchPage from '../../pages/AdminPostSearchPage copy/AdminPostSearchPage';
 import MyPage from '../../pages/MyPage/MyPage';
+import AdminPage from '../../pages/AdminPage/MyPage';
 
 function AuthenticatedRoute(props) {
     const navigate = useNavigate();
@@ -37,6 +38,7 @@ function AuthenticatedRoute(props) {
                 <Route path="/:boardName/update/:postId" element={<BoardRegistPage/>} /> 
                 <Route path="/mentoring" element={<MentoringPage />} />
                 <Route path="/mentoring/:postId" element={<PostDetailPage />} />
+                <Route path="/admin" element={<AdminPage />} />
                 <Route path="/admin/users" element={<AdminUserSearchPage />} />
                 <Route path="/admin/posts" element={<AdminPostSearchPage />} />
             </Routes>

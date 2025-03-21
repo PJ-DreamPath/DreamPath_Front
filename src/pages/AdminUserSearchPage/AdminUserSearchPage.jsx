@@ -22,7 +22,7 @@ const AdminUserSearchPage = () => {
          order: "desc",
          searchText: ""
     });
-
+    
     useEffect(() => {
         setParams((prev) =>({
             ...prev,
