@@ -337,8 +337,8 @@ export default function PostDetailPage({}) {
                                     });
                                     navigate(
                                         pathNm === 'mentoring'
-                                            ? `/service/mentoring/update`
-                                            : `/${pathNm}/update`
+                                            ? `/service/mentoring/update/${post.postId}`
+                                            : `/${pathNm}/update/${post.postId}`
                                     );
                                 }}
                             >
