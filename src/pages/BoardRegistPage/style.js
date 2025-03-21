@@ -116,6 +116,9 @@ export const qullBox = css`
 
         height: 100%;
     }
+    & .ql-editor {
+        height: calc(100% - 5rem);
+    }
 `;
 
 export const selectBox = css``;

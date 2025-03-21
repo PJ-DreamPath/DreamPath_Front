@@ -1,10 +1,23 @@
 import { useMutation } from '@tanstack/react-query';
-import { delPostApi, postLikeApi, postLikeCancelApi, registPostApi } from '../apis/postApi';
+import {
+    delPostApi,
+    postLikeApi,
+    postLikeCancelApi,
+    registPostApi,
+    updatePostApi,
+} from '../apis/postApi';
 
 export const useRegistPostMutation = () =>
     useMutation({
         mutationKey: ['useRegistPostMutation'],
         mutationFn: registPostApi,
+        retry: 0,
+    });
+
+export const useUpdatePostMutation = () =>
+    useMutation({
+        mutationKey: ['useUpdatePostMutation'],
+        mutationFn: updatePostApi,
         retry: 0,
     });
 
@@ -30,4 +43,3 @@ export const usePostLikeCancelMutation = () =>
         mutationFn: postLikeCancelApi,
         retry: 0,
     });
-        

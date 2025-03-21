@@ -17,6 +17,12 @@ export const postDetailApi = async (postId) =>
     await api.get(`/api/post/${postId}`);
 
 // 수정 U
+export const updatePostApi = async (params) =>
+    await api.put(`/api/posts/${params.postId}`, params.formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    });
 
 // 삭제 D
 export const delPostApi = async (postId) =>
