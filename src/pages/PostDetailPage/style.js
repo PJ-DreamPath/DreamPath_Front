@@ -108,13 +108,16 @@ export const toggleWrap = css`
     }
 `;
 
-export const toggleBox = (isRecruiting) => css`
+export const toggleBox = (isRecruiting, isOkay) => css`
     box-sizing: border-box;
     padding: 0.4rem;
+    outline: none;
+    border: none;
     border-radius: 5rem;
     height: 2.8rem;
     aspect-ratio: 1.7 / 1;
     background-color: ${isRecruiting ? '#1681ff' : '#aaa'};
+    cursor: ${isOkay ? 'pointer' : 'default'};
 
     span {
         display: block;
@@ -125,6 +128,27 @@ export const toggleBox = (isRecruiting) => css`
         margin-left: ${isRecruiting ? '0' : 'auto'};
 
         background-color: #fff;
+    }
+`;
+
+export const row = css`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+
+    width: 100%;
+    height: 3rem;
+
+    p,
+    span {
+        display: inline-block;
+        font-size: 1.3rem;
+    }
+    p {
+        border-right: 1px solid #aaa;
+        margin-right: 1rem;
+        width: 8rem;
     }
 `;
 
@@ -164,7 +188,124 @@ export const likeBtn = css`
     }
 `;
 
-export const mapBox = css``;
+export const mapBox = css`
+    & > p {
+        font-size: 2.4rem;
+        font-weight: bold;
+        color: #1681ff;
+
+        span {
+            font-size: 1.6rem;
+            font-weight: normal;
+            color: #333;
+
+            &:first-of-type {
+                margin-left: 2rem;
+            }
+        }
+    }
+`;
+
+export const here = css`
+    width: 10rem;
+    aspect-ratio: 1 / 1;
+    position: relative;
+
+    p {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        flex-wrap: wrap;
+
+        position: absolute;
+        left: 50%;
+        top: -6.4rem;
+        transform: translate(-50%, 0);
+
+        box-sizing: border-box;
+        border: 0.5rem solid #1683ff;
+        border-radius: 50%;
+
+        width: 100%;
+        aspect-ratio: 1 / 1;
+
+        background-color: #f1f5fd;
+
+        span {
+            display: block;
+
+            &:first-of-type {
+                font-size: 1.6rem;
+                // font-size: var(--fs-16);
+            }
+            &:last-of-type {
+                font-size: 1.4rem;
+                font-weight: bold;
+            }
+        }
+    }
+
+    &::before {
+        content: '';
+        width: 2rem;
+        aspect-ratio: 1 / 1;
+        background-color: #1683ff;
+        position: absolute;
+        left: 50%;
+        top: 20%;
+        transform: translate(-50%, 0) rotate(45deg);
+        z-index: -1;
+    }
+
+    &::after {
+        content: '';
+        width: 1rem;
+        aspect-ratio: 1 / 1;
+        background-color: #1683ff;
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+    }
+`;
+
+export const btnBox = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    margin-top: 3rem;
+
+    width: 100%;
+
+    button {
+        box-sizing: border-box;
+        padding: 0.8rem 0;
+        border: none;
+        border-radius: 1rem;
+
+        width: 13rem;
+
+        font-size: 1.8rem;
+        text-align: center;
+
+        background-color: #fff;
+        box-shadow: 0.4rem 0.4rem 1.3rem rgba(0, 0, 0, 0.12);
+
+        &.update,
+        &.regist {
+            color: #fff;
+            background-color: #1683ff;
+        }
+        &.del {
+            color: #fff;
+            background-color: red;
+        }
+    }
+`;
 
 export const commentBox = css`
     margin-top: 10rem;
