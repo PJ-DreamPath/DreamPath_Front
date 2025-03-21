@@ -5,6 +5,5 @@ export const mentoringStatusUpdateApi = async (postId) =>
     await api.put(`/api/mentoring/status?postId=${postId}`);
 
 export const mentoringApplyApi = async (params) => {
-    console.log("params",params);
-    return await api.post(`/api/mentoring/apply`, params)
-}
+    return await api.post(`/api/mentoring/apply`, params);
+};

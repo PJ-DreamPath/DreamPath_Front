@@ -24,8 +24,12 @@ export const delPostApi = async (postId) =>
 
 // 내 좋아요 조회
 export const postsMyLikes = async (postId) =>
-    await api.get('/api/posts/my/like', { postId });
+    await api.get(`/api/posts/${postId}/my/like`);
 
 // 게시글 좋아요
 export const postLikeApi = async (postId) =>
     await api.post(`/api/posts/${postId}/like`);
+
+// 게시글 좋아요 취소
+export const postLikeCancelApi = async (postId) =>
+    await api.delete(`/api/posts/${postId}/like`);

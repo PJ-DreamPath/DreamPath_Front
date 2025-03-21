@@ -13,6 +13,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import {
     useDelPostMutation,
+    usePostLikeCancelMutation,
     usePostLikeMutation,
 } from '../../mutations/postMutation';
 import {
@@ -98,31 +99,32 @@ export default function PostDetailPage({}) {
         ) {
             setIsRecruiting(!isRecruiting);
             update.mutateAsync(post.postId).then((result) => {
-                console.log('result', result.data);
                 setIsRecruiting(result.data === 'recruiting');
             });
         }
     }
 
     // 좋아요 클릭
-    const myLikeList = useGetMyLike(post.postId);
+    const isMyLike = useGetMyLike(post.postId);
     const clickLike = usePostLikeMutation();
-
-    useEffect(() => {
-        console.log('myLike', myLikeList?.data);
-    }, [myLikeList.data]);
+    const cancleLike = usePostLikeCancelMutation();
 
     function handlelikeBtnOnClick() {
-        clickLike
-            .mutateAsync(post.postId)
-            .then((resp) => {
-                console.log('resp', resp);
-
-                // myLikeList.refetch();
-            })
-            .catch((e) => {
-                Swal.fire(e);
+        if (isMyLike?.data?.data === undefined || isMyLike?.data?.data === '') {
+            clickLike.mutateAsync(post.postId).then((resp) => {
+                if (resp.status === 200) {
+                    isMyLike.refetch();
+                    postDetail.refetch();
+                }
             });
+        } else {
+            cancleLike.mutateAsync(post.postId).then((resp) => {
+                if (resp.status === 200) {
+                    isMyLike.refetch();
+                    postDetail.refetch();
+                }
+            });
+        }
     }
 
     // 신청 클릭
@@ -135,7 +137,6 @@ export default function PostDetailPage({}) {
                 email: post.user.email,
             })
             .then((result) => {
-                console.log(result);
                 Swal.fire(result.data);
             });
     };
@@ -276,18 +277,24 @@ export default function PostDetailPage({}) {
 
             <div css={s.contentBox}>{parse(String(post.content || ''))}</div>
 
-            <button
-                type="button"
-                css={s.likeBtn}
-                onClick={handlelikeBtnOnClick}
-            >
-                {myLikeList?.data?.data?.length > 0 ? (
-                    <FaHeart />
-                ) : (
-                    <FaRegHeart />
-                )}
-                {post.likeCount}
-            </button>
+            {loginUserData.data.userId === post.userId ||
+            post.status !== 'recruiting' ? (
+                <></>
+            ) : (
+                <button
+                    type="button"
+                    css={s.likeBtn}
+                    onClick={handlelikeBtnOnClick}
+                >
+                    {isMyLike?.data?.data === undefined ||
+                    isMyLike?.data?.data === '' ? (
+                        <FaRegHeart />
+                    ) : (
+                        <FaHeart />
+                    )}
+                    {post.likeCount}
+                </button>
+            )}
 
             {/* 주소 박스 */}
             {post.mentoringAddress && (
