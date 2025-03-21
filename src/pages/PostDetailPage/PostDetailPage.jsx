@@ -9,10 +9,10 @@ import parse from 'html-react-parser';
 import { useGetPostDetail } from '../../queries/postQuery';
 import moment from 'moment/moment';
 import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import { useDelPostMutation } from '../../mutations/postMutation';
-import { useMentoringStatusUpdateMutation } from '../../mutations/mentoringMutation';
+import { useMentoringApplyMutation, useMentoringStatusUpdateMutation } from '../../mutations/mentoringMutation';
 
 export default function PostDetailPage({}) {
     const navigate = useNavigate();
@@ -48,7 +48,7 @@ export default function PostDetailPage({}) {
 
     useEffect(() => {
         if (postDetail && postDetail.data && postDetail.data.data) {
-            console.log(postDetail.data.data);
+            
             setPost(postDetail.data.data);
         }
     }, [postDetail.data]);
@@ -98,6 +98,22 @@ export default function PostDetailPage({}) {
             });
         }
     }
+    // 신청 클릭
+    const mentoringApply = useMentoringApplyMutation();
+    
+    const handleOnApplyButtonOnClick = () => {
+         mentoringApply.mutateAsync({
+            postId: post.postId,
+            email: post.user.email
+        }).then(
+            (result) => {
+                console.log(result);
+                Swal.fire(result.data);
+            }
+        );
+
+        
+    };
 
     // 삭제 클릭
     const delPost = useDelPostMutation();
@@ -300,7 +316,7 @@ export default function PostDetailPage({}) {
                         </button>
                     </>
                 ) : post.status === 'recruiting' ? (
-                    <button type="button" className="regist">
+                    <button type="button" className="regist" onClick={handleOnApplyButtonOnClick}>
                         신청하기
                     </button>
                 ) : (
