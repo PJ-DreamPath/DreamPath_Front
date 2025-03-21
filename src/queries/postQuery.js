@@ -1,5 +1,5 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { postDetailApi, postsApi } from '../apis/postApi';
+import { postDetailApi, postsApi, postsMyLikes } from '../apis/postApi';
 
 // 페이지 조회
 export const useGetPosts = (boardId, params) =>
@@ -41,6 +41,17 @@ export const useGetPostDetail = (postId) =>
     useQuery({
         queryKey: ['useGetPostDetail', postId],
         queryFn: async () => await postDetailApi(postId),
+        retry: 0,
+        enabled: !!postId,
+        staleTime: 1000 * 60 * 20,
+        gcTime: 1000 * 60 * 10,
+    });
+
+// 내 좋아요 리스트
+export const useGetMyLike = (postId) =>
+    useQuery({
+        queryKey: ['useGetMyLike', postId],
+        queryFn: async () => await postsMyLikes(postId),
         retry: 0,
         enabled: !!postId,
         staleTime: 1000 * 60 * 20,
