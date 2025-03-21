@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { delPostApi, registPostApi } from '../apis/postApi';
-import { mentoringStatusUpdateApi } from '../apis/mentoringApi';
+import { mentoringApplyApi, mentoringStatusUpdateApi } from '../apis/mentoringApi';
 
 export const useMentoringStatusUpdateMutation = () =>
     useMutation({
@@ -8,4 +8,11 @@ export const useMentoringStatusUpdateMutation = () =>
         mutationFn: mentoringStatusUpdateApi,
         retry: 0,
     });
+
+export const useMentoringApplyMutation = () => 
+    useMutation({
+        mutationKey: ['useMentoringApplyMutation'],
+        mutationFn: mentoringApplyApi,
+        retry: 0,
+    })
 
