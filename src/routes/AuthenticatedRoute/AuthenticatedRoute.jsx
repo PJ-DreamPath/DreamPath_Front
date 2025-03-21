@@ -14,55 +14,33 @@ import MyPage from '../../pages/MyPage/MyPage';
 function AuthenticatedRoute(props) {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    const principalState = queryClient.getQueryState(['userMeQuery']);
+    const principalState = queryClient.getQueryState(["userMeQuery"]);
 
     useEffect(() => {
-        if (principalState.status === 'error') {
-            alert('로그인 후 이용해주세요.');
-            navigate('/');
+    
+        if(principalState.status === "error") {
+            alert("로그인 후 이용해주세요.");
+            navigate("/")
         }
     }, [principalState.status]);
 
     return (
         <>
-            {principalState.status === 'success' && (
-                <Routes>
-                    <Route path="/mypage" element={<MyPage />} />
-                    <Route
-                        path="/mypage/purchase"
-                        element={<PurchaseSectionPage />}
-                    />
-                    <Route
-                        path="/mypage/point/purchase"
-                        element={<PointPurchasePage />}
-                    />
-                    <Route
-                        path="/mypage/ticket/purchase"
-                        element={<TicketPurchasePage />}
-                    />
-                    <Route
-                        path="/:boardName/regist"
-                        element={<BoardRegistPage />}
-                    />
-                    <Route
-                        path="/:boardName/update"
-                        element={<BoardRegistPage />}
-                    />
-                    <Route path="/mentoring" element={<MentoringPage />} />
-                    <Route
-                        path="/mentoring/:postId"
-                        element={<PostDetailPage />}
-                    />
-                    <Route
-                        path="/admin/users"
-                        element={<AdminUserSearchPage />}
-                    />
-                    <Route
-                        path="/admin/posts"
-                        element={<AdminPostSearchPage />}
-                    />
-                </Routes>
-            )}
+          {
+            principalState.status === "success" &&
+            <Routes>
+                <Route path="/mypage" element={<MyPage />} />
+                <Route path="/mypage/purchase" element={<PurchaseSectionPage />} />
+                <Route path="/mypage/point/purchase" element={<PointPurchasePage />} />
+                <Route path="/mypage/ticket/purchase" element={<TicketPurchasePage />} />
+                <Route path="/:boardName/regist" element={<BoardRegistPage />} />
+                <Route path="/:boardName/update/:postId" element={<BoardRegistPage/>} /> 
+                <Route path="/mentoring" element={<MentoringPage />} />
+                <Route path="/mentoring/:postId" element={<PostDetailPage />} />
+                <Route path="/admin/users" element={<AdminUserSearchPage />} />
+                <Route path="/admin/posts" element={<AdminPostSearchPage />} />
+            </Routes>
+          }  
         </>
     );
 }
