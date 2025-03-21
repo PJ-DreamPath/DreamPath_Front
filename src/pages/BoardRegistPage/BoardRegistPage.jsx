@@ -10,7 +10,10 @@ import DaumPostcode from 'react-daum-postcode';
 import { IoClose } from 'react-icons/io5';
 import { DatePicker } from '@mui/x-date-pickers';
 import moment from 'moment/moment';
-import { useRegistPostMutation } from '../../mutations/postMutation';
+import {
+    useRegistPostMutation,
+    useUpdatePostMutation,
+} from '../../mutations/postMutation';
 import Swal from 'sweetalert2';
 import { useGetCategories } from '../../queries/categoriesQuery';
 import { useGetPostDetail } from '../../queries/postQuery';
@@ -117,7 +120,6 @@ export default function BoardRegistPage({}) {
     });
 
     useEffect(() => {
-        console.log('post', post);
         if (!!post) {
             setRegistData({
                 boardId: post.boardId,
@@ -133,11 +135,9 @@ export default function BoardRegistPage({}) {
             });
 
             // 여기에 작성해줘
-            if (!!pathNm.postId && contaiinerQuillRef.current) {
+            if (!!pathNm.postId && quill && contaiinerQuillRef.current) {
                 console.log(contaiinerQuillRef.current);
-                // contaiinerQuillRef.current.clipboard.dangerouslyPasteHTML(
-                //     post.content
-                // );
+                quill.clipboard.dangerouslyPasteHTML(post.content);
             }
         }
     }, [post, quill]);
@@ -152,6 +152,7 @@ export default function BoardRegistPage({}) {
     }
 
     const registPostMutation = useRegistPostMutation();
+    const updatePostMutation = useUpdatePostMutation();
     async function handleRegistPostBtnOnClick() {
         if (!registData.title) {
             await Swal.fire({
@@ -224,21 +225,47 @@ export default function BoardRegistPage({}) {
         if (!!attacheFile) {
             formData.append('file', attacheFile);
         }
-        const resp = await registPostMutation.mutateAsync(formData);
 
-        if (resp.status == 200) {
-            navigation(
-                board.boardName === 'mentoring'
-                    ? `/service/${board.boardName}`
-                    : `/${board.boardName}`
-            );
+        if (!pathNm.postId) {
+            const resp = await registPostMutation.mutateAsync(formData);
+
+            if (resp.status == 200) {
+                postDetail.refetch();
+                // navigation(
+                //     board.boardName === 'mentoring'
+                //         ? `/service/${board.boardName}`
+                //         : `/${board.boardName}`
+                // );
+            } else {
+                await Swal.fire({
+                    titleText: '등록할 수 없습니다.',
+                    icon: 'error',
+                    timer: 1000,
+                    showConfirmButton: false,
+                });
+            }
         } else {
-            await Swal.fire({
-                titleText: '등록할 수 없습니다.',
-                icon: 'error',
-                timer: 1000,
-                showConfirmButton: false,
-            });
+            const params = {
+                postId: post.postId,
+                formData: formData,
+            };
+
+            const resp = await updatePostMutation.mutateAsync(params);
+
+            if (resp.status == 200) {
+                navigation(
+                    board.boardName === 'mentoring'
+                        ? `/service/${board.boardName}/${post.postId}`
+                        : `/${board.boardName}/${post.postId}`
+                );
+            } else {
+                await Swal.fire({
+                    titleText: '수정할 수 없습니다.',
+                    icon: 'error',
+                    timer: 1000,
+                    showConfirmButton: false,
+                });
+            }
         }
     }
 
@@ -392,7 +419,7 @@ export default function BoardRegistPage({}) {
 
                 <div css={s.btnBox}>
                     <button type="button" onClick={handleRegistPostBtnOnClick}>
-                        등록
+                        {!pathNm.postId ? '등록' : '수정'}
                     </button>
                     <button
                         type="button"
