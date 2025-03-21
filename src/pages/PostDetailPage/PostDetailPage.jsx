@@ -4,15 +4,21 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useGetBoards } from '../../queries/boardQuery';
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
-import { FaHeart, FaStar } from 'react-icons/fa';
+import { FaHeart, FaRegHeart, FaStar } from 'react-icons/fa';
 import parse from 'html-react-parser';
-import { useGetPostDetail } from '../../queries/postQuery';
+import { useGetMyLike, useGetPostDetail } from '../../queries/postQuery';
 import moment from 'moment/moment';
 import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
-import { useDelPostMutation } from '../../mutations/postMutation';
-import { useMentoringApplyMutation, useMentoringStatusUpdateMutation } from '../../mutations/mentoringMutation';
+import {
+    useDelPostMutation,
+    usePostLikeMutation,
+} from '../../mutations/postMutation';
+import {
+    useMentoringApplyMutation,
+    useMentoringStatusUpdateMutation,
+} from '../../mutations/mentoringMutation';
 
 export default function PostDetailPage({}) {
     const navigate = useNavigate();
@@ -48,7 +54,6 @@ export default function PostDetailPage({}) {
 
     useEffect(() => {
         if (postDetail && postDetail.data && postDetail.data.data) {
-            
             setPost(postDetail.data.data);
         }
     }, [postDetail.data]);
@@ -98,21 +103,41 @@ export default function PostDetailPage({}) {
             });
         }
     }
+
+    // 좋아요 클릭
+    const myLikeList = useGetMyLike(post.postId);
+    const clickLike = usePostLikeMutation();
+
+    useEffect(() => {
+        console.log('myLike', myLikeList?.data);
+    }, [myLikeList.data]);
+
+    function handlelikeBtnOnClick() {
+        clickLike
+            .mutateAsync(post.postId)
+            .then((resp) => {
+                console.log('resp', resp);
+
+                // myLikeList.refetch();
+            })
+            .catch((e) => {
+                Swal.fire(e);
+            });
+    }
+
     // 신청 클릭
     const mentoringApply = useMentoringApplyMutation();
-    
+
     const handleOnApplyButtonOnClick = () => {
-         mentoringApply.mutateAsync({
-            postId: post.postId,
-            email: post.user.email
-        }).then(
-            (result) => {
+        mentoringApply
+            .mutateAsync({
+                postId: post.postId,
+                email: post.user.email,
+            })
+            .then((result) => {
                 console.log(result);
                 Swal.fire(result.data);
-            }
-        );
-
-        
+            });
     };
 
     // 삭제 클릭
@@ -162,7 +187,7 @@ export default function PostDetailPage({}) {
         return;
     }
 
-    return (
+    return !postDetail.isLoading ? (
         <>
             <div css={s.titleBox}>
                 <div css={s.left}>
@@ -231,7 +256,7 @@ export default function PostDetailPage({}) {
 
             {/* 상세 정보 박스 */}
             {board.boardName === 'mentoring' ? (
-                <>
+                <div css={s.detailInfoBox}>
                     <div css={s.row}>
                         <p>카테고리</p>
                         <span>{post.categoryName}</span>
@@ -244,15 +269,24 @@ export default function PostDetailPage({}) {
                         <p>첨부파일</p>
                         <span>{post.attachedFiles}</span>
                     </div>
-                </>
+                </div>
             ) : (
                 <div css={s.row}>파일</div>
             )}
 
             <div css={s.contentBox}>{parse(String(post.content || ''))}</div>
 
-            <button type="button" css={s.likeBtn}>
-                <FaHeart /> {post.likeCount}
+            <button
+                type="button"
+                css={s.likeBtn}
+                onClick={handlelikeBtnOnClick}
+            >
+                {myLikeList?.data?.data?.length > 0 ? (
+                    <FaHeart />
+                ) : (
+                    <FaRegHeart />
+                )}
+                {post.likeCount}
             </button>
 
             {/* 주소 박스 */}
@@ -316,7 +350,11 @@ export default function PostDetailPage({}) {
                         </button>
                     </>
                 ) : post.status === 'recruiting' ? (
-                    <button type="button" className="regist" onClick={handleOnApplyButtonOnClick}>
+                    <button
+                        type="button"
+                        className="regist"
+                        onClick={handleOnApplyButtonOnClick}
+                    >
                         신청하기
                     </button>
                 ) : (
@@ -342,5 +380,7 @@ export default function PostDetailPage({}) {
                 <div css={s.commentBox}>여기에 댓글 코드 작성해주세요</div>
             )}
         </>
+    ) : (
+        <></>
     );
 }

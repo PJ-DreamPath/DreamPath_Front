@@ -8,7 +8,7 @@ export const titleBox = css`
 `;
 
 export const left = css`
-    width: calc(100% - 40rem - 16rem);
+    width: calc(100% - 55rem - 16rem);
 `;
 
 export const breadCrumb = css`
@@ -76,7 +76,7 @@ export const right = css`
     align-items: center;
     gap: 1rem;
 
-    width: 40rem;
+    width: 55rem;
 
     & > p {
         font-size: 1.3rem;
@@ -129,6 +129,10 @@ export const toggleBox = (isRecruiting, isOkay) => css`
 
         background-color: #fff;
     }
+`;
+
+export const detailInfoBox = css`
+    margin-top: 2rem;
 `;
 
 export const row = css`
