@@ -3,12 +3,13 @@ import React, { useEffect, useState } from 'react';
 import * as s from './style';
 import { SiNaver } from 'react-icons/si';
 import { FcGoogle } from 'react-icons/fc';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { data, Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { useLoginMutation } from '../../../../mutations/authMutation';
 import MainUserBox from '../MainUserBox/MainUserBox';
 import Swal from 'sweetalert2';
 import { setTokenLocalStorage, getTokenFromLocalStorage } from '../../../../configs/axiosConfig';
+import AdminBox from '../AdminBox/AdminBox';
 
 function SigninUserBox() {
     const navigate = useNavigate();
@@ -17,6 +18,7 @@ function SigninUserBox() {
     
     const [searchParams] = useSearchParams();
     const [isLoggedIn, setIsLoggedIn] = useState(!!getTokenFromLocalStorage()); 
+    const userInfo = queryClient.getQueryData(['userMeQuery']);
 
     const [inputValue, setInputValue] = useState({
         username: searchParams.get("username") || "",
@@ -75,55 +77,52 @@ function SigninUserBox() {
     }
 
 
-    if (isLoggedIn) {
-        return <MainUserBox />;
-    }
-
     return (
-        <div css={s.body}>
-            <div css={s.signinUserBox}>
+        isLoggedIn ?  userInfo?.data?.roleId < 3 ? <MainUserBox /> : <AdminBox /> :  <div css={s.body}>
+        <div css={s.signinUserBox}>
+            <div>
+                <label htmlFor="username">아이디</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="아이디 입력"
+                    onChange={handleInputOnChange}
+                />
+
+                <label htmlFor="password">비밀번호</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="비밀번호 입력"
+                    onChange={handleInputOnChange}
+                />
+
+                <div css={s.buttonContainer}>
+                    <button css={s.googleButton} onClick={() => handleOAuth2LoginOnClick("google")}>
+                        <FcGoogle /> Continue with Google
+                    </button>
+                    <button css={s.naverButton} onClick={() => handleOAuth2LoginOnClick("naver")}>
+                        <SiNaver /> Continue with Naver
+                    </button>
+                </div>
+
                 <div>
-                    <label htmlFor="username">아이디</label>
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        placeholder="아이디 입력"
-                        onChange={handleInputOnChange}
-                    />
+                    <button css={s.loginButton} type="button" onClick={handleLoginOnClick}>
+                        로그인
+                    </button>
+                </div>
 
-                    <label htmlFor="password">비밀번호</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="비밀번호 입력"
-                        onChange={handleInputOnChange}
-                    />
-
-                    <div css={s.buttonContainer}>
-                        <button css={s.googleButton} onClick={() => handleOAuth2LoginOnClick("google")}>
-                            <FcGoogle /> Continue with Google
-                        </button>
-                        <button css={s.naverButton} onClick={() => handleOAuth2LoginOnClick("naver")}>
-                            <SiNaver /> Continue with Naver
-                        </button>
-                    </div>
-
-                    <div>
-                        <button css={s.loginButton} type="button" onClick={handleLoginOnClick}>
-                            로그인
-                        </button>
-                    </div>
-
-                    <div>
-                        <button css={s.signupButton} type="button" onClick={handleSignupOnClick}>
-                            회원가입
-                        </button>
-                    </div>
+                <div>
+                    <button css={s.signupButton} type="button" onClick={handleSignupOnClick}>
+                        회원가입
+                    </button>
                 </div>
             </div>
         </div>
+    </div>
+    
     );
 }
 
