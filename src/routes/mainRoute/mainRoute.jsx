@@ -2,7 +2,6 @@ import React from 'react';
 import Header from '../../components/common/Header/Header';
 import MainLeftlayout from '../../components/common/MainLeftlayout/MainLeftlayout';
 import MainRightLayout from '../../components/common/MainRightLayout/MainRightLayout';
-import SideMenuBox from '../../components/common/SIdeMenuBox/SIdeMenuBox';
 import { Route, Routes } from 'react-router-dom';
 import SigninUserBox from '../../components/common/UserBox/SigninUserBox/SigninUserBox';
 import MainContainer from '../../components/common/MainContainer/MainContainer';
@@ -10,6 +9,7 @@ import NoticePage from '../../pages/NoticePage/NoticePage';
 import CommunityBoardPage from '../../pages/CommunityBoardPage/CommunityBoardPage';
 import AuthenticatedRoute from '../AuthenticatedRoute/AuthenticatedRoute';
 import PostDetailPage from '../../pages/PostDetailPage/PostDetailPage';
+import SideMenuBox from '../../components/common/SideMenuBox/SideMenuBox';
 
 function MainRoute() {
 

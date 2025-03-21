@@ -3,16 +3,16 @@ import * as s from './style';
 import React, { useEffect, useRef, useState } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useGetBoards } from '../../queries/boardQuery';
 import Select from 'react-select';
-import { useGetMentoringCategories } from '../../queries/mentoringQuery';
 import DaumPostcode from 'react-daum-postcode';
 import { IoClose } from 'react-icons/io5';
 import { DatePicker } from '@mui/x-date-pickers';
 import moment from 'moment/moment';
 import { useRegistPostMutation } from '../../mutations/postMutation';
 import Swal from 'sweetalert2';
+import { useGetCategories } from '../../queries/categoriesQuery';
 
 export default function BoardRegistPage({}) {
     const navigation = useNavigate();
@@ -66,7 +66,7 @@ export default function BoardRegistPage({}) {
     }, []);
 
     // 카테고리 리스트 데이터
-    const categories = useGetMentoringCategories();
+    const categories = useGetCategories(board.boardId);
     const [categoriesSelectOption, setCategoriesSelectOption] = useState();
 
     useEffect(() => {
@@ -74,8 +74,8 @@ export default function BoardRegistPage({}) {
             const newArray = [];
             categories.data.data.map((category) =>
                 newArray.push({
-                    value: category.mentoringCategoryId,
-                    label: category.mentoringCategoryName,
+                    value: category.categoryId,
+                    label: category.categoryName,
                 })
             );
 
@@ -100,10 +100,6 @@ export default function BoardRegistPage({}) {
         startDate: moment(),
         endDate: moment(),
     });
-
-    useEffect(() => {
-        console.log('registData', registData);
-    }, [registData]);
 
     const [attacheFile, setAttachedFile] = useState(null);
 
@@ -206,14 +202,9 @@ export default function BoardRegistPage({}) {
     }
 
     useEffect(() => {
-        // 권한 체크 및 페이지 체크
-        if (!!localStorage.getItem('AccessToken')) {
-            if (board.boardId > 3) {
-                // 로그인 되어 있지만 등록 페이지가 없는 게시판일 경우 무조건 메인으로
-                navigation('/');
-            }
-        } else {
-            // 로그인 전이면 무조건 메인으로
+        // 페이지 체크
+        if (board.boardId > 3) {
+            // 등록 페이지가 없는 게시판일 경우 무조건 메인으로
             navigation('/');
         }
 
@@ -363,7 +354,11 @@ export default function BoardRegistPage({}) {
                     <button
                         type="button"
                         onClick={() => {
-                            navigation(`/${board.boardName}`);
+                            navigation(
+                                board.boardName === 'mentoring'
+                                    ? `/service/mentoring`
+                                    : `/${pathNm}`
+                            );
                         }}
                     >
                         취소
