@@ -52,6 +52,10 @@ export default function MentoringPage({}) {
     const [postList, setPostList] = useState([]);
 
     useEffect(() => {
+        console.log('postList', postList);
+    }, [postList]);
+
+    useEffect(() => {
         if (
             getPostList.data &&
             getPostList.data.pages &&
@@ -140,7 +144,7 @@ export default function MentoringPage({}) {
                     <button
                         type="button"
                         onClick={() => {
-                            navigation('/mentoring/regist');
+                            navigation('/service/mentoring/regist');
                         }}
                     >
                         글쓰기
@@ -160,12 +164,17 @@ export default function MentoringPage({}) {
                                         : null
                                 }
                                 status={post.status}
-                                viewCount={post.viewCount}
+                                likeCount={post.likeCount}
                                 title={post.title}
                                 content={post.content}
                                 nickname={post.user.nickname}
                                 starPoint={post.user.starPoint}
                                 createdAt={post.createdAt}
+                                onClick={() => {
+                                    navigation(
+                                        `/service/mentoring/${post.postId}`
+                                    );
+                                }}
                             />
                         );
                     })

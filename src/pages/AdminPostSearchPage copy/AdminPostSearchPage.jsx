@@ -106,7 +106,7 @@ const AdminPostSearchPage = () => {
                         {adminPostList?.data?.data?.postList?.map((post, index) => (
                             <tr key={`adminPost${index}`} css={s.tableRow}>
                                 <td css={s.tableCell}>{post.postId}</td>
-                                <td css={s.tableCell}>{post.title}</td>
+                                <td css={s.tableCell} className='titleName'>{post.title}</td>
                                 <td css={s.tableCell} className='name'>{post.nickname}</td>
                                 <td css={s.tableCell}>{post.boardName}</td>
                                 <td css={s.tableCell}>{post.createdAt}</td>

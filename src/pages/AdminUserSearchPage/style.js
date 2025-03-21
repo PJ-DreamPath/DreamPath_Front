@@ -56,7 +56,7 @@ export const tableCell = css`
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        width: 10rem;
+        width: 7rem;
     }
 `;
 

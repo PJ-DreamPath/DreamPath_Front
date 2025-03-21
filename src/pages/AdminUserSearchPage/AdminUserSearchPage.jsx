@@ -103,7 +103,7 @@ const AdminUserSearchPage = () => {
                                 <td css={s.tableCell}>{user.userRoles.map((role) => 
                                      role.role.roleName
                                 )}</td>
-                                <td css={s.tableCell}>{user.phoneNumber}</td>
+                                <td css={s.tableCell}>{user.phoneNumber}010-1234-1234</td>
                                 <td css={s.tableCell}>{user.createdAt}</td>
                                 <td css={s.tableCell}>{Number(user.totalPrice).toLocaleString()}원</td>
                                 <td css={s.tableCell}>

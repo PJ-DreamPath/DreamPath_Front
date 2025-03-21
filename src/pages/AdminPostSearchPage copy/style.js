@@ -50,13 +50,21 @@ export const tableRow = css`
 export const tableCell = css`
     padding: 12px;
     text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &.titleName {
+        display: flex;
+        justify-content: center; 
+        align-items: center;
+        text-align: center;
+        max-width: 15rem;
+        overflow: hidden;
+    }
 
     &.name {
-        display: inline-block;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        width: 10rem;
+        min-width: 7rem;
     }
 `;
 

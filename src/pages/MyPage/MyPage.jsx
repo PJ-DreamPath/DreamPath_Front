@@ -1,21 +1,25 @@
 /** @jsxImportSource @emotion/react */
 import * as s from './style';
 
-import { useUpdatePasswordMutation, useUpdateProfileImageMutation } from '../../mutations/mypageMutation';
+import { userDeleteUserMutation, useUpdatePasswordMutation, useUpdateProfileImageMutation } from '../../mutations/mypageMutation';
 import { useUpdateEmailMutation, useUpdateNicknameMutation } from '../../mutations/mypageMutation';
 import { useEffect, useState } from 'react';
 import { useUserMeQuery } from '../../queries/userQuery';
+import { useNavigate } from 'react-router-dom';
 
  function MyPage(props) {
+  const navigate = useNavigate();
   const loginUser = useUserMeQuery();
   const updateProfileImageMutation = useUpdateProfileImageMutation();
   const updateNicknameMutation = useUpdateNicknameMutation();
   const updateEmailMutation = useUpdateEmailMutation();
   const updatePasswordMutation = useUpdatePasswordMutation();
+  const deleteUserMutation = userDeleteUserMutation();
 
   const [ nicknameValue, setNicknameValue ] = useState("");
   const [ emailValue, setEmailValue ] = useState("");
   const [ passwordValue, setPasswordValue ] = useState("");
+  const [ userValue, setUserValue ] =useState("");
 
   
 
@@ -72,6 +76,18 @@ const handlePasswordInputOnChange = (e) => {
     loginUser.refetch();
   };
 
+ 
+  const handleUserDeleteButtonOnClick = async () => {
+  
+    await deleteUserMutation.mutateAsync(userValue);    
+
+    localStorage.removeItem("AccessToken");
+    window.location.reload();
+    navigate("/")
+ 
+  };
+
+
 
   return (
     <>
@@ -100,7 +116,7 @@ const handlePasswordInputOnChange = (e) => {
         <section css={s.infoSection}>
           <div css={s.infoHeader}>
             <h2>기본 정보</h2>
-            <button css={s.deleteBtn}>회원탈퇴</button>
+            <button onClick={handleUserDeleteButtonOnClick} css={s.deleteBtn}>회원탈퇴</button>
           </div>
 
           <div css={s.infoContent}>
