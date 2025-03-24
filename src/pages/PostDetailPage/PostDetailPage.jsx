@@ -302,7 +302,7 @@ export default function PostDetailPage({}) {
                 <div css={s.mapBox}>
                     <p>
                         만남의 장소
-                        <span>{post.mentoringAddress.split('#')[0]}</span>
+                        <span>{post.mentoringAddress.split('#')[0]} </span>
                         <span>{post.mentoringAddress.split('#')[1]}</span>
                     </p>
                     <Map
