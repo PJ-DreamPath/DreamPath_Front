@@ -1,14 +1,18 @@
 /**@jsxImportSource @emotion/react */
 import * as s from './style';
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useGetMyMentoringQuery } from '../../queries/userQuery';
 import { BiSearch } from 'react-icons/bi';
 import Select from 'react-select';
 import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
 
+import { GrView } from 'react-icons/gr';
+import { FcLike } from 'react-icons/fc';
+
 function MyMentoring(props)    {
 
+const navigate = useNavigate();
 const [searchParams, setSearchParams] = useSearchParams();
     const page = parseInt(searchParams.get("page") || "1");
     const searchText = searchParams.get("searchText") || "";
@@ -76,6 +80,11 @@ const [searchParams, setSearchParams] = useSearchParams();
         (option) => option.value === order
     ).value)
 
+    const handleTitleOnClick = (postId) => {
+        navigate(`/service/mentoring/${postId}`)
+        // console.log(postId);
+    }
+
     return (
         <div css={s.container}>
             <div css={s.titleSelectBar}>
@@ -104,7 +113,7 @@ const [searchParams, setSearchParams] = useSearchParams();
                     }}
                     value={orderSelectOptions.find(
                         (option) => option.value === order
-                    ).value}
+                    )}
                     onChange={handleSelectOnChange}
                 />
                 
@@ -126,12 +135,19 @@ const [searchParams, setSearchParams] = useSearchParams();
                         {
                             searchMyMentoringList?.data?.data.myMentoringSearchList.map((my, index) => (
                                 <tr key={`myMentoringIndex${index}`} css={s.tableRow}>
-                                    <td css={s.tableCell}>{my.status}</td>
-                                    <td css={s.tableCell}>{my.title}</td>
+                                    <td css={s.tableCell}>{my.status === "recruiting" ? "모집중" : "모집마감"}</td>
+                                    <td css={s.tableCell} onClick={
+                                    () => {
+                                        handleTitleOnClick(my.postId);
+                                        //  console.log(my.postId);
+                                        //  navigate(`/service/mentoring/${my.postId}`);
+                                    } 
+                                    }>{my.title}</td>
                                     <td css={s.tableCell}>{my.createdAt}</td>                      
                                     <td css={s.tableCell}>{my.commentCount}</td>                      
-                                    <td css={s.tableCell}>{my.likeCount}</td>                      
-                                    <td css={s.tableCell}>{my.viewCount}</td>                      
+                                    <td css={s.tableCell}><span><FcLike /></span><span css={s.countBox}>{my.likeCount}</span></td>                      
+                                    <td css={s.tableCell}><span><GrView /></span><span css={s.countBox}>{my.viewCount}</span></td>                      
+
                                 </tr>
                             ))
                         }

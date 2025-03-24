@@ -55,7 +55,11 @@ export const tableRow = css`
 export const tableCell = css`
     padding: 12px;
     text-align: center;
+    font-size: 1.3rem;
     
+    &:nth-of-type(1) {
+        width: 10rem;
+    }
 
     &:nth-of-type(2) {
         text-align: start;
@@ -64,10 +68,22 @@ export const tableCell = css`
         white-space: nowrap;
         width: 50rem;
         display: inline-block;
+        cursor: pointer;
+    }
+    & > span:nth-of-type(1) {
+        position: relative;
+        margin-right: 1rem;
+        cursor: default;
+        font-size: 1rem;
+        padding-top: 1rem;
     }
     
 `;
 
+export const countBox = css`
+    display: inline-block;
+    width: 1rem;
+`;
 export const deleteButton = css`
     background: none;
     border: none;
@@ -143,6 +159,8 @@ export const pageNumbers = css`
         }
     }
 `;
+
+
 
 export const pageNum = (isSelect) => css`
     background-color: ${isSelect ? "#eeeeee" : "#ffffff"} !important;
