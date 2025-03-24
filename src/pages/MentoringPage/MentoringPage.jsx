@@ -21,7 +21,7 @@ export default function MentoringPage({}) {
         { value: 'recruiting', label: '모집중' },
         { value: 'closedRecruitment', label: '모집마감' },
         { value: 'startDesc', label: '평점높은순' },
-        { value: 'commentDesc', label: '후기많은순' },
+        // { value: 'commentDesc', label: '후기많은순' },
         { value: 'likeDesc', label: '좋아요많은순' },
 
         // { value: 'back', label: '백엔드' },
