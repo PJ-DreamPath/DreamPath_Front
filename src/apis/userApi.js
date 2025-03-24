@@ -2,7 +2,10 @@ import { api } from "../configs/axiosConfig";
 
 export const getUserMeApi = async () => await api.get("/api/user/me");
 
-
+export const getMyMentoringApi = async (params) => { 
+    console.log("param", typeof params.page)
+    return await api.get(`/api/user/me/mentoring`, {params});
+}
 
 export const updateProfileImgApi = async (formData) => {
     return await api.post(

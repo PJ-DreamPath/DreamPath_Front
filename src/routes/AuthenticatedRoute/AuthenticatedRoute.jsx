@@ -11,6 +11,7 @@ import PostDetailPage from '../../pages/PostDetailPage/PostDetailPage';
 import AdminPostSearchPage from '../../pages/AdminPostSearchPage copy/AdminPostSearchPage';
 import MyPage from '../../pages/MyPage/MyPage';
 import AdminPage from '../../pages/AdminPage/MyPage';
+import MyMentoring from '../../pages/MyMentoringPage/MyMentoring';
 
 function AuthenticatedRoute(props) {
     const navigate = useNavigate();
@@ -31,6 +32,7 @@ function AuthenticatedRoute(props) {
             principalState.status === "success" &&
             <Routes>
                 <Route path="/mypage" element={<MyPage />} />
+                <Route path="/mypage/myMentoring" element={<MyMentoring />} />
                 <Route path="/mypage/purchase" element={<PurchaseSectionPage />} />
                 <Route path="/mypage/point/purchase" element={<PointPurchasePage />} />
                 <Route path="/mypage/ticket/purchase" element={<TicketPurchasePage />} />
