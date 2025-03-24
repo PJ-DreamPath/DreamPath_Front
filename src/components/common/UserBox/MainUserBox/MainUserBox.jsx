@@ -12,6 +12,16 @@ const MainUserBox = () => {
     const queryClient = useQueryClient();
     const loginUserData = queryClient.getQueryData(["userMeQuery"]);
 
+
+    const profileImg = loginUserData?.data?.profileImg;
+    const nickname = loginUserData?.data?.nickname;
+    const roleName = loginUserData?.data?.roleName;
+    const formattedDate = loginUserData?.data?.createdAt?.substring(0, 10);
+    const remainPoint = loginUserData?.data?.remainPoint;
+    const remaining = loginUserData?.data?.remaining;
+
+    console.log("loginUserData:", loginUserData);
+
     const handleMyPageButtonOnClick = () => {
         console.log("!!!")
         navigate("/service/mypage");
@@ -28,7 +38,6 @@ const MainUserBox = () => {
         window.location.reload();
         
     }
-    const profileImg = loginUserData?.data?.profileImg;
 
     return (
         <div css={s.userBoxContainer}>
@@ -50,19 +59,20 @@ const MainUserBox = () => {
 </div>
 
            
-            <div css={s.nickname}>닉네임</div>
-            <div css={s.joinDate}>2025.01.11 가입</div>
+            <div css={s.nickname}>{nickname}</div>
+            
+            <div css={s.joinDate}>{formattedDate}</div>
 
             
             <div css={s.mentorSection}>
-                <div>멘토</div>
+                <div>{roleName}</div>
                 <div css={s.starRating}>★★★★★</div>
             </div>
 
            
             <div css={s.mentoringInfo}>
-                <div>✏️ 내가 등록한 멘토링 <strong>3</strong></div>
-                <div>✏️ 등록 가능한 멘토링 갯수 <strong>17</strong></div>
+                <div> 나의 포인트: {remainPoint}</div>
+                <div>✏️ 등록 가능한 멘토링 갯수: {remaining} </div>
             </div>
 
          
