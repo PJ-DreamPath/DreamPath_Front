@@ -79,7 +79,7 @@ export default function BoardRegistPage({}) {
             categories.data.data.map((category) =>
                 newArray.push({
                     value: category.categoryId,
-                    label: category.categoryName,
+                    label: category.categoryNameKor,
                 })
             );
 
