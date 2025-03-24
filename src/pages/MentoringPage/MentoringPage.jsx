@@ -8,6 +8,8 @@ import { IoSearch } from 'react-icons/io5';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { useGetBoards } from '../../queries/boardQuery';
+import { useRecoilState } from 'recoil';
+import { sideMenuBoxMentoringState } from '../../atoms/sideMenuBox';
 
 export default function MentoringPage({}) {
     const navigation = useNavigate();
@@ -21,15 +23,18 @@ export default function MentoringPage({}) {
         { value: 'startDesc', label: '평점높은순' },
         { value: 'commentDesc', label: '후기많은순' },
         { value: 'likeDesc', label: '좋아요많은순' },
+
+        // { value: 'back', label: '백엔드' },
+        // { value: 'front', label: '프론트엔드' },
+        // { value: 'security', label: '정보보안' },
+        // { value: 'full', label: '풀스택' },
     ];
 
     // 검색 조건
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const [search, setSearch] = useState({
-        order: searchParams.get('order') || 'desc',
-        searchTxt: searchParams.get('searchTxt') || '',
-    });
+    const [search, setSearch] = useRecoilState(sideMenuBoxMentoringState);
+
     const [searchTxtValue, setSearchTxtValue] = useState(search.searchTxt);
 
     function handleSearchOnClick() {
@@ -143,9 +148,11 @@ export default function MentoringPage({}) {
                                 padding: '0.3rem',
                             }),
                         }}
-                        value={orderSelectOptions.find(
-                            (option) => option.value === search.order
-                        )}
+                        value={
+                            orderSelectOptions.find(
+                                (option) => option.value === search.order
+                            ) || ''
+                        }
                         onChange={(option) => {
                             handleOrderOnClick(option.value);
                         }}
