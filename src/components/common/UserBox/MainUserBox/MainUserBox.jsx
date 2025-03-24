@@ -61,7 +61,7 @@ const MainUserBox = () => {
            
             <div css={s.nickname}>{nickname}</div>
             
-            <div css={s.joinDate}>{formattedDate}</div>
+            <div css={s.joinDate}>가입 일자: {formattedDate}</div>
 
             
             <div css={s.mentorSection}>
