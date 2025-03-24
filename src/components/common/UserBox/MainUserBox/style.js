@@ -11,8 +11,8 @@ export const userBoxContainer = css`
 `;
 
 export const profileImgStyle = css`
-    width: 100%;
-    height: 100%;
+    width: 60%;
+    height: 60%;
     object-fit: cover;
     border-radius: 50%;
 `;
