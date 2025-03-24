@@ -40,7 +40,7 @@ export const contentBox = css`
                 font-size: 1.6rem;
                 font-weight: bold;
 
-                &:not(.choice):before {
+                &:not(.choice, .attachedFile):before {
                     content: '*';
                     color: red;
                     margin-right: 0.5rem;
@@ -53,7 +53,8 @@ export const contentBox = css`
                 width: 100%;
             }
 
-            input {
+            input,
+            .attachedFile {
                 box-sizing: border-box;
                 padding: 0 1rem;
                 border: 1px solid #aaa;
@@ -61,6 +62,12 @@ export const contentBox = css`
 
                 width: 100%;
                 height: 4rem;
+            }
+
+            .attachedFile {
+                font-size: 1.6rem;
+                font-weight: normal;
+                line-height: 3.6rem;
             }
         }
     }

@@ -22,10 +22,6 @@ export default function BoardRegistPage({}) {
     const navigation = useNavigate();
     const pathNm = useParams();
 
-    useEffect(() => {
-        console.log(pathNm);
-    }, [pathNm]);
-
     // boardList
     const boardList = useGetBoards();
 
@@ -39,16 +35,6 @@ export default function BoardRegistPage({}) {
             setBoard(newArray);
         }
     }, [boardList.data]);
-
-    // 상세 조회
-    const postDetail = useGetPostDetail(pathNm.postId);
-    const [post, setPost] = useState({});
-
-    useEffect(() => {
-        if (postDetail && postDetail.data && postDetail.data.data) {
-            setPost(postDetail.data.data);
-        }
-    }, [postDetail.data]);
 
     // quill
     const contaiinerQuillRef = useRef();
@@ -110,7 +96,7 @@ export default function BoardRegistPage({}) {
     // 게시글 등록
     const [registData, setRegistData] = useState({
         boardId: board.boardId,
-        mentoringCategoryId: 0,
+        categoryId: 0,
         title: '',
         content: '',
         mentoringAddress: '',
@@ -119,11 +105,25 @@ export default function BoardRegistPage({}) {
         endDate: moment(),
     });
 
+    const [attacheFile, setAttachedFile] = useState(null);
+
+    // 상세 조회
+    const postDetail = useGetPostDetail(pathNm.postId);
+    const [post, setPost] = useState({});
+
     useEffect(() => {
-        if (!!post) {
+        if (postDetail && postDetail.data && postDetail.data.data) {
+            setPost(postDetail.data.data);
+
+            setAttachedFile(postDetail.data.data.attachedFiles);
+        }
+    }, [postDetail.data]);
+
+    useEffect(() => {
+        if (!!post && !!pathNm.postId) {
             setRegistData({
                 boardId: post.boardId,
-                mentoringCategoryId: post.categoryId,
+                categoryId: post.categoryId,
                 title: post.title,
                 content: post.content,
                 mentoringAddress: String(post.mentoringAddress).split('#')[0],
@@ -136,13 +136,10 @@ export default function BoardRegistPage({}) {
 
             // 여기에 작성해줘
             if (!!pathNm.postId && quill && contaiinerQuillRef.current) {
-                console.log(contaiinerQuillRef.current);
                 quill.clipboard.dangerouslyPasteHTML(post.content);
             }
         }
     }, [post, quill]);
-
-    const [attacheFile, setAttachedFile] = useState(null);
 
     function handleInpOnChange(e) {
         setRegistData((prev) => ({
@@ -174,10 +171,7 @@ export default function BoardRegistPage({}) {
 
         if (board.boardName === 'mentoring') {
             // 멘토링이면
-            if (
-                !registData.mentoringCategoryId ||
-                registData.mentoringCategoryId === 0
-            ) {
+            if (!registData.categoryId || registData.categoryId === 0) {
                 await Swal.fire({
                     titleText: '카테고리를 선택해주세요.',
                     icon: 'error',
@@ -207,7 +201,7 @@ export default function BoardRegistPage({}) {
 
         const finalData = {
             boardId: registData.boardId,
-            mentoringCategoryId: registData.mentoringCategoryId,
+            categoryId: registData.categoryId,
             title: registData.title,
             content: registData.content,
             mentoringAddress: !!registData.mentoringAddress
@@ -226,25 +220,7 @@ export default function BoardRegistPage({}) {
             formData.append('file', attacheFile);
         }
 
-        if (!pathNm.postId) {
-            const resp = await registPostMutation.mutateAsync(formData);
-
-            if (resp.status == 200) {
-                postDetail.refetch();
-                // navigation(
-                //     board.boardName === 'mentoring'
-                //         ? `/service/${board.boardName}`
-                //         : `/${board.boardName}`
-                // );
-            } else {
-                await Swal.fire({
-                    titleText: '등록할 수 없습니다.',
-                    icon: 'error',
-                    timer: 1000,
-                    showConfirmButton: false,
-                });
-            }
-        } else {
+        if (!!pathNm.postId) {
             const params = {
                 postId: post.postId,
                 formData: formData,
@@ -253,6 +229,7 @@ export default function BoardRegistPage({}) {
             const resp = await updatePostMutation.mutateAsync(params);
 
             if (resp.status == 200) {
+                postDetail.refetch();
                 navigation(
                     board.boardName === 'mentoring'
                         ? `/service/${board.boardName}/${post.postId}`
@@ -261,6 +238,24 @@ export default function BoardRegistPage({}) {
             } else {
                 await Swal.fire({
                     titleText: '수정할 수 없습니다.',
+                    icon: 'error',
+                    timer: 1000,
+                    showConfirmButton: false,
+                });
+            }
+        } else {
+            const resp = await registPostMutation.mutateAsync(formData);
+
+            if (resp.status == 200) {
+                postDetail.refetch();
+                navigation(
+                    board.boardName === 'mentoring'
+                        ? `/service/${board.boardName}`
+                        : `/${board.boardName}`
+                );
+            } else {
+                await Swal.fire({
+                    titleText: '등록할 수 없습니다.',
                     icon: 'error',
                     timer: 1000,
                     showConfirmButton: false,
@@ -282,6 +277,18 @@ export default function BoardRegistPage({}) {
             boardId: board.boardId,
         }));
     }, [board]);
+
+    useEffect(() => {
+        console.log('post', post);
+    }, [post]);
+
+    useEffect(() => {
+        console.log('registData', registData);
+    }, [registData]);
+
+    useEffect(() => {
+        console.log('attacheFile', attacheFile);
+    }, [attacheFile]);
 
     return (
         <>
@@ -316,7 +323,7 @@ export default function BoardRegistPage({}) {
                             <label htmlFor="category">카테고리</label>
                             <Select
                                 options={categoriesSelectOption}
-                                name="mentoringCategoryId"
+                                name="categoryId"
                                 styles={{
                                     control: (style) => ({
                                         ...style,
@@ -335,13 +342,12 @@ export default function BoardRegistPage({}) {
                                 }}
                                 value={categoriesSelectOption?.find(
                                     (option) =>
-                                        option.value ===
-                                        registData.mentoringCategoryId
+                                        option.value === registData.categoryId
                                 )}
                                 onChange={(option) => {
                                     setRegistData((prev) => ({
                                         ...prev,
-                                        mentoringCategoryId: option.value,
+                                        categoryId: option.value,
                                     }));
                                 }}
                             />
@@ -400,17 +406,24 @@ export default function BoardRegistPage({}) {
                             />
                         </div>
                         <div>
-                            <label htmlFor="attachedFile" className="choice">
-                                첨부파일
+                            <label className="choice">첨부파일</label>
+                            <label
+                                htmlFor="attachedFile"
+                                className="attachedFile"
+                            >
+                                <input
+                                    type="file"
+                                    name="attachedFile"
+                                    id="attachedFile"
+                                    style={{ display: 'none' }}
+                                    onChange={(e) => {
+                                        setAttachedFile(e.target.files[0]);
+                                    }}
+                                />
+                                {!!attacheFile && typeof attacheFile == 'object'
+                                    ? attacheFile.name
+                                    : attacheFile}
                             </label>
-                            <input
-                                type="text"
-                                name="attachedFile"
-                                id="attachedFile"
-                                onChange={(e) => {
-                                    setAttachedFile(e.target.files[0]);
-                                }}
-                            />
                         </div>
                     </>
                 ) : (
