@@ -428,7 +428,7 @@ export default function BoardRegistPage({}) {
                             navigation(
                                 board.boardName === 'mentoring'
                                     ? `/service/mentoring`
-                                    : `/${pathNm}`
+                                    : `/${pathNm.boardName}`
                             );
                         }}
                     >
