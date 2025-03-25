@@ -16,10 +16,13 @@ export const title = css`
 `;
 
 export const tableWrapper = css`
-    overflow-x: auto;
-    background: white;
+    margin-bottom: 2rem;
     border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+    height: 50rem;
+    overflow-x: auto;
+
+    background: white;
 `;
 
 export const table = css`

@@ -34,7 +34,7 @@ const AdminUserSearchPage = () => {
     const adminUserList = useGetAdminUsers(params);
 
 
- const [pageNumbers, setPageNumbers] = useState([]);
+    const [pageNumbers, setPageNumbers] = useState([]);
 
 
     useEffect(() => {
