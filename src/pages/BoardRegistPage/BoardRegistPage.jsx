@@ -278,18 +278,6 @@ export default function BoardRegistPage({}) {
         }));
     }, [board]);
 
-    useEffect(() => {
-        console.log('post', post);
-    }, [post]);
-
-    useEffect(() => {
-        console.log('registData', registData);
-    }, [registData]);
-
-    useEffect(() => {
-        console.log('attacheFile', attacheFile);
-    }, [attacheFile]);
-
     return (
         <>
             <div css={s.titleBox}>
