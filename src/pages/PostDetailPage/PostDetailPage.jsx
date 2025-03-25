@@ -56,7 +56,6 @@ export default function PostDetailPage({}) {
     useEffect(() => {
         if (postDetail && postDetail.data && postDetail.data.data) {
             setPost(postDetail.data.data);
-            console.log('detail', postDetail.data.data);
         }
     }, [postDetail.data]);
 

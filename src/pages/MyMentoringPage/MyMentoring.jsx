@@ -10,17 +10,16 @@ import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
 import { GrView } from 'react-icons/gr';
 import { FcLike } from 'react-icons/fc';
 
-function MyMentoring(props)    {
-
-const navigate = useNavigate();
-const [searchParams, setSearchParams] = useSearchParams();
-    const page = parseInt(searchParams.get("page") || "1");
-    const searchText = searchParams.get("searchText") || "";
+function MyMentoring(props) {
+    const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const page = parseInt(searchParams.get('page') || '1');
+    const searchText = searchParams.get('searchText') || '';
 
     const order = searchParams.get('order') || 'desc';
     const orderSelectOptions = [
-        { value: "desc", label: "최신순" },
-        { value: "asc", label: "오래된순" },
+        { value: 'desc', label: '최신순' },
+        { value: 'asc', label: '오래된순' },
     ];
 
     const searchMyMentoringList = useGetMyMentoringQuery({
@@ -28,62 +27,51 @@ const [searchParams, setSearchParams] = useSearchParams();
         limitCount: 10,
         order,
         searchText,
-    })
+    });
 
-    const [ searchInputValue, setSearchInputValue ] = useState("");
+    const [searchInputValue, setSearchInputValue] = useState('');
     const handleSearchButtonOnClick = () => {
-        searchParams.set("page", 1);
-        searchParams.set("searchText", searchInputValue);
+        searchParams.set('page', 1);
+        searchParams.set('searchText', searchInputValue);
         setSearchParams(searchParams);
-    }
+    };
 
     const [pageNumbers, setPageNumbers] = useState([]);
 
     useEffect(() => {
         if (!searchMyMentoringList.isLoading) {
-
-            console.log(searchMyMentoringList);
-
             const currentPage = searchMyMentoringList?.data?.data.page || 1;
-            const totalPages = searchMyMentoringList?.data?.data.totalPages || 1;
+            const totalPages =
+                searchMyMentoringList?.data?.data.totalPages || 1;
             const startIndex = Math.floor((currentPage - 1) / 5) * 5 + 1;
-            const endIndex = startIndex + 4 > totalPages ? totalPages : startIndex + 4;
+            const endIndex =
+                startIndex + 4 > totalPages ? totalPages : startIndex + 4;
 
             let newPageNumbers = [];
             for (let i = startIndex; i <= endIndex; i++) {
                 newPageNumbers = [...newPageNumbers, i];
             }
             setPageNumbers(newPageNumbers);
-
         }
     }, [searchMyMentoringList.data]);
 
     useEffect(() => {
         searchMyMentoringList.refetch();
-      
-    }, [searchParams])
-
-
+    }, [searchParams]);
 
     const handleSelectOnChange = (option) => {
-        searchParams.set("order", option.value);
+        searchParams.set('order', option.value);
         setSearchParams(searchParams);
-    }
+    };
 
     const handlePageNumbersOnClick = (pageNumber) => {
-        searchParams.set("page", pageNumber);
+        searchParams.set('page', pageNumber);
         setSearchParams(searchParams);
-    }
-
-
-    console.log(orderSelectOptions.find(
-        (option) => option.value === order
-    ).value)
+    };
 
     const handleTitleOnClick = (postId) => {
-        navigate(`/service/mentoring/${postId}`)
-        // console.log(postId);
-    }
+        navigate(`/service/mentoring/${postId}`);
+    };
 
     return (
         <div css={s.container}>
@@ -91,8 +79,19 @@ const [searchParams, setSearchParams] = useSearchParams();
                 <h2 css={s.title}>내 멘토링 내역</h2>
                 <div css={s.searchTextContainer}>
                     <div css={s.searchInputBox}>
-                        <input type="text" value={searchInputValue} onChange={(e) => setSearchInputValue(e.target.value)} />
-                        <button css={s.emptyButton} onClick={handleSearchButtonOnClick}><BiSearch /></button>
+                        <input
+                            type="text"
+                            value={searchInputValue}
+                            onChange={(e) =>
+                                setSearchInputValue(e.target.value)
+                            }
+                        />
+                        <button
+                            css={s.emptyButton}
+                            onClick={handleSearchButtonOnClick}
+                        >
+                            <BiSearch />
+                        </button>
                     </div>
                 </div>
                 <Select
@@ -116,11 +115,9 @@ const [searchParams, setSearchParams] = useSearchParams();
                     )}
                     onChange={handleSelectOnChange}
                 />
-                
             </div>
             <div css={s.tableWrapper}>
                 <table css={s.table}>
-                  
                     <thead>
                         <tr css={s.tableRowHeader}>
                             <th css={s.tableHeader}>상태</th>
@@ -132,41 +129,75 @@ const [searchParams, setSearchParams] = useSearchParams();
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            searchMyMentoringList?.data?.data.myMentoringSearchList.map((my, index) => (
-                                <tr key={`myMentoringIndex${index}`} css={s.tableRow}>
-                                    <td css={s.tableCell}>{my.status === "recruiting" ? "모집중" : "모집마감"}</td>
-                                    <td css={s.tableCell} onClick={
-                                    () => {
-                                        handleTitleOnClick(my.postId);
-                                        //  console.log(my.postId);
-                                        //  navigate(`/service/mentoring/${my.postId}`);
-                                    } 
-                                    }>{my.title}</td>
-                                    <td css={s.tableCell}>{my.createdAt}</td>                      
-                                    <td css={s.tableCell}>{my.commentCount}</td>                      
-                                    <td css={s.tableCell}><span><FcLike /></span><span css={s.countBox}>{my.likeCount}</span></td>                      
-                                    <td css={s.tableCell}><span><GrView /></span><span css={s.countBox}>{my.viewCount}</span></td>                      
-
+                        {searchMyMentoringList?.data?.data.myMentoringSearchList.map(
+                            (my, index) => (
+                                <tr
+                                    key={`myMentoringIndex${index}`}
+                                    css={s.tableRow}
+                                >
+                                    <td css={s.tableCell}>
+                                        {my.status === 'recruiting'
+                                            ? '모집중'
+                                            : '모집마감'}
+                                    </td>
+                                    <td
+                                        css={s.tableCell}
+                                        onClick={() => {
+                                            handleTitleOnClick(my.postId);
+                                        }}
+                                    >
+                                        {my.title}
+                                    </td>
+                                    <td css={s.tableCell}>{my.createdAt}</td>
+                                    <td css={s.tableCell}>{my.commentCount}</td>
+                                    <td css={s.tableCell}>
+                                        <span>
+                                            <FcLike />
+                                        </span>
+                                        <span css={s.countBox}>
+                                            {my.likeCount}
+                                        </span>
+                                    </td>
+                                    <td css={s.tableCell}>
+                                        <span>
+                                            <GrView />
+                                        </span>
+                                        <span css={s.countBox}>
+                                            {my.viewCount}
+                                        </span>
+                                    </td>
                                 </tr>
-                            ))
-                        }
+                            )
+                        )}
                     </tbody>
                 </table>
             </div>
             <div css={s.footer}>
                 <div css={s.pageNumbers}>
-                    <button disabled={searchMyMentoringList?.data?.data.firstPage} onClick={() => handlePageNumbersOnClick(page - 1)}><GoChevronLeft /></button>
-                    {
-                        pageNumbers.map(number => 
-                            <button key={`myMentoring${number}`} css={s.pageNum(page === number)} onClick={() => handlePageNumbersOnClick(number)}><span>{number}</span></button>
-                        )
-                    }
-                    <button disabled={searchMyMentoringList?.data?.data.lastPage} onClick={() => handlePageNumbersOnClick(page + 1)}><GoChevronRight /></button>
+                    <button
+                        disabled={searchMyMentoringList?.data?.data.firstPage}
+                        onClick={() => handlePageNumbersOnClick(page - 1)}
+                    >
+                        <GoChevronLeft />
+                    </button>
+                    {pageNumbers.map((number) => (
+                        <button
+                            key={`myMentoring${number}`}
+                            css={s.pageNum(page === number)}
+                            onClick={() => handlePageNumbersOnClick(number)}
+                        >
+                            <span>{number}</span>
+                        </button>
+                    ))}
+                    <button
+                        disabled={searchMyMentoringList?.data?.data.lastPage}
+                        onClick={() => handlePageNumbersOnClick(page + 1)}
+                    >
+                        <GoChevronRight />
+                    </button>
                 </div>
             </div>
         </div>
-        
     );
 }
 

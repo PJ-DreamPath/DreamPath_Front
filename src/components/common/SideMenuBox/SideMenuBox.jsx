@@ -20,11 +20,6 @@ export default function SideMenuBox({}) {
 
     // path를 가져와서 마이페이지, cms 또는 멘토링 인지 구별 하기 위함
     const fullPath = useParams();
-    useEffect(() => {
-        console.log(fullPath);
-
-        console.log(fullPath['*'] === 'service/mypage');
-    }, [fullPath]);
 
     // boardList
     const boardList = useGetBoards();
