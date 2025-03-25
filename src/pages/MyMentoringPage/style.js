@@ -39,7 +39,7 @@ export const tableHeader = css`
     text-align: center;
 
     &:nth-of-type(2) {
-        width: 50rem;
+        width: 40rem;
     }
 `;
 
@@ -66,7 +66,7 @@ export const tableCell = css`
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
-        width: 50rem;
+        width: 30rem;
         display: inline-block;
         cursor: pointer;
     }
