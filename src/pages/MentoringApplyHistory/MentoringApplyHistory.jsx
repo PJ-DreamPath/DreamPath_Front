@@ -1,4 +1,4 @@
-/**@jsxImportSource @emotion/react */
+/** @jsxImportSource @emotion/react */
 import * as s from './style';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -6,7 +6,6 @@ import { useGetMyMentoringQuery } from '../../queries/userQuery';
 import { BiSearch } from 'react-icons/bi';
 import Select from 'react-select';
 import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
-
 import { GrView } from 'react-icons/gr';
 import { FcLike } from 'react-icons/fc';
 
@@ -15,14 +14,13 @@ function MentoringApplyHistory(props) {
     const [searchParams, setSearchParams] = useSearchParams();
     const page = parseInt(searchParams.get('page') || '1');
     const searchText = searchParams.get('searchText') || '';
-
     const order = searchParams.get('order') || 'desc';
     const orderSelectOptions = [
         { value: 'desc', label: '최신순' },
         { value: 'asc', label: '오래된순' },
     ];
 
-    const searchMyMentoringList = useGetMyMentoringQuery({
+    const mentoringHistoryQuery = useGetMentoringApplyHistoryQuery({
         page,
         limitCount: 10,
         order,
@@ -39,13 +37,11 @@ function MentoringApplyHistory(props) {
     const [pageNumbers, setPageNumbers] = useState([]);
 
     useEffect(() => {
-        if (!searchMyMentoringList.isLoading) {
-            const currentPage = searchMyMentoringList?.data?.data.page || 1;
-            const totalPages =
-                searchMyMentoringList?.data?.data.totalPages || 1;
+        if (!mentoringHistoryQuery.isLoading) {
+            const currentPage = mentoringHistoryQuery?.data?.data.page || 1;
+            const totalPages = mentoringHistoryQuery?.data?.data.totalPages || 1;
             const startIndex = Math.floor((currentPage - 1) / 5) * 5 + 1;
-            const endIndex =
-                startIndex + 4 > totalPages ? totalPages : startIndex + 4;
+            const endIndex = startIndex + 4 > totalPages ? totalPages : startIndex + 4;
 
             let newPageNumbers = [];
             for (let i = startIndex; i <= endIndex; i++) {
@@ -53,10 +49,10 @@ function MentoringApplyHistory(props) {
             }
             setPageNumbers(newPageNumbers);
         }
-    }, [searchMyMentoringList.data]);
+    }, [mentoringHistoryQuery.data]);
 
     useEffect(() => {
-        searchMyMentoringList.refetch();
+        mentoringHistoryQuery.refetch();
     }, [searchParams]);
 
     const handleSelectOnChange = (option) => {
@@ -76,15 +72,13 @@ function MentoringApplyHistory(props) {
     return (
         <div css={s.container}>
             <div css={s.titleSelectBar}>
-                <h2 css={s.title}>내 멘토링 내역</h2>
+                <h2 css={s.title}>멘토링 신청 내역</h2>
                 <div css={s.searchTextContainer}>
                     <div css={s.searchInputBox}>
                         <input
                             type="text"
                             value={searchInputValue}
-                            onChange={(e) =>
-                                setSearchInputValue(e.target.value)
-                            }
+                            onChange={(e) => setSearchInputValue(e.target.value)}
                         />
                         <button
                             css={s.emptyButton}
@@ -129,22 +123,15 @@ function MentoringApplyHistory(props) {
                         </tr>
                     </thead>
                     <tbody>
-                        {searchMyMentoringList?.data?.data.myMentoringSearchList.map(
+                        {mentoringHistoryQuery?.data?.data.myMentoringApplyHistory.map(
                             (my, index) => (
-                                <tr
-                                    key={`myMentoringIndex${index}`}
-                                    css={s.tableRow}
-                                >
+                                <tr key={`myMentoringIndex${index}`} css={s.tableRow}>
                                     <td css={s.tableCell}>
-                                        {my.status === 'recruiting'
-                                            ? '모집중'
-                                            : '모집마감'}
+                                        {my.status === 'recruiting' ? '모집중' : '모집마감'}
                                     </td>
                                     <td
                                         css={s.tableCell}
-                                        onClick={() => {
-                                            handleTitleOnClick(my.postId);
-                                        }}
+                                        onClick={() => handleTitleOnClick(my.postId)}
                                     >
                                         {my.title}
                                     </td>
@@ -154,17 +141,13 @@ function MentoringApplyHistory(props) {
                                         <span>
                                             <FcLike />
                                         </span>
-                                        <span css={s.countBox}>
-                                            {my.likeCount}
-                                        </span>
+                                        <span css={s.countBox}>{my.likeCount}</span>
                                     </td>
                                     <td css={s.tableCell}>
                                         <span>
                                             <GrView />
                                         </span>
-                                        <span css={s.countBox}>
-                                            {my.viewCount}
-                                        </span>
+                                        <span css={s.countBox}>{my.viewCount}</span>
                                     </td>
                                 </tr>
                             )
@@ -175,7 +158,7 @@ function MentoringApplyHistory(props) {
             <div css={s.footer}>
                 <div css={s.pageNumbers}>
                     <button
-                        disabled={searchMyMentoringList?.data?.data.firstPage}
+                        disabled={mentoringHistoryQuery?.data?.data.firstPage}
                         onClick={() => handlePageNumbersOnClick(page - 1)}
                     >
                         <GoChevronLeft />
@@ -190,7 +173,7 @@ function MentoringApplyHistory(props) {
                         </button>
                     ))}
                     <button
-                        disabled={searchMyMentoringList?.data?.data.lastPage}
+                        disabled={mentoringHistoryQuery?.data?.data.lastPage}
                         onClick={() => handlePageNumbersOnClick(page + 1)}
                     >
                         <GoChevronRight />

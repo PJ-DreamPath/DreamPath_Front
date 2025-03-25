@@ -129,7 +129,7 @@ export default function PostDetailPage({}) {
 
     // 신청 클릭
     const mentoringApply = useMentoringApplyMutation();
-
+   
     const handleOnApplyButtonOnClick = () => {
         mentoringApply
             .mutateAsync({
