@@ -356,7 +356,7 @@ export default function PostDetailPage({}) {
                             삭제
                         </button>
                     </>
-                ) : post.status === 'recruiting' ? (
+                ) : post.status === 'recruiting' &&  pathNm === 'mentoring' ? (
                     <button
                         type="button"
                         className="regist"

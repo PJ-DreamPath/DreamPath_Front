@@ -10,7 +10,7 @@ import TicketPurchasePage from '../../pages/TicketPurchasePage/TicketPurchasePag
 import PostDetailPage from '../../pages/PostDetailPage/PostDetailPage';
 import AdminPostSearchPage from '../../pages/AdminPostSearchPage copy/AdminPostSearchPage';
 import MyPage from '../../pages/MyPage/MyPage';
-import AdminPage from '../../pages/AdminPage/MyPage';
+import AdminPage from '../../pages/AdminPage/AdminPage';
 import MyMentoring from '../../pages/MyMentoringPage/MyMentoring';
 import MentoringApplyHistory from '../../pages/MentoringApplyHistory/MentoringApplyHistory';
 
