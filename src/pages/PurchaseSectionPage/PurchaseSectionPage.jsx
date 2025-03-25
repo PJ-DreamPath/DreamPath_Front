@@ -1,8 +1,23 @@
 /**@jsxImportSource @emotion/react */
+import { alertTitleClasses } from '@mui/material';
+import { useTicketPurchaseMutation } from '../../mutations/ticketMutation';
 import * as s from './style';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
 
 function PurchaseSectionPage(props) {
+    const ticketPurchase = useTicketPurchaseMutation();
+
+    const handlePurchaseButtonOnClick = async (e) => {
+    
+        
+       await ticketPurchase.mutateAsync({ticketId: Number(e.target.value)}).then((response) => {
+            console.log(response);
+            Swal.fire(response.data);
+       });
+
+    }
+
     return (
         <div css={s.container}>
             <h3>이용권 구매</h3>
@@ -13,7 +28,7 @@ function PurchaseSectionPage(props) {
                     <span>10회</span>
                     <div css={s.optionButton}>
                         <span>10,000P</span>
-                        <button>구매</button>
+                        <button value={1} onClick={handlePurchaseButtonOnClick}>구매</button>
                     </div>
                 </div>
                 <div css={s.option}>
@@ -21,7 +36,7 @@ function PurchaseSectionPage(props) {
                     <span>20회</span>
                     <div css={s.optionButton}>
                         <span>13,000P</span>
-                        <button>구매</button>
+                        <button value={2} onClick={handlePurchaseButtonOnClick}>구매</button>
                     </div>
                 </div>
                 <div css={s.option}>
@@ -29,7 +44,7 @@ function PurchaseSectionPage(props) {
                     <span>30회</span>
                     <div css={s.optionButton}>
                         <span>17,000P</span>
-                        <button>구매</button>
+                        <button value={3} onClick={handlePurchaseButtonOnClick}>구매</button>
                     </div>
                 </div>
             </div>
