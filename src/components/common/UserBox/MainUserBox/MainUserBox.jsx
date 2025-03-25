@@ -18,6 +18,7 @@ const MainUserBox = () => {
     const formattedDate = loginUserData?.data?.createdAt?.substring(0, 10);
     const remainPoint = loginUserData?.data?.remainPoint;
     const remaining = loginUserData?.data?.remaining;
+    
 
     const handleMyPageButtonOnClick = () => {
         navigate('/service/mypage');
