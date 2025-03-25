@@ -110,6 +110,10 @@ export default function MentoringPage({}) {
         }
     }, [postList]);
 
+    useEffect(() => {
+        getPostList.refetch();
+    }, []);
+
     return (
         <>
             <div css={s.titleBox}>
