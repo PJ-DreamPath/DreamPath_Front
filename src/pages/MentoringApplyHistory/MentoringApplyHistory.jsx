@@ -2,12 +2,12 @@
 import * as s from './style';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useGetMyMentoringQuery } from '../../queries/userQuery';
 import { BiSearch } from 'react-icons/bi';
 import Select from 'react-select';
 import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
 import { GrView } from 'react-icons/gr';
 import { FcLike } from 'react-icons/fc';
+import { useGetMentoringApplyHistoryQuery } from '../../queries/userQuery';
 
 function MentoringApplyHistory(props) {
     const navigate = useNavigate();
@@ -19,6 +19,7 @@ function MentoringApplyHistory(props) {
         { value: 'desc', label: '최신순' },
         { value: 'asc', label: '오래된순' },
     ];
+    
 
     const mentoringHistoryQuery = useGetMentoringApplyHistoryQuery({
         page,
@@ -48,6 +49,8 @@ function MentoringApplyHistory(props) {
                 newPageNumbers = [...newPageNumbers, i];
             }
             setPageNumbers(newPageNumbers);
+            console.log(mentoringHistoryQuery);
+            console.log("!!!!");
         }
     }, [mentoringHistoryQuery.data]);
 
@@ -114,20 +117,17 @@ function MentoringApplyHistory(props) {
                 <table css={s.table}>
                     <thead>
                         <tr css={s.tableRowHeader}>
-                            <th css={s.tableHeader}>상태</th>
+                            <th css={s.tableHeader}>작성자</th>
                             <th css={s.tableHeader}>제목</th>
                             <th css={s.tableHeader}>작성일</th>
-                            <th css={s.tableHeader}>댓글</th>
-                            <th css={s.tableHeader}>좋아요</th>
-                            <th css={s.tableHeader}>조회수</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {mentoringHistoryQuery?.data?.data.myMentoringApplyHistory.map(
+                        {mentoringHistoryQuery?.data?.data.myApplySearch.map(
                             (my, index) => (
-                                <tr key={`myMentoringIndex${index}`} css={s.tableRow}>
+                                <tr key={`MentoringApplyHistory${index}`} css={s.tableRow}>
                                     <td css={s.tableCell}>
-                                        {my.status === 'recruiting' ? '모집중' : '모집마감'}
+                                        {my.mento}
                                     </td>
                                     <td
                                         css={s.tableCell}
@@ -136,19 +136,7 @@ function MentoringApplyHistory(props) {
                                         {my.title}
                                     </td>
                                     <td css={s.tableCell}>{my.createdAt}</td>
-                                    <td css={s.tableCell}>{my.commentCount}</td>
-                                    <td css={s.tableCell}>
-                                        <span>
-                                            <FcLike />
-                                        </span>
-                                        <span css={s.countBox}>{my.likeCount}</span>
-                                    </td>
-                                    <td css={s.tableCell}>
-                                        <span>
-                                            <GrView />
-                                        </span>
-                                        <span css={s.countBox}>{my.viewCount}</span>
-                                    </td>
+                                    
                                 </tr>
                             )
                         )}

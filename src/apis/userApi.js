@@ -6,6 +6,10 @@ export const getMyMentoringApi = async (params) => {
     return await api.get(`/api/user/me/mentoring`, { params });
 };
 
+export const getMentoringApplyHistoryApi = async (params) => {
+    return await api.get(`/api/mentoring/me/applyList`, {params});
+};
+
 export const updateProfileImgApi = async (formData) => {
     return await api.post('/api/user/profile/img', formData, {
         headers: {
