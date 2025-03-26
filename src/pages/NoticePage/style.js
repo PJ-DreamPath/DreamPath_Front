@@ -20,7 +20,7 @@ export const searchWrap = css`
     justify-content: flex-end;
     align-items: center;
     gap: 1rem;
-
+    margin-bottom: 10px;
     height: 4rem;
 
     button {
