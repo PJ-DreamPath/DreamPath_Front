@@ -107,8 +107,8 @@ export default function SideMenuBox({}) {
                             } else {
                                 const to = boardList?.data?.data.find(
                                     (name) =>
-                                        name.boardNameKor ===
-                                        category.categoryNameKor
+                                        name.boardName ===
+                                        category.categoryName
                                 ).boardName;
 
                                 if (fullPath['*'].includes('mypage')) {
