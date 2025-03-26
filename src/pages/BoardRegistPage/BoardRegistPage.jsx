@@ -17,6 +17,7 @@ import {
 import Swal from 'sweetalert2';
 import { useGetCategories } from '../../queries/categoriesQuery';
 import { useGetPostDetail } from '../../queries/postQuery';
+import { useUserMeQuery } from '../../queries/userQuery';
 
 export default function BoardRegistPage({}) {
     const navigation = useNavigate();
@@ -277,6 +278,17 @@ export default function BoardRegistPage({}) {
             boardId: board.boardId,
         }));
     }, [board]);
+
+    const { data } = useUserMeQuery();
+
+    useEffect(() => {
+        if(pathNm.boardName.includes("notice")) {
+            if(data?.data?.roleName !== "관리자") {
+                navigation('/notice');
+                alert("권한이 없습니다.");
+            }
+        }
+    }, [pathNm]);
 
     return (
         <>

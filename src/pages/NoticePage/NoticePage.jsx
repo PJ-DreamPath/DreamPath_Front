@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 /**@jsxImportSource @emotion/react */
 import * as s from './style';
 import { useGetPosts } from '../../queries/postQuery';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
 import { useGetBoards } from '../../queries/boardQuery';
 import { IoSearch } from 'react-icons/io5';
@@ -12,6 +12,8 @@ import { useUserMeQuery } from '../../queries/userQuery';
 function NoticePage({ }) {
 
     const navigation = useNavigate();
+
+    const pathNm = useParams();
     
     
     const orderSelectOptions = [
@@ -94,7 +96,7 @@ function NoticePage({ }) {
 
     const { data } = useUserMeQuery();
 
-    const roleId = data?.data?.roleId;
+    const roleName = data?.data?.roleName;
 
     return (
         <div css={s.container}>
@@ -142,7 +144,7 @@ function NoticePage({ }) {
                     }}
                 />
                 {
-                    roleId === 3 && (
+                    roleName === "관리자" && (
                         <button 
                             type="button"
                             onClick={() => {
