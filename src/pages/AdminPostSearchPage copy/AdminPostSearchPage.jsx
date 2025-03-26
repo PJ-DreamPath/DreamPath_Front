@@ -110,7 +110,7 @@ const AdminPostSearchPage = () => {
                                         {post.nickname}
                                     </td>
                                     <td css={s.tableCell}>{post.boardName}</td>
-                                    <td css={s.tableCell}>{post.createdAt}</td>
+                                    <td css={s.tableCell}>{new Date(post.createdAt).toLocaleDateString()}</td>
                                     <td css={s.tableCell}>
                                         {post.commentCount}
                                     </td>
