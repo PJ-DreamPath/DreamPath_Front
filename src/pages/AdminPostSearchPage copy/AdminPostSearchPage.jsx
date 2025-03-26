@@ -6,10 +6,13 @@ import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
 import { api } from '../../configs/axiosConfig';
 import { useGetAdminPost } from '../../queries/adminQuery';
 import { FaRegTrashCan } from 'react-icons/fa6';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useUserMeQuery } from '../../queries/userQuery';
 
 const AdminPostSearchPage = () => {
     const [posts, getPosts] = useState([]);
+    const navigation = useNavigate();
+    const pathNm = useParams();
 
     const [searchParams, setSearchParams] = useSearchParams();
     const page = parseInt(searchParams.get('page') || '1');
@@ -66,6 +69,17 @@ const AdminPostSearchPage = () => {
             alert('삭제 실패! 다시 시도해주세요.');
         }
     };
+
+    const { data } = useUserMeQuery();
+
+    useEffect(() => {
+        if (pathNm['*'] && pathNm['*'].includes("admin")) {
+            if (data?.data?.roleName !== "관리자") {
+                navigation('/');
+                alert("권한이 없습니다.");
+            }
+        }
+    }, [pathNm, data, navigation]);
 
     return (
         <div css={s.container}>

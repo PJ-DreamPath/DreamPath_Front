@@ -281,6 +281,8 @@ export default function BoardRegistPage({}) {
 
     const { data } = useUserMeQuery();
 
+    console.log(pathNm, "pathNm")
+
     useEffect(() => {
         if(pathNm.boardName.includes("notice")) {
             if(data?.data?.roleName !== "관리자") {

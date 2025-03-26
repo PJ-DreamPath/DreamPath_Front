@@ -6,14 +6,18 @@ import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
 import { api } from '../../configs/axiosConfig';
 import { useGetAdminUsers } from '../../queries/adminQuery';
 import { FaRegTrashCan } from "react-icons/fa6";
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useUserMeQuery } from '../../queries/userQuery';
 
 
 const AdminUserSearchPage = () => {
+    const navigation = useNavigate();
+    const pathNm = useParams();
+
     const [users, setUsers] = useState([]);
 
-        const [searchParams, setSearchParams] = useSearchParams();
-        const page = parseInt(searchParams.get("page") || "1");
+    const [searchParams, setSearchParams] = useSearchParams();
+    const page = parseInt(searchParams.get("page") || "1");
 
 
     const [params, setParams] = useState ({
@@ -29,10 +33,8 @@ const AdminUserSearchPage = () => {
             page: searchParams.get("page") || 1
         }))
     }, [searchParams])
-    
 
     const adminUserList = useGetAdminUsers(params);
-
 
     const [pageNumbers, setPageNumbers] = useState([]);
 
@@ -75,7 +77,18 @@ const AdminUserSearchPage = () => {
         }
     };
 
-    return (
+    const { data } = useUserMeQuery();
+
+    useEffect(() => {
+        if (pathNm['*'] && pathNm['*'].includes("admin")) {
+            if (data?.data?.roleName !== "관리자") {
+                navigation('/');
+                alert("권한이 없습니다.");
+            }
+        }
+    }, [pathNm, data, navigation]);
+
+    return ( 
         <div css={s.container}>
             <h2 css={s.title}>회원관리</h2>
             <div css={s.tableWrapper}>
