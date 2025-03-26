@@ -30,6 +30,8 @@ export default function SideMenuBox({}) {
             fullPath['*'].includes('mypage') ||
             fullPath['*'].includes('admin')
         ) {
+            boardList.refetch();
+
             if (boardList && boardList.data && boardList.data.data) {
                 let newArray = boardList.data.data.filter((board) =>
                     fullPath['*'].includes(`service/${board.boardName}`)
@@ -38,11 +40,15 @@ export default function SideMenuBox({}) {
                 setBoard(newArray);
             }
         }
-    }, [fullPath]);
+    }, [fullPath, boardList.data]);
 
     // 각 페이지 데이터 리스트
     const categories = useGetCategories(board.boardId);
     const [list, setList] = useState([]);
+
+    useEffect(() => {
+        categories.refetch();
+    }, [board]);
 
     useEffect(() => {
         if (categories && categories.data && categories.data.data)
