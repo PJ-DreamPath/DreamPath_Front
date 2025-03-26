@@ -7,3 +7,5 @@ export const ticketPurchaseApi = async (params) => {
     
     return await api.put(`/api/ticket/renewal?ticketId=${params.ticketId}`);
 }
+
+
