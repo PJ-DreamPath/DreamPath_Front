@@ -92,7 +92,7 @@ function NoticePage({ }) {
 
     useEffect(() => {
         noticePostList.refetch();
-    });
+    }, []);
 
     const { data } = useUserMeQuery();
 
