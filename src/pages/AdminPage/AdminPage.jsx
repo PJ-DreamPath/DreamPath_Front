@@ -12,16 +12,18 @@ import {
 } from '../../mutations/mypageMutation';
 import { useEffect, useState } from 'react';
 import { useUserMeQuery } from '../../queries/userQuery';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 function AdminPage(props) {
-    const navigate = useNavigate();
+    const navigation = useNavigate();
     const loginUser = useUserMeQuery();
     const updateProfileImageMutation = useUpdateProfileImageMutation();
     const updateNicknameMutation = useUpdateNicknameMutation();
     const updateEmailMutation = useUpdateEmailMutation();
     const updatePasswordMutation = useUpdatePasswordMutation();
     const deleteUserMutation = userDeleteUserMutation();
+    const pathNm = useParams();
+    const location = useLocation();
 
     const [nicknameValue, setNicknameValue] = useState('');
     const [emailValue, setEmailValue] = useState('');
@@ -73,6 +75,18 @@ function AdminPage(props) {
         loginUser.refetch();
     };
 
+    const { data } = useUserMeQuery();
+
+    useEffect(() => {
+        console.log(location.pathname, "path");
+        if (location.pathname.includes("admin")) {
+            if (data?.data?.roleName !== "관리자") {
+                navigation('/');
+                alert("권한이 없습니다.");
+            }
+        }
+    }, [location, data, navigation]);
+    
     return (
         <>
             <section css={s.profileSection}>
