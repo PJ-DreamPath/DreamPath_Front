@@ -71,6 +71,7 @@ const AdminUserSearchPage = () => {
             await api.delete(`/api/admin/users/${userId}`)
             alert("삭제되었습니다.");
             setUsers(users.filter(user => user.userId !== userId));
+            adminUserList.refetch();
         } catch (error) {
             console.error("삭제 오류", error);
             alert("삭제 실패! 다시 시도해주세요.");
