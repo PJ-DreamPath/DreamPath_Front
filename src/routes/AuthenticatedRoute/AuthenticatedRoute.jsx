@@ -13,6 +13,7 @@ import MyPage from '../../pages/MyPage/MyPage';
 import AdminPage from '../../pages/AdminPage/AdminPage';
 import MyMentoring from '../../pages/MyMentoringPage/MyMentoring';
 import MentoringApplyHistory from '../../pages/MentoringApplyHistory/MentoringApplyHistory';
+import MainPage from '../../pages/MainPage/MainPage';
 
 function AuthenticatedRoute(props) {
     const navigate = useNavigate();
@@ -33,6 +34,7 @@ function AuthenticatedRoute(props) {
             principalState.status === "success" &&
             <Routes>
                 <Route path="/mypage" element={<MyPage />} />
+                <Route path="/mainpage" element={<MainPage />} />
                 <Route path="/mypage/myMentoring" element={<MyMentoring />} />
                 <Route path="/mypage/mentoringhistory" element={<MentoringApplyHistory />} />
                 <Route path="/mypage/purchase" element={<PurchaseSectionPage />} />
