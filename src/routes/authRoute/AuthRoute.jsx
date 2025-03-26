@@ -26,6 +26,7 @@ function AuthRoute(props) {
                 <Routes>
                     <Route path='/login/oauth2' element={<OAuth2LoginPage />}></Route>
                     <Route path="/signup" element={<SignupPage />} />
+                    
                 </Routes>
 
             }

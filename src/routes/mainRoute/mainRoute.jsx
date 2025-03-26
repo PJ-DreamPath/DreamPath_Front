@@ -10,6 +10,7 @@ import CommunityBoardPage from '../../pages/CommunityBoardPage/CommunityBoardPag
 import AuthenticatedRoute from '../AuthenticatedRoute/AuthenticatedRoute';
 import PostDetailPage from '../../pages/PostDetailPage/PostDetailPage';
 import SideMenuBox from '../../components/common/SideMenuBox/SideMenuBox';
+import MainPage from '../../pages/MainPage/MainPage';
 
 function MainRoute() {
 
