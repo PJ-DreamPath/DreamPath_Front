@@ -1,5 +1,4 @@
 /**@jsxImportSource @emotion/react */
-import { alertTitleClasses } from '@mui/material';
 import { useTicketPurchaseMutation } from '../../mutations/ticketMutation';
 import * as s from './style';
 import React, { useEffect, useState } from 'react';
@@ -8,7 +7,6 @@ import { usePointChargeMutation } from '../../mutations/pointMutation';
 import PortOne from '@portone/browser-sdk/v2';
 
 import { v4 as uuid } from 'uuid';
-import axios from 'axios';
 
 function PurchaseSectionPage(props) {
 
@@ -18,10 +16,7 @@ function PurchaseSectionPage(props) {
     const ticketPurchase = useTicketPurchaseMutation();
     const pointCharge = usePointChargeMutation();
 
-    const PAYSTATUS = {
-        "PAID": "걸제완료",
-        "FAILED": "결제실패",
-    }
+    
 
     const products = [
         {
@@ -85,7 +80,7 @@ function PurchaseSectionPage(props) {
             });
 
             if (!!paymentResponse?.code) {
-                throw new Error("결제 취소소");
+                throw new Error("결제 취소");
             }
     
             await pointCharge.mutateAsync({ pointId, mid: paymentResponse.paymentId});
@@ -96,9 +91,6 @@ function PurchaseSectionPage(props) {
         }
     };
     
-
-
-
 
 const handlePurchaseButtonOnClick = async (e) => {
 
