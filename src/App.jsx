@@ -6,6 +6,7 @@ import MainRoute from './routes/mainRoute/mainRoute';
 import AuthRoute from './routes/authRoute/authRoute';
 import Footer from './components/common/Footer/Footer';
 import { useUserMeQuery } from './queries/userQuery';
+import HomeRoute from './routes/HomeRoute.jsx/HomeRoute';
 
 function App() {
 
@@ -17,8 +18,8 @@ function App() {
       <Mainlayout>
         <Routes>
           <Route path="/auth/*" element={<AuthRoute />} />
+          <Route path="/home" element={<HomeRoute />} />
           <Route path="/*" element={<MainRoute />} />
-          
         </Routes>
         <Footer />
       </Mainlayout>

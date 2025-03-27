@@ -9,9 +9,13 @@ import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
 
 import { GrView } from 'react-icons/gr';
 import { FcLike } from 'react-icons/fc';
+import { FaRegTrashCan } from 'react-icons/fa6';
+import { useDelPostMutation } from '../../mutations/postMutation';
+import Swal from 'sweetalert2';
 
 function MyMentoring(props) {
     const navigate = useNavigate();
+    const [posts, getPosts] = useState([]);
     const [searchParams, setSearchParams] = useSearchParams();
     const page = parseInt(searchParams.get('page') || '1');
     const searchText = searchParams.get('searchText') || '';
@@ -73,6 +77,49 @@ function MyMentoring(props) {
         navigate(`/service/mentoring/${postId}`);
     };
 
+    const delPost = useDelPostMutation();
+    async function handleDelBtnOnClick(postId) {
+        console.log(postId);
+
+        const result = await Swal.fire({
+            title: '게시글 삭제',
+            text: '정말로 게시글을 삭제하시겠습니까? 삭제 후에는 복구할 수 없습니다.',
+            showConfirmButton: true,
+            confirmButtonText: '확인',
+            confirmButtonColor: '#1681ff',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+            cancelButtonColor: 'red',
+        });
+
+        if (result.isConfirmed) {
+            delPost
+                .mutateAsync(postId)
+                .then(async (response) => {
+                    await Swal.fire({
+                        title: '삭제 성공',
+                        text: '해당 게시글을 삭제되었습니다.',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        iconColor: ' #1683ff',
+                        timer: 1000,
+                    });
+                    searchMyMentoringList.refetch();
+                })
+                .catch((error) => {
+                    Swal.fire({
+                        title: '삭제 실패',
+                        icon: 'error',
+                        iconColor: 'red',
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+                });
+        }
+
+        return;
+    }
+
     return (
         <div css={s.container}>
             <div css={s.titleSelectBar}>
@@ -126,6 +173,7 @@ function MyMentoring(props) {
                             <th css={s.tableHeader}>댓글</th>
                             <th css={s.tableHeader}>좋아요</th>
                             <th css={s.tableHeader}>조회수</th>
+                            <th css={s.tableHeader}>삭제</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -165,6 +213,16 @@ function MyMentoring(props) {
                                         <span css={s.countBox}>
                                             {my.viewCount}
                                         </span>
+                                    </td>
+                                    <td css={s.tableCell}>
+                                        <button
+                                            css={s.deleteButton}
+                                            onClick={() => {
+                                                handleDelBtnOnClick(my.postId)
+                                            }}
+                                        >
+                                            <FaRegTrashCan />
+                                        </button>
                                     </td>
                                 </tr>
                             )

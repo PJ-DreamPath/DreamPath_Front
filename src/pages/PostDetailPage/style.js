@@ -40,10 +40,12 @@ export const title = css`
     justify-content: flex-start;
     align-items: center;
     gap: 2rem;
+    width: 60rem;
 
     h2 {
         margin: 0;
-
+        width: fit-content;
+        max-width: 44rem;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;

@@ -10,7 +10,6 @@ import CommunityBoardPage from '../../pages/CommunityBoardPage/CommunityBoardPag
 import AuthenticatedRoute from '../AuthenticatedRoute/AuthenticatedRoute';
 import PostDetailPage from '../../pages/PostDetailPage/PostDetailPage';
 import SideMenuBox from '../../components/common/SideMenuBox/SideMenuBox';
-import MainPage from '../../pages/MainPage/MainPage';
 
 function MainRoute() {
 
@@ -27,7 +26,6 @@ function MainRoute() {
 
                 <MainRightLayout>
                     <Routes>
-                        <Route path="/" element={<></>} />
                         <Route path="/notice" element={<NoticePage />} />
                         <Route path="/notice/:postId" element={<PostDetailPage />} />
                         <Route path="/communityBoard" element={<CommunityBoardPage />} />
@@ -37,7 +35,6 @@ function MainRoute() {
                     </Routes>
                 </MainRightLayout>
             </MainContainer>
-        
         </>
         
     );
