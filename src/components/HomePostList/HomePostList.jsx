@@ -4,6 +4,7 @@ import { useGetPosts } from '../../queries/postQuery';
 import * as s from './style';
 import React, { useEffect, useState } from 'react';
 import PostCard from '../common/PostCard/PostCard';
+import HomePostCard from './HomePostCard';
 
 function HomePostList(props) {
     const navigation = useNavigate();
@@ -11,7 +12,7 @@ function HomePostList(props) {
     const [search, setSearch] = useState({
                 page: 1,
                 limitCount: 4,
-                order: 'startDesc',
+                order: 'starDesc',
                 searchTxt: '',
             });
 
@@ -26,14 +27,14 @@ function HomePostList(props) {
         <div css={s.postListContainer}>
             {
                 mentoringPostList?.data?.data.postList.map((post) => 
-                    <PostCard
+                    <HomePostCard
                         key={`homePost_${post.postId}`}
                         status={post.status}
                         likeCount={post.likeCount}
                         title={post.title}
                         content={post.content}
                         nickname={post.user.nickname}
-                        starPoint={post.user.starPoint}
+                        starPoint={post.starPoint}
                         createdAt={post.createdAt}
                         onClick={() => {
                             navigation(
