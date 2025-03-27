@@ -7,5 +7,5 @@ export const layout = css`
   height: auto;
   overflow: hidden;
 
-  background-color: #dbdbdb;
+  background-color: #f1f5fd;
 `;
