@@ -12,5 +12,5 @@ export const container = css`
 
   border-radius: 0 20rem 0 0;
 
-  background-color: #dbdbdb;
+  background-color: #f1f5fd;
 `;
