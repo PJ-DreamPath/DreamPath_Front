@@ -39,7 +39,7 @@ export const tableHeader = css`
     text-align: center;
 
     &:nth-of-type(2) {
-        width: 40rem;
+        width: 35rem;
     }
 `;
 
