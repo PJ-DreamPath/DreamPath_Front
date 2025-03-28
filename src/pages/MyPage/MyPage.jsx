@@ -2,7 +2,9 @@
 import * as s from './style';
 
 import {
+    useConfirmPhoneNumberMutation,
     userDeleteUserMutation,
+    useSendAuthPhoneMutation,
     useUpdatePasswordMutation,
     useUpdateProfileImageMutation,
 } from '../../mutations/mypageMutation';
@@ -13,6 +15,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useUserMeQuery } from '../../queries/userQuery';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 function MyPage(props) {
     const navigate = useNavigate();
@@ -22,11 +25,20 @@ function MyPage(props) {
     const updateEmailMutation = useUpdateEmailMutation();
     const updatePasswordMutation = useUpdatePasswordMutation();
     const deleteUserMutation = userDeleteUserMutation();
+    const sendAuthPhoneMutation = useSendAuthPhoneMutation();
+    const confirmPhoneNumberMutation = useConfirmPhoneNumberMutation();
 
     const [nicknameValue, setNicknameValue] = useState('');
     const [emailValue, setEmailValue] = useState('');
     const [passwordValue, setPasswordValue] = useState('');
     const [userValue, setUserValue] = useState('');
+    const [phoneNumberInputValue, setPhoneNumberInputValue] = useState({
+        phoneNumber:'',
+    });
+
+    const [ authNumber, setAuthNumber ] = useState("");
+    const [ isEqualCode, setIsEqualCode ] = useState(false);
+    
 
     useEffect(() => {
         setNicknameValue(loginUser?.data?.data.nickname || '');
@@ -80,6 +92,39 @@ function MyPage(props) {
         window.location.reload();
         navigate('/');
     };
+
+    const handleAuthPhoneOnChange = (e) => {
+        setPhoneNumberInputValue({
+            phoneNumber: e.target.value,
+        });
+    }
+
+    const handelAuthPhoneOnClick = async () => {
+       await sendAuthPhoneMutation.mutateAsync(phoneNumberInputValue).then((response) => {
+            setAuthNumber(response.data);
+            Swal.fire("인증 번호가 전송되었습니다.");
+       }).catch((error) => {
+            Swal.fire("인증 번호 전송에 실패했습니다.");
+       });
+    }
+
+    const handleAuthPhoneCheckOnChange = (e) => {
+        if(authNumber !== Number( e.target.value) || e.target.value === "") {
+            setIsEqualCode(false);
+        } else {
+            setIsEqualCode(true);
+        }
+    }
+
+    const handelConfirmButtonOnClick = async () => {
+        await confirmPhoneNumberMutation.mutateAsync(phoneNumberInputValue).then((response) => {
+            console.log(response);
+            Swal.fire(response.data);
+        }).catch((error) => {
+            console.log(error);
+            Swal.fire(error.data);
+        });
+    }
 
     return (
         <>
@@ -169,9 +214,12 @@ function MyPage(props) {
 
                     <div css={s.infoRow}>
                         <span>휴대폰 번호</span>
-                        <input type="tel" />
-                        <button>인증하기</button>
-                        <button>수정</button>
+                        <input onChange={handleAuthPhoneOnChange} type="tel" />
+                        <button onClick={handelAuthPhoneOnClick}>인증하기</button>
+                        {
+                            authNumber !== '' ?  <input onChange={handleAuthPhoneCheckOnChange} type="text" /> : <></>
+                        }
+                        <button disabled={!isEqualCode} onClick={handelConfirmButtonOnClick}>확인</button>
                     </div>
                 </div>
             </section>
