@@ -1,13 +1,17 @@
 /** @jsxImportSource @emotion/react */
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as s from './style';
 import React from 'react';
 
 export default function Header({}) {
+  const navigate = useNavigate();
+  const handleImgOnClick = () => {
+    navigate('/home');
+  }
   return (
     <header css={s.header}>
       <h1 css={s.logo}>
-        <img src={'../../public/img/img_logo_white.svg'} />
+        <img src={'../../public/img/img_logo_white.svg'} onClick={handleImgOnClick} />
       </h1>
 
       <nav css={s.nav}>

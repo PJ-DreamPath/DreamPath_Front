@@ -109,5 +109,8 @@ export const infoRow = css`
     border-radius: 0.5rem;
     cursor: pointer;
     border: none;
+    &:disabled {
+      background-color: #aaa;
+    };
   }
 `;
