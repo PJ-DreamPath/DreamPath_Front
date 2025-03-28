@@ -12,7 +12,7 @@ export const header = css`
 
 export const logo = css`
   display: inline-block;
-
+  cursor: pointer;
   box-sizing: border-box;
   padding: 0;
   margin: 0;

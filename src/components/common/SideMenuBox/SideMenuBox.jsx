@@ -30,7 +30,7 @@ export default function SideMenuBox({}) {
             fullPath['*'].includes('mypage') ||
             fullPath['*'].includes('admin')
         ) {
-            boardList.refetch();
+            // boardList.refetch();
 
             if (boardList && boardList.data && boardList.data.data) {
                 let newArray = boardList.data.data.filter((board) =>

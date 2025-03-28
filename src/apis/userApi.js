@@ -27,3 +27,13 @@ export const deleteUserApi = async (user) =>
     await api.delete('api/user', { user });
 
 
+export const sendUserAuthPhoneApi = async (params) => {
+    
+    return await api.post('/api/send-one', params);
+}
+
+export const updatePhoneNumberApi = async (params) => {
+    console.log("params", params);
+    return await api.put('/api/user/me/phoneNumber', params);
+}
+
