@@ -2,6 +2,7 @@
 import * as s from './style';
 
 import {
+    useConfirmPhoneNumberMutation,
     userDeleteUserMutation,
     useSendAuthPhoneMutation,
     useUpdatePasswordMutation,
@@ -25,6 +26,7 @@ function MyPage(props) {
     const updatePasswordMutation = useUpdatePasswordMutation();
     const deleteUserMutation = userDeleteUserMutation();
     const sendAuthPhoneMutation = useSendAuthPhoneMutation();
+    const confirmPhoneNumberMutation = useConfirmPhoneNumberMutation();
 
     const [nicknameValue, setNicknameValue] = useState('');
     const [emailValue, setEmailValue] = useState('');
@@ -112,6 +114,16 @@ function MyPage(props) {
         } else {
             setIsEqualCode(true);
         }
+    }
+
+    const handelConfirmButtonOnClick = async () => {
+        await confirmPhoneNumberMutation.mutateAsync(phoneNumberInputValue).then((response) => {
+            console.log(response);
+            Swal.fire(response.data);
+        }).catch((error) => {
+            console.log(error);
+            Swal.fire(error.data);
+        });
     }
 
     return (
@@ -207,7 +219,7 @@ function MyPage(props) {
                         {
                             authNumber !== '' ?  <input onChange={handleAuthPhoneCheckOnChange} type="text" /> : <></>
                         }
-                        <button disabled={!isEqualCode}>확인</button>
+                        <button disabled={!isEqualCode} onClick={handelConfirmButtonOnClick}>확인</button>
                     </div>
                 </div>
             </section>
