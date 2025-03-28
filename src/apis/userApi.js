@@ -25,3 +25,5 @@ export const updateEmailApi = async (email) =>
     await api.put('/api/user/profile/email', { email });
 export const deleteUserApi = async (user) =>
     await api.delete('api/user', { user });
+
+

@@ -1,7 +1,6 @@
 /**@jsxImportSource @emotion/react */
 import { useTicketPurchaseMutation } from '../../mutations/ticketMutation';
 import * as s from './style';
-import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { usePointChargeMutation } from '../../mutations/pointMutation';
 import PortOne from '@portone/browser-sdk/v2';
@@ -10,14 +9,11 @@ import { v4 as uuid } from 'uuid';
 
 function PurchaseSectionPage(props) {
 
-    const [payments, setPayments] = useState([]);
-
-
     const ticketPurchase = useTicketPurchaseMutation();
     const pointCharge = usePointChargeMutation();
 
-    
 
+    //상품
     const products = [
         {
             productId: 1,
@@ -41,9 +37,7 @@ function PurchaseSectionPage(props) {
         },
     ];
 
-
-
-
+    
     const handlePointChargeButtonOnClick = async (productId) => {
         console.log("Received productId:", productId);
         const foundProduct = products.find((p) => p.productId === productId);
