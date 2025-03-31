@@ -7,5 +7,9 @@ export const layout = css`
   height: auto;
   overflow: hidden;
 
+  position: absolute;
+  left: 7rem;
+  top: 0;
+
   background-color: #fff;
 `;

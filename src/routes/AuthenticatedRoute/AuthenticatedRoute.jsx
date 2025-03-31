@@ -23,7 +23,7 @@ function AuthenticatedRoute(props) {
     
         if(principalState.status === "error") {
             alert("로그인 후 이용해주세요.");
-            navigate("/")
+            navigate("/home")
         }
     }, [principalState.status]);
 
