@@ -52,6 +52,19 @@ export const title = css`
         font-size: 3rem;
     }
 `;
+
+export const buttonContainer = css`
+
+    /* display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 1rem; */
+
+    margin-left: auto ;
+    button {
+        margin-right: 1.5rem;
+    }
+`;
 export const starBox = css`
     display: flex;
     justify-content: flex-start;
