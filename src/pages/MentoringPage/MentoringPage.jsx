@@ -203,6 +203,7 @@ export default function MentoringPage({}) {
                     <p css={s.noPost}>등록된 게시글이 없습니다.</p>
                 )}
             </div>
+
         </>
     );
 }

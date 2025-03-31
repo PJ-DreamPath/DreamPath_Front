@@ -12,7 +12,8 @@ export const useUserMeQuery = () => useQuery({
     
 });
 
-export const useGetMyMentoringQuery = (param) => useQuery({
+export const useGetMyMentoringQuery = (param) => 
+    useQuery({
     queryKey: ["useGetMyMentoringQuery", param],
     queryFn: async () => await getMyMentoringApi(param),
 

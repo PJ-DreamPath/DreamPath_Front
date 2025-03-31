@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import * as s from './style';
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useGetBoards } from '../../queries/boardQuery';
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 import { FaHeart, FaRegHeart, FaStar } from 'react-icons/fa';
 import parse from 'html-react-parser';
 import { useGetMyLike, useGetPostDetail } from '../../queries/postQuery';
-import moment from 'moment/moment';
+import moment, { now } from 'moment/moment';
 import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
@@ -20,9 +20,18 @@ import {
     useMentoringApplyMutation,
     useMentoringStatusUpdateMutation,
 } from '../../mutations/mentoringMutation';
+import { useUserMeQuery } from '../../queries/userQuery';
+import { useDeleteCommentMutation, useSaveCommentMutation, useUpdateCommentMutation } from '../../mutations/MentoringComment';
+import Quill from 'quill';
+import { usegetCommentsQuery } from '../../queries/commentQuery';
 
-export default function PostDetailPage({}) {
+export default function PostDetailPage({ }) {
     const navigate = useNavigate();
+
+    const updateCommentMutation = useUpdateCommentMutation();
+    const deleteCommentMutation = useDeleteCommentMutation();
+    const saveCommentMutation = useSaveCommentMutation();
+
 
     // notice인지 mentring인지 communityBoard인지 구분하기 위함!
     const fullPath = useParams();
@@ -35,6 +44,7 @@ export default function PostDetailPage({}) {
     // breadCrumb
     const boardList = useGetBoards();
     const [board, setBoard] = useState({});
+
 
     useEffect(() => {
         if (boardList?.data?.data) {
@@ -93,9 +103,9 @@ export default function PostDetailPage({}) {
         if (
             loginUserData.data.userId === post.userId &&
             moment(post.startDate).format('YYYY-MM-DD') <
-                moment().format('YYYY-MM-DD') &&
+            moment().format('YYYY-MM-DD') &&
             moment(post.endDate).format('YYYY-MM-DD') >
-                moment().format('YYYY-MM-DD')
+            moment().format('YYYY-MM-DD')
         ) {
             setIsRecruiting(!isRecruiting);
             update.mutateAsync(post.postId).then((result) => {
@@ -166,6 +176,7 @@ export default function PostDetailPage({}) {
                         showConfirmButton: false,
                         iconColor: ' #1683ff',
                         timer: 1000,
+
                     });
 
                     navigate(
@@ -181,12 +192,190 @@ export default function PostDetailPage({}) {
                         iconColor: 'red',
                         showConfirmButton: false,
                         timer: 1000,
+
                     });
                 });
         }
 
         return;
     }
+
+
+    // comment
+    // const [commentValue, setCommentValue] = useState("");
+    // const [starPoint, setStarPoint] = useState(-1);
+    // const [reviewText, setReviewText] = useState('');
+
+    const useGetComments = usegetCommentsQuery({
+        page: 1,
+        limitCount: 3,
+    });
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const [pageNumbers, setPageNumbers] = useState([]);
+
+    useEffect(() => {
+        if (!useGetComments?.isLoading) {
+            const currentPage = useGetComments?.data?.data.page || 1;
+            const totalPages =
+                useGetComments?.data?.data.totalPages || 1;
+            const startIndex = Math.floor((currentPage - 1) / 5) * 5 + 1;
+            const endIndex =
+                startIndex + 4 > totalPages ? totalPages : startIndex + 4;
+
+            let newPageNumbers = [];
+            for (let i = startIndex; i <= endIndex; i++) {
+                newPageNumbers = [...newPageNumbers, i];
+            }
+            setPageNumbers(newPageNumbers);
+        }
+    }, [useGetComments?.data]);
+
+    useEffect(() => {
+        console.log(useGetComments);
+        useGetComments?.refetch();
+    }, [searchParams]);
+
+    const handlePageNumbersOnClick = (pageNumber) => {
+        searchParams.set('page', pageNumber);
+        setSearchParams(searchParams);
+    };
+
+    const [saveCommentValue, setSaveCommentValue] = useState({
+        postId: 0,
+        content: "",
+        starPoint: -1
+
+    });
+
+
+    useEffect(() => {
+        setSaveCommentValue((prev) => ({
+            ...prev,
+            postId: Number(post.postId)
+        }))
+    }, [post])
+
+    // update, delete button(comment)
+    const handleUpdateOnClick = async () => {
+
+        const result = await Swal.fire({
+            title: "후기 내용 수정",
+            text: "작성하신 내용으로 수정하겠습니까?",
+            showConfirmButton: true,
+            confirmButtonText: "확인",
+            showCancelButton: true,
+            cancelButtonText: "취소",
+
+        });
+
+        if (result.isConfirmed) {
+
+            await updateCommentMutation.mutateAsync(commentValue).then(async (response) => {
+
+                await Swal.fire({
+                    title: "수정 성공",
+                    text: "후기가 수정되었습니다.",
+                    icon: "success",
+                    timer: 1000,
+                    showConfirmButton: false
+                });
+            })
+                .catch((error) => {
+                    Swal.fire({
+                        title: "수정 실패",
+                        icon: "error",
+                        timer: 1000,
+                        showConfirmButton: false
+
+                    });
+
+                });
+        }
+    }
+
+    const handleDeleteOnClick = async () => {
+
+        const result = await Swal.fire({
+            title: "후기 내용 삭제",
+            text: "후기 내용을 삭제하시겠습니까?",
+            showConfirmButton: true,
+            confirmButtonText: "확인",
+            showCancelButton: true,
+            cancelButtonText: "취소",
+
+        });
+        if (result.isConfirmed) {
+            await deleteCommentMutation.mutateAsync(commentValue).then(async (response) => {
+
+                await Swal.fire({
+                    title: "삭제 성공",
+                    text: "후기가 삭제되었습니다.",
+                    icon: "success",
+                    timer: 1000,
+                    showConfirmButton: false
+                });
+            })
+                .catch((error) => {
+                    Swal.fire({
+                        title: "삭제 실패",
+                        icon: "error",
+                        timer: 1000,
+                        showConfirmButton: false
+
+                    });
+
+                });
+        }
+    }
+
+    // 후기 작성
+    const handleReviewOnChange = (e) => {
+        setSaveCommentValue((prev) => ({
+            ...prev,
+            content: e.target.value
+        }))
+    };
+
+
+
+    // 등록
+    const handleCommnetSaveOnClick = async () => {
+        if (saveCommentValue.starPoint <= 0 || saveCommentValue.content === "") {
+            await Swal.fire({
+                title: "등록 실패",
+                text: "후기 등록이 실패되었습니다.",
+                icon: "error",
+                timer: 1000,
+                showConfirmButton: false
+            });
+
+            return;
+        }
+
+        await saveCommentMutation.mutateAsync(saveCommentValue).then(async (response) => {
+            if (response.status === 200) {
+                await Swal.fire({
+                    title: "등록 성공",
+                    text: "후기가 등록되었습니다.",
+                    icon: "success",
+                    timer: 1000,
+                    showConfirmButton: false
+                });
+            } else {
+                await Swal.fire({
+                    title: "등록 실패",
+                    text: "후기 등록이 실패되었습니다.",
+                    icon: "error",
+                    timer: 1000,
+                    showConfirmButton: false
+                });
+            }
+        })
+
+    };
+
+
 
     return !postDetail.isLoading ? (
         <>
@@ -239,12 +428,12 @@ export default function PostDetailPage({}) {
                                 css={s.toggleBox(
                                     isRecruiting,
                                     loginUserData.data.userId === post.userId &&
-                                        moment(post.startDate).format(
-                                            'YYYY-MM-DD'
-                                        ) < moment().format('YYYY-MM-DD') &&
-                                        moment(post.endDate).format(
-                                            'YYYY-MM-DD'
-                                        ) > moment().format('YYYY-MM-DD')
+                                    moment(post.startDate).format(
+                                        'YYYY-MM-DD'
+                                    ) < moment().format('YYYY-MM-DD') &&
+                                    moment(post.endDate).format(
+                                        'YYYY-MM-DD'
+                                    ) > moment().format('YYYY-MM-DD')
                                 )}
                             >
                                 <span></span>
@@ -278,7 +467,7 @@ export default function PostDetailPage({}) {
             <div css={s.contentBox}>{parse(String(post.content || ''))}</div>
 
             {loginUserData.data.userId === post.userId ||
-            post.status !== 'recruiting' ? (
+                post.status !== 'recruiting' ? (
                 <></>
             ) : (
                 <button
@@ -287,7 +476,7 @@ export default function PostDetailPage({}) {
                     onClick={handlelikeBtnOnClick}
                 >
                     {isMyLike?.data?.data === undefined ||
-                    isMyLike?.data?.data === '' ? (
+                        isMyLike?.data?.data === '' ? (
                         <FaRegHeart />
                     ) : (
                         <FaHeart />
@@ -384,7 +573,116 @@ export default function PostDetailPage({}) {
 
             {/* 댓글 박스 */}
             {pathNm !== 'notice' && (
-                <div css={s.commentBox}>여기에 댓글 코드 작성해주세요</div>
+                <div css={s.commentBox}>
+                    <div css={s.saveAndCount}>
+                        <div css={s.reviewCount}>후기 {length}</div>
+                        <div>
+                            <button onClick={handleCommnetSaveOnClick} css={s.commentSave}>등록</button>
+                        </div>
+                    </div>
+
+                    <div css={s.commentContainer}>
+                        <div css={s.commentTopBox}>
+                            <div css={s.userInfo}>
+                                <div css={s.img}>
+                                    <img
+                                        src={`http://localhost:8080/image/user/profile/${loginUserData?.data?.profileImg}`}
+                                        alt=""
+                                    />
+                                </div>
+                                <div css={s.info}>
+                                    <p css={s.nickname}>
+                                        {loginUserData?.data?.nickname}
+                                    </p>
+                                    <p css={s.date}>
+                                        {moment(loginUserData?.data?.createdAt).format("YYYY-MM-DD")}
+                                    </p>
+                                </div>
+                            </div>
+                            <div css={s.starPointBox}> {Array.from({ length: 5 }, (_, idx) => (<FaStar key={`vcv` + idx} className={saveCommentValue.starPoint > idx ? 'on' : ""} onClick={() => setSaveCommentValue((prev) => ({
+                                ...prev,
+                                starPoint: idx + 1
+                            }))} />
+                            ))}
+
+
+                            </div>
+                        </div>
+                        <div css={s.commentBottonBox}>
+                            <textarea onChange={handleReviewOnChange} placeholder='후기입력'>
+
+                            </textarea>
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    {/* <div css={s.commentWriteBox}>
+                    </div>
+                    <div css={s.commentReviewBox}>
+                        <div css={s.profile_section}>
+                            
+                                <div css={s.profile_img}>
+                                {loginUser.isLoading || (
+                                <img
+                                    src={`http://localhost:8080/image/user/profile/${loginUser?.data?.data.profileImg}`}
+                                    alt=""
+                                />
+                                )}
+                            
+                                </div>
+                                <div css={s.profile_Info}>
+                                    <div css={s.saveNickname}>
+                                    {loginUser.isLoading || (
+                                            <span>{loginUser?.data?.data.nickname || '닉네임 없음'}</span>
+                                        )}
+                                    </div>
+                                    <div css={s.createDate}>{commentDate}</div>
+                                </div>
+                          
+                            <div css={s.comment_action}>
+                               
+                                    <button onClick={handleUpdateOnClick} css={s.updateBox}>수정</button>
+                                    <button onClick={handleDeleteOnClick} css={s.deleteBox}>삭제</button>
+                              
+                                <div css={s.starPoint}>
+                                    {[1, 2, 3, 4, 5].map((star) => (
+                                        <span key={star} onClick={() => setStarPoint(star)}
+                                            style={{color: starPoint >= star ? "gold" : "#D9D9D9",
+                                                
+                                            }}>
+                                                ★
+                                            </span>
+                                    ))}
+                                </div> 
+                            </div> 
+                        </div>
+                        
+                        <div css={s.line}></div>
+
+                        <div  onChange={handleReviewOnChange} css={s.review} placeholder='후기를 작성해주세요.' >후기 작성
+                            
+
+                        </div>
+                    
+                </div> */}
+                </div>
+
+
             )}
         </>
     ) : (

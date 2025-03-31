@@ -16,6 +16,7 @@ export const profileContent = css`
   gap: 1.5rem;
 `;
 
+
 export const profileImage = css`
   overflow: hidden;
   cursor: pointer;
