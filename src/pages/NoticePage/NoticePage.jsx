@@ -15,7 +15,6 @@ function NoticePage({ }) {
 
     const pathNm = useParams();
     
-    
     const orderSelectOptions = [
         { value: 'desc', label: '최신순' },
         { value: 'asc', label: '오래된순' },
@@ -23,6 +22,8 @@ function NoticePage({ }) {
     ];
     
     const [searchParams, setSearchParams] = useSearchParams();
+    
+    const page = parseInt(searchParams.get("page") || "1");
     
     const [search, setSearch] = useState({
         page: searchParams.get('page') || '1',
@@ -209,7 +210,7 @@ function NoticePage({ }) {
                     {pageNumbers.map((number) => (
                         <button
                             key={`noticePostList${number}`}
-                            css={s.pageNum(search.page === number)}
+                            css={s.pageNum(page === number)}
                             onClick={() => handlePageNumbersOnClick(number)}
                         >
                             <span>{number}</span>

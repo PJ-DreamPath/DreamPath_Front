@@ -30,7 +30,7 @@ export default function SideMenuBox({}) {
             fullPath['*'].includes('mypage') ||
             fullPath['*'].includes('admin')
         ) {
-            // boardList.refetch();
+            
 
             if (boardList && boardList.data && boardList.data.data) {
                 let newArray = boardList.data.data.filter((board) =>
@@ -41,6 +41,16 @@ export default function SideMenuBox({}) {
             }
         }
     }, [fullPath, boardList.data]);
+
+     useEffect(() => {
+        if (
+            fullPath['*'] === 'service/mentoring' ||
+            fullPath['*'].includes('mypage') ||
+            fullPath['*'].includes('admin')
+        ) {
+            boardList.refetch();
+        }
+    }, [fullPath]);
 
     // 각 페이지 데이터 리스트
     const categories = useGetCategories(board.boardId);
