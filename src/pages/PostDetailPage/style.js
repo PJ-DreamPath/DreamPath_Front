@@ -313,9 +313,245 @@ export const btnBox = css`
     }
 `;
 
+// 댓글
+
+export const commentContainer = css`
+    width: 100%;
+    margin-top: 1.5rem;
+    border-radius: 1rem;
+    background-color: #fff;
+`;
+
+export const commentTopBox = css`
+    display: flex;
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    width: 100%;
+    height: 50%;
+    border-bottom: solid 0.1rem #dbdbdb;
+`;
+
+export const userInfo = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+`;
+
+export const img = css`
+    overflow: hidden;
+    width: 6rem;
+    height: 6rem;
+    background-color: #dbdbdb;
+    border-radius: 50%;
+
+    img {
+        display: inline-block;
+        width: 100%;
+        height: auto;
+    }
+`;
+
+export const info = css`
+    margin-left: 1.5rem;
+
+    & > p {
+        margin: 0;
+    }
+`
+export const nickname = css`
+    font-size: 1.6rem;
+    font-weight: bold;
+`
+
+export const date = css`
+    color: #aaa;
+`
+
+export const starPointBox = css`
+    display: flex;
+    gap: 1rem;
+    font-size: 2.5rem;
+
+
+
+    svg {
+        &.on {
+            path {
+                color: gold;
+            }
+        }
+        path {
+            color: #aaa;
+    }}
+`
+export const commentBottonBox = css`
+    width: 100%;
+    padding: 2rem;
+    box-sizing: border-box;
+
+    & > textarea {
+        width: 100%;
+        resize: none;
+        height: 10rem;
+        border: none;
+        outline: none;
+
+        &::placeholder {
+            color: #aaa;
+            font-weight: bold;
+        }
+    }
+`
+
+
+
+
+
+
+
 export const commentBox = css`
+
     margin-top: 10rem;
     padding-top: 5rem;
     width: 100%;
+    height: 100%;
     background-color: #f1f5fd;
+
 `;
+
+export const saveAndCount = css`
+    display: flex;
+    justify-content: space-between;
+`
+
+export const reviewCount = css`
+    font-size: 1.5rem;
+    font-weight: bold;
+`
+
+export const commentSave = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 8rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    background-color: #1681FF;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+    border: none;
+
+`
+
+export const commentReviewBox = css`
+    position: relative;
+    display: flex;
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+    margin: 3rem 4rem 2rem 4rem;
+    width: auto;
+    height: 30rem;
+    background-color: #ffffff;
+`
+
+export const profile_section = css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;    
+    margin-bottom: 10rem;
+    width: 100%;
+    
+`
+
+export const profile_img = css`
+  overflow: hidden;
+  width: 6rem;
+  height: 6rem;
+  margin-left: 3rem;
+  border-radius: 50%;
+  
+
+  & > img {
+    width: 100%;
+  }
+`
+
+export const profile_Info = css`
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-left: 1.5rem;
+
+`
+
+export const saveNickname = css`
+    font-size: 1.5rem;
+    font-weight: bold;
+`
+
+export const createDate = css`
+    white-space: nowrap ;
+`
+
+export const comment_action = css`
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 3rem;
+    gap: 1.5rem;
+    width: 100%;
+    
+`
+
+export const line = css`
+    position: absolute;
+    top: 50%; 
+    left: 0;
+    width: 100%;
+    border-top: 3px solid rgba(201, 201, 201, 0.3) ;
+  ;
+`
+
+export const updateBox = css`
+    width: 10rem;
+    height: 3.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: #1681FF;
+    color: #fafafa;
+    font-weight: bold;
+`
+export const deleteBox = css`
+    width: 10rem;
+    height: 3.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: red;
+    color: #fafafa;
+    font-weight: bold;
+`
+
+export const starPoint = css`
+    font-size: 3rem;
+    letter-spacing: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+`
+
+export const review = css`
+    position: absolute;
+    bottom: 10%;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    font-size: 0.5rem;
+    height: auto;
+    color: #000000;
+
+`
+
