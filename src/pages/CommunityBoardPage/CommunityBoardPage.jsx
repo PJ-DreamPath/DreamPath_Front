@@ -11,10 +11,12 @@ import { FcLike } from 'react-icons/fc';
 import { GrView } from 'react-icons/gr';
 import { FaRegCommentDots } from 'react-icons/fa';
 import moment from 'moment/moment';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function CommunityBoardPage({}) {
     const navigation = useNavigate();
-
+    const queryClient = useQueryClient();
+    const loginUser = queryClient.getQueryData(["userMeQuery"]);
     // 셀렉트 박스 옵션
     const orderSelectOptions = [
         { value: 'desc', label: '최신순' },
@@ -177,6 +179,11 @@ export default function CommunityBoardPage({}) {
                                 <tr key={`communityBoard_${idx}`}>
                                     <td
                                         onClick={() => {
+                                            if(!loginUser){
+                                                alert("로그인 후 이용해주세요");
+                                                navigation("/home");
+                                                return;
+                                            }
                                             navigation(
                                                 `/communityBoard/${board.postId}`
                                             );

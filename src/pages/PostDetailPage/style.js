@@ -175,6 +175,7 @@ export const contentBox = css`
     padding: 2rem 0;
     width: 100%;
     height: auto;
+    min-height: 15rem;
 
     font-size: 1.6rem;
 `;
@@ -426,18 +427,77 @@ export const commentBottonBox = css`
 
 
 export const commentBox = css`
-
+    box-sizing: border-box;
     margin-top: 10rem;
     padding-top: 5rem;
     width: 100%;
     height: 100%;
     background-color: #f1f5fd;
+    position: relative;
+    z-index:1;
+    padding: 5rem 5rem 0;
 
+     ::before {
+        content: "";
+        width: 100vw;
+        height: 100%;
+        position: absolute;
+        left: -40rem;
+        top: 0;
+        background-color: #f1f5fd;
+        z-index: -1;
+    }
+
+`;
+export const footer = css`
+    display: flex;
+    justify-content: center;
+    margin-right: 5rem;
+    margin-top: 1rem;
+    
+`;
+
+export const pageNumbers = css`
+    display: flex;
+
+    & > button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        margin-right: 0.5rem;
+        border: 0.1rem solid #dbdbdb;
+        border-radius: 0.5rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        font-weight: 600;
+        font-size: 1.2rem;
+        cursor: pointer;
+        background-color: #ffffff;
+
+        &:hover {
+            background-color: #eeeeee;
+        }
+
+        &:disabled {
+            background-color: #fafafa;
+        }
+
+        & > span {
+            margin-bottom: 0.1rem;
+        }
+    }
+`;
+
+export const pageNum = (isSelect) => css`
+    background-color: ${isSelect ? "#eeeeee" : "#ffffff"} !important;
 `;
 
 export const saveAndCount = css`
     display: flex;
     justify-content: space-between;
+    position: relative;
+    z-index:1;
 `
 
 export const reviewCount = css`
@@ -458,6 +518,7 @@ export const commentSave = css`
     font-weight: bold;
     color: #ffffff;
     border: none;
+
 
 `
 

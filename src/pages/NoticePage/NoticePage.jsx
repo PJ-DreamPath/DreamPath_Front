@@ -101,7 +101,7 @@ function NoticePage({}) {
 
     return (
         <div css={s.container}>
-            <h2 css={s.title}>공지사항</h2>
+            <div css={s.topBox}><h2 css={s.title}>공지사항</h2>
             <div css={s.searchWrap}>
                 <div css={s.searchBox}>
                     <input
@@ -154,7 +154,7 @@ function NoticePage({}) {
                         글쓰기
                     </button>
                 )}
-            </div>
+            </div></div>
             <div css={s.tableWrapper}>
                 <table css={s.table}>
                     <thead>
@@ -179,6 +179,11 @@ function NoticePage({}) {
                                             css={s.tableCell}
                                             className="titleName"
                                             onClick={() => {
+                                                if(!data){
+                                                    alert("로그인 후 이용해주세요");
+                                                    navigation("/home");
+                                                    return;
+                                                }
                                                 navigation(
                                                     `/notice/${post.postId}`
                                                 );
