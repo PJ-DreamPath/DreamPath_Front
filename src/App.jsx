@@ -3,10 +3,10 @@ import { Global } from '@emotion/react';
 import { global } from './styles/global';
 import Mainlayout from './components/common/Mainlayout/Mainlayout';
 import MainRoute from './routes/mainRoute/mainRoute';
-import AuthRoute from './routes/authRoute/authRoute';
 import Footer from './components/common/Footer/Footer';
 import { useUserMeQuery } from './queries/userQuery';
 import HomeRoute from './routes/HomeRoute.jsx/HomeRoute';
+import AuthRoute from './routes/authRoute/AuthRoute';
 
 function App() {
 

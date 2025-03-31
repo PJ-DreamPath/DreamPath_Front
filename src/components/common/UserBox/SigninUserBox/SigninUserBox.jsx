@@ -18,10 +18,9 @@ function SigninUserBox() {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const loginMutation = useLoginMutation();
-
     const [searchParams] = useSearchParams();
     const [isLoggedIn, setIsLoggedIn] = useState(!!getTokenFromLocalStorage());
-    const userInfo = queryClient.getQueryData(['userMeQuery']);
+    const userInfoState = queryClient.getQueryState(['userMeQuery']);
 
     const [inputValue, setInputValue] = useState({
         username: searchParams.get('username') || '',
@@ -29,10 +28,11 @@ function SigninUserBox() {
     });
 
     useEffect(() => {
+        console.log(userInfoState)
         if (getTokenFromLocalStorage()) {
             setIsLoggedIn(true);
         }
-    }, []);
+    }, [userInfoState.status]);
 
     const handleInputOnChange = (e) => {
         setInputValue((prev) => ({
@@ -47,23 +47,26 @@ function SigninUserBox() {
 
     const handleLoginOnClick = async () => {
         try {
+            
             const response = await loginMutation.mutateAsync(inputValue);
-
+            
             const tokenName = response.data.name;
             const accessToken = response.data.token;
 
             setTokenLocalStorage(tokenName, accessToken);
             setIsLoggedIn(true);
-
+            
             await Swal.fire({
                 icon: 'success',
                 text: '로그인 성공',
                 timer: 1000,
                 position: 'center',
                 showConfirmButton: false,
+                
             });
-
-            await queryClient.invalidateQueries({ queryKey: ['userMeQuery'] });
+            await queryClient.refetchQueries(['userMeQuery']); 
+    
+            setIsLoggedIn(!!getTokenFromLocalStorage());
         } catch (error) {
             await Swal.fire({
                 title: '로그인 실패',
@@ -71,19 +74,22 @@ function SigninUserBox() {
                 confirmButtonText: '확인',
                 confirmButtonColor: '#e22323',
             });
+            
         }
+        
     };
-
+    
+  
     const handleOAuth2LoginOnClick = (provider) => {
         window.location.href = `http://localhost:8080/oauth2/authorization/${provider}`;
+       
+
+        
     };
 
-    return isLoggedIn ? (
-        userInfo?.data?.roleId < 3 ? (
-            <MainUserBox />
-        ) : (
-            <AdminBox />
-        )
+
+    return isLoggedIn && !!userInfoState?.data?.data ? (
+        userInfoState?.data?.data?.roleId === 1 || userInfoState?.data?.data?.roleId === 2 ? <MainUserBox /> : <AdminBox /> 
     ) : (
         <div css={s.body}>
             <div css={s.signinUserBox}>
