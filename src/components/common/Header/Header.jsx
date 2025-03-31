@@ -11,7 +11,7 @@ export default function Header({}) {
   return (
     <header css={s.header}>
       <h1 css={s.logo}>
-        <img src={'../../public/img/img_logo_white.svg'} onClick={handleImgOnClick} />
+        <img src={'/img/img_logo_white.svg'} onClick={handleImgOnClick} />
       </h1>
 
       <nav css={s.nav}>

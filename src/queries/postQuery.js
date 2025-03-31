@@ -43,7 +43,7 @@ export const useGetPostDetail = (postId) =>
         queryKey: ['useGetPostDetail', postId],
         queryFn: async () => await postDetailApi(postId),
         retry: 0,
-        enabled: !!postId,
+        enabled: postId !== 0,
         staleTime: 1000 * 60 * 20,
         gcTime: 1000 * 60 * 10,
     });
@@ -54,7 +54,7 @@ export const useGetMyLike = (postId) =>
         queryKey: ['useGetMyLike', postId],
         queryFn: async () => await postsMyLikes(postId),
         retry: 0,
-        enabled: !!postId,
+        enabled: postId !== 0,
         staleTime: 1000 * 60 * 20,
         gcTime: 1000 * 60 * 10,
     });
