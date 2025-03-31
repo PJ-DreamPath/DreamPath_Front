@@ -12,8 +12,8 @@ function OAuth2LoginPage(props) {
         
         const accessToken = searchParams.get("accessToken"); 
         setTokenLocalStorage("AccessToken", accessToken);
-        await queryClient.invalidateQueries({queryKey: ["useMeQuery"]});
-        navigate("/");
+        await queryClient.invalidateQueries({queryKey: ["userMeQuery"]});
+        navigate("/home");
     }
 
 

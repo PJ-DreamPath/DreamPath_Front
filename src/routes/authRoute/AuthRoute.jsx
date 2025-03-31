@@ -12,15 +12,15 @@ function AuthRoute(props) {
     const queryClient = useQueryClient();
     const queryState = queryClient.getQueryState(["userMeQuery"]);
     
-
+    
     useEffect(() => {
         if (queryState.status === "success") {
-            navigate("/");
+            navigate("/home");
         }
     }, [queryState, location]);
 
     return (
-        <>
+        <>  
             {
                 queryState.status === "error" &&
                 <Routes>
