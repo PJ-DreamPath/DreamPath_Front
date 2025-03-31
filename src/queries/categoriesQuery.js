@@ -5,7 +5,6 @@ export const useGetCategories = (boardId) =>
     useQuery({
         queryKey: ['useGetCategories', boardId],
         queryFn: async () => {
-            console.log('useGetCategories', boardId);
             return await categoriesApi(boardId);
         },
         retry: 0,

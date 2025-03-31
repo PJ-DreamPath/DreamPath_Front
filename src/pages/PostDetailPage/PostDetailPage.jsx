@@ -20,15 +20,16 @@ import {
     useMentoringApplyMutation,
     useMentoringStatusUpdateMutation,
 } from '../../mutations/mentoringMutation';
-import { useUserMeQuery } from '../../queries/userQuery';
 import { useDeleteCommentMutation, useSaveCommentMutation, useUpdateCommentMutation } from '../../mutations/mentoringCommentMutation';
-import Quill from 'quill';
-import { usegetCommentsQuery } from '../../queries/commentQuery';
+import { usegGetCommentsQuery } from '../../queries/commentQuery';
+import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
 
 export default function PostDetailPage({ }) {
     const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
 
-    const updateCommentMutation = useUpdateCommentMutation();
+    const page = parseInt(searchParams.get('page') || '1');
+
     const deleteCommentMutation = useDeleteCommentMutation();
     const saveCommentMutation = useSaveCommentMutation();
 
@@ -61,12 +62,14 @@ export default function PostDetailPage({ }) {
 
     // 상세 조회
     const postDetail = useGetPostDetail(fullPath.postId);
-    const [post, setPost] = useState({});
+    const [post, setPost] = useState({
+        postId: 0,
+    });
 
     useEffect(() => {
         if (postDetail && postDetail.data && postDetail.data.data) {
             setPost(postDetail.data.data);
-            
+
         }
     }, [postDetail.data]);
 
@@ -140,7 +143,7 @@ export default function PostDetailPage({ }) {
 
     // 신청 클릭
     const mentoringApply = useMentoringApplyMutation();
-   
+
     const handleOnApplyButtonOnClick = () => {
         mentoringApply
             .mutateAsync({
@@ -203,15 +206,12 @@ export default function PostDetailPage({ }) {
 
 
     // comment
-    // const [commentValue, setCommentValue] = useState("");
-    // const [starPoint, setStarPoint] = useState(-1);
-    // const [reviewText, setReviewText] = useState('');
-
-    const useGetComments = usegetCommentsQuery({
-        page: 1,
-        limitCount: 3,
-    });
-    const [searchParams, setSearchParams] = useSearchParams();
+    const useGetComments = usegGetCommentsQuery(post.postId,
+        {
+            page: page,
+            limitCount: 3,
+        });
+    
 
     const [pageNumbers, setPageNumbers] = useState([]);
 
@@ -233,9 +233,13 @@ export default function PostDetailPage({ }) {
     }, [useGetComments?.data]);
 
     useEffect(() => {
-        console.log(useGetComments);
         useGetComments?.refetch();
     }, [searchParams]);
+
+    useEffect(() => {
+        console.log(useGetComments);
+    }, [useGetComments.data]);
+
 
     const handlePageNumbersOnClick = (pageNumber) => {
         searchParams.set('page', pageNumber);
@@ -245,7 +249,7 @@ export default function PostDetailPage({ }) {
     const [saveCommentValue, setSaveCommentValue] = useState({
         postId: 0,
         content: "",
-        starPoint: -1
+        starPoint: -1,
 
     });
 
@@ -258,44 +262,40 @@ export default function PostDetailPage({ }) {
     }, [post])
 
     // update, delete button(comment)
+
+    const [updateCommentValue, setUpdateCommentValue] = useState({
+        commentId: 0,
+        content: "",
+        starPoint: -1,
+    });
+
+    const updateCommentMutation = useUpdateCommentMutation();
+
+
+    const [isModify, setIsModify] = useState(false);
+
     const handleUpdateOnClick = async () => {
+        await updateCommentMutation.mutateAsync(updateCommentValue).then((response) => {
 
-        const result = await Swal.fire({
-            title: "후기 내용 수정",
-            text: "작성하신 내용으로 수정하겠습니까?",
-            showConfirmButton: true,
-            confirmButtonText: "확인",
-            showCancelButton: true,
-            cancelButtonText: "취소",
+            Swal.fire(response.data);
+            if (response.status === 200) {
+                useGetComments.refetch();
+                setIsModify(false);
+            }
+        }).catch((error) => {
+            Swal.fire(error.data);
+        })
 
-        });
-
-        if (result.isConfirmed) {
-
-            await updateCommentMutation.mutateAsync(commentValue).then(async (response) => {
-
-                await Swal.fire({
-                    title: "수정 성공",
-                    text: "후기가 수정되었습니다.",
-                    icon: "success",
-                    timer: 1000,
-                    showConfirmButton: false
-                });
-            })
-                .catch((error) => {
-                    Swal.fire({
-                        title: "수정 실패",
-                        icon: "error",
-                        timer: 1000,
-                        showConfirmButton: false
-
-                    });
-
-                });
-        }
     }
 
-    const handleDeleteOnClick = async () => {
+    const handleUpdateTextAriaOnChange = (e) => {
+        setUpdateCommentValue((prev) => ({
+            ...prev,
+            content: e.target.value,
+        }))
+    }
+
+    const handleDeleteCommentOnClick = async (comment) => {
 
         const result = await Swal.fire({
             title: "후기 내용 삭제",
@@ -306,8 +306,9 @@ export default function PostDetailPage({ }) {
             cancelButtonText: "취소",
 
         });
+
         if (result.isConfirmed) {
-            await deleteCommentMutation.mutateAsync(commentValue).then(async (response) => {
+            await deleteCommentMutation.mutateAsync({ commentId: comment.commentId, userId: comment.userId }).then(async (response) => {
 
                 await Swal.fire({
                     title: "삭제 성공",
@@ -316,6 +317,10 @@ export default function PostDetailPage({ }) {
                     timer: 1000,
                     showConfirmButton: false
                 });
+
+                if (response.status === 200) {
+                    useGetComments.refetch();
+                }
             })
                 .catch((error) => {
                     Swal.fire({
@@ -375,6 +380,8 @@ export default function PostDetailPage({ }) {
         })
 
     };
+
+
 
 
 
@@ -546,7 +553,7 @@ export default function PostDetailPage({ }) {
                             삭제
                         </button>
                     </>
-                ) : post.status === 'recruiting' &&  pathNm === 'mentoring' ? (
+                ) : post.status === 'recruiting' && pathNm === 'mentoring' ? (
                     <button
                         type="button"
                         className="regist"
@@ -576,7 +583,7 @@ export default function PostDetailPage({ }) {
             {pathNm !== 'notice' && (
                 <div css={s.commentBox}>
                     <div css={s.saveAndCount}>
-                        <div css={s.reviewCount}>후기 {length}</div>
+                        <div css={s.reviewCount}>후기 {useGetComments?.data?.data.totalElements}</div>
                         <div>
                             <button onClick={handleCommnetSaveOnClick} css={s.commentSave}>등록</button>
                         </div>
@@ -600,6 +607,7 @@ export default function PostDetailPage({ }) {
                                     </p>
                                 </div>
                             </div>
+
                             <div css={s.starPointBox}> {Array.from({ length: 5 }, (_, idx) => (<FaStar key={`vcv` + idx} className={saveCommentValue.starPoint > idx ? 'on' : ""} onClick={() => setSaveCommentValue((prev) => ({
                                 ...prev,
                                 starPoint: idx + 1
@@ -615,75 +623,116 @@ export default function PostDetailPage({ }) {
                             </textarea>
                         </div>
 
+
                     </div>
+                    {
+                        useGetComments?.data?.data.commentSearchList.map((comment, idx) => {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    {/* <div css={s.commentWriteBox}>
-                    </div>
-                    <div css={s.commentReviewBox}>
-                        <div css={s.profile_section}>
-                            
-                                <div css={s.profile_img}>
-                                {loginUser.isLoading || (
-                                <img
-                                    src={`http://localhost:8080/image/user/profile/${loginUser?.data?.data.profileImg}`}
-                                    alt=""
-                                />
-                                )}
-                            
-                                </div>
-                                <div css={s.profile_Info}>
-                                    <div css={s.saveNickname}>
-                                    {loginUser.isLoading || (
-                                            <span>{loginUser?.data?.data.nickname || '닉네임 없음'}</span>
-                                        )}
+                            return <div key={`commentList${idx}`} css={s.commentContainer}>
+                                <div css={s.commentTopBox}>
+                                    <div css={s.userInfo}>
+                                        <div css={s.img}>
+                                            <img
+                                                src={comment.profileImg !== null ? `http://localhost:8080/image/user/profile/${comment.profileImg}` : "/img/default.png"}
+                                                alt=""
+                                            />
+                                        </div>
+                                        <div css={s.info}>
+                                            <p css={s.nickname}>
+                                                {comment.nickname}
+                                            </p>
+                                            <p css={s.date}>
+                                                {moment(comment.createdAt).format("YYYY-MM-DD")}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div css={s.createDate}>{commentDate}</div>
-                                </div>
-                          
-                            <div css={s.comment_action}>
-                               
-                                    <button onClick={handleUpdateOnClick} css={s.updateBox}>수정</button>
-                                    <button onClick={handleDeleteOnClick} css={s.deleteBox}>삭제</button>
-                              
-                                <div css={s.starPoint}>
-                                    {[1, 2, 3, 4, 5].map((star) => (
-                                        <span key={star} onClick={() => setStarPoint(star)}
-                                            style={{color: starPoint >= star ? "gold" : "#D9D9D9",
-                                                
-                                            }}>
-                                                ★
-                                            </span>
+                                    {
+                                        comment?.userId === loginUserData?.data?.userId
+                                            ?
+                                            <div css={s.buttonContainer}>
+                                                {
+                                                    isModify
+                                                        ?
+                                                        <button onClick={handleUpdateOnClick} css={s.updateBox}>등록</button>
+                                                        :
+                                                        <button onClick={() => {
+                                                            setIsModify(true);
+                                                            setUpdateCommentValue((prev) => ({
+                                                                ...prev,
+                                                                commentId: comment.commentId,
+                                                                content: comment.content,
+                                                                starPoint: comment.starPoint,
+                                                            }))
+                                                        }} css={s.updateBox}>수정</button>
+                                                }
+                                                <button css={s.deleteBox} onClick={() => {
+                                                    handleDeleteCommentOnClick(comment)
+                                                }}>삭제</button>
+                                            </div>
+                                            : <></>
+                                    }
+                                    <div css={s.starPointBox}> {Array.from({ length: 5 }, (_, idx) => (<FaStar key={`vcv` + idx} className={
+                                        // comment.userId === loginUserData?.data?.userId ? updateCommentValue.starPoint === -1 ? comment.starPoint > idx ? 'on' : "" : updateCommentValue.starPoint > idx ? 'on' : "": comment.starPoint > idx ? 'on' : ""
+
+                                        comment.userId === loginUserData?.data?.userId && comment.commentId === updateCommentValue.commentId ? updateCommentValue.starPoint > idx ? 'on' : "" : comment.starPoint > idx ? 'on' : ""
+                                    } onClick={() => {
+                                        if (comment.userId === loginUserData?.data?.userId && isModify) {
+                                            setUpdateCommentValue((prev) => ({
+                                                ...prev,
+                                                starPoint: idx + 1,
+                                            }))
+                                        }
+                                    }} />
                                     ))}
-                                </div> 
-                            </div> 
-                        </div>
-                        
-                        <div css={s.line}></div>
 
-                        <div  onChange={handleReviewOnChange} css={s.review} placeholder='후기를 작성해주세요.' >후기 작성
-                            
 
+                                    </div>
+                                </div>
+                                <div css={s.commentBottonBox}>
+                                    {
+                                        isModify && loginUserData?.data?.userId === comment.userId
+                                            ?
+                                            <textarea onChange={handleUpdateTextAriaOnChange} placeholder='후기입력' value={updateCommentValue.content}>
+
+                                            </textarea>
+                                            :
+                                            comment.content
+                                    }
+                                </div>
+
+
+
+                            </div>
+                        })
+                    }
+                    <div css={s.footer}>
+                        <div css={s.pageNumbers}>
+                            <button
+                                disabled={
+                                    useGetComments?.data?.data.firstPage
+                                }
+                                onClick={() => handlePageNumbersOnClick(page - 1)}
+                            >
+                                <GoChevronLeft />
+                            </button>
+                            {pageNumbers.map((number) => (
+                                <button
+                                    key={`ticket${number}`}
+                                    css={s.pageNum(page === number)}
+                                    onClick={() => handlePageNumbersOnClick(number)}
+                                >
+                                    <span>{number}</span>
+                                </button>
+                            ))}
+                            <button
+                                disabled={useGetComments?.data?.data.lastPage}
+                                onClick={() => handlePageNumbersOnClick(page + 1)}
+                            >
+                                <GoChevronRight />
+                            </button>
                         </div>
-                    
-                </div> */}
+                    </div>
                 </div>
-
-
             )}
         </>
     ) : (

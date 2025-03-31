@@ -22,7 +22,7 @@ function AuthenticatedRoute(props) {
     useEffect(() => {
     
         if(principalState.status === "error") {
-            navigate("/")
+            navigate("/home")
         }
     }, [principalState.status]);
     

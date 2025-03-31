@@ -1,11 +1,16 @@
 import { css } from '@emotion/react';
 
 export const container = css`
-    width: 90%;
-    margin-top: -20px;
-    margin-left: -30px;
     background-color: white;
     border-radius: 8px;
+`;
+
+export const topBox = css`
+display: flex;
+justify-content: space-between;
+align-items: center;
+width : 100%;
+margin-bottom: 5rem;
 `;
 
 export const title = css`
@@ -13,6 +18,7 @@ export const title = css`
     font-weight: bold;
     color: #1681ff;
     margin-bottom: 20px;
+    margin: 0;
 `;
 
 export const searchWrap = css`
@@ -20,7 +26,6 @@ export const searchWrap = css`
     justify-content: flex-end;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 10px;
     height: 4rem;
 
     button {

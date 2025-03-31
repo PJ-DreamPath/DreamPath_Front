@@ -4,9 +4,12 @@ import * as s from './style';
 import React, { useEffect, useState } from 'react';
 import { useGetPosts } from '../../../queries/postQuery';
 import moment from 'moment';
+import { useQueryClient } from '@tanstack/react-query';
 
 function BottomContainer(props) {
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
+    const loginUser = queryClient.getQueryData(["userMeQuery"]);
 
     const handleNoticeMoreOnClick = () => {
         navigate("/notice");
@@ -51,6 +54,11 @@ function BottomContainer(props) {
                 {
                     noticeList?.data?.data.postList.map(post => 
                     <div css={s.row} onClick={() => {
+                        if(!loginUser){
+                            alert("로그인 후 이용해주세요");
+                            navigate("/home");
+                            return;
+                        }
                         navigate(
                             `/notice/${post.postId}`
                         );
@@ -70,6 +78,11 @@ function BottomContainer(props) {
                 {
                     communityList?.data?.data.postList.map(post => 
                     <div css={s.row} onClick={() => {
+                        if(!loginUser){
+                            alert("로그인 후 이용해주세요");
+                            navigate("/home");
+                            return;
+                        }
                         navigate(
                             `/communityBoard/${post.postId}`
                         );
