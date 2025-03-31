@@ -5,7 +5,7 @@ export const getSearchTicketPurchaseListApi = async (params) => await api.get("/
 export const ticketPurchaseApi = async (params) => {
     console.log(params);
     
-    return await api.put(`/api/ticket/renewal?ticketId=${params.ticketId}`);
+    return await api.put(`/api/ticket/renewal/remaining`, params);
 }
 
 
