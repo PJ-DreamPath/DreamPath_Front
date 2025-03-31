@@ -9,12 +9,8 @@ export const registPostApi = async (formData) =>
     });
 
 // 전체 조회 R
-export const postsApi = async (boardId, params) =>{
-    console.log("boardId", boardId);
-    console.log("params", params);
-    
-    return await api.get(`/api/posts/${boardId}`, { params });
-}
+export const postsApi = async (boardId, params) =>
+    await api.get(`/api/posts/${boardId}`, { params });
 
 // 상세 조회 R
 export const postDetailApi = async (postId) =>

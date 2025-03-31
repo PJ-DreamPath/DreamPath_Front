@@ -15,9 +15,9 @@ import {
     useUpdatePostMutation,
 } from '../../mutations/postMutation';
 import Swal from 'sweetalert2';
-import { useGetCategories } from '../../queries/categoriesQuery';
 import { useGetPostDetail } from '../../queries/postQuery';
 import { useUserMeQuery } from '../../queries/userQuery';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function BoardRegistPage({}) {
     const navigation = useNavigate();
@@ -71,7 +71,9 @@ export default function BoardRegistPage({}) {
     }, []);
 
     // 카테고리 리스트 데이터
-    const categories = useGetCategories(board.boardId);
+    const queryClient = useQueryClient();
+    const categories = queryClient.getQueryData(['useGetCategories']);
+    // const categories = useGetCategories(board.boardId);
     const [categoriesSelectOption, setCategoriesSelectOption] = useState();
 
     useEffect(() => {
@@ -281,13 +283,13 @@ export default function BoardRegistPage({}) {
 
     const { data } = useUserMeQuery();
 
-    console.log(pathNm, "pathNm")
+    console.log(pathNm, 'pathNm');
 
     useEffect(() => {
-        if(pathNm.boardName.includes("notice")) {
-            if(data?.data?.roleName !== "관리자") {
+        if (pathNm.boardName.includes('notice')) {
+            if (data?.data?.roleName !== '관리자') {
                 navigation('/notice');
-                alert("권한이 없습니다.");
+                alert('권한이 없습니다.');
             }
         }
     }, [pathNm]);

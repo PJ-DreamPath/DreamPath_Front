@@ -55,7 +55,9 @@ export default function MentoringPage({}) {
 
     // board 리스트
     const boardList = useGetBoards();
-    const [board, setBoard] = useState({});
+    const [board, setBoard] = useState({
+        boardId: 0,
+    });
 
     useEffect(() => {
         if (boardList?.data?.data) {

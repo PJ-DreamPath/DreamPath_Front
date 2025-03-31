@@ -9,7 +9,7 @@ export const useGetPosts = (boardId, params) =>
             return await postsApi(boardId, params);
         },
         retry: 0,
-        enabled: !!boardId,
+        enabled: boardId !== undefined && boardId !== null,
         staleTime: 1000 * 60 * 20,
         gcTime: 1000 * 60 * 10,
     });
@@ -25,10 +25,11 @@ export const useGetPostsInfinityScroll = (boardId, search) =>
                 order: search.order,
                 searchTxt: search.searchTxt,
             };
+
             return await postsApi(boardId, params);
         },
         retry: 0,
-        enabled: !!boardId,
+        // enabled: boardId !== undefined && boardId !== null,
         refetchOnWindowFocus: false,
         initialPageParam: 1,
         getNextPageParam: (lastPage) => {

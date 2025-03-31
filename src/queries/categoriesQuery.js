@@ -5,10 +5,17 @@ export const useGetCategories = (boardId) =>
     useQuery({
         queryKey: ['useGetCategories', boardId],
         queryFn: async () => {
+            console.log('useGetCategories', boardId);
             return await categoriesApi(boardId);
         },
         retry: 0,
-        enabled: !!boardId,
+        enabled:
+            boardId !== undefined &&
+            boardId !== 'undefined' &&
+            boardId !== null &&
+            boardId !== 'null' &&
+            boardId !== '' &&
+            boardId !== 0,
         staleTime: 1000 * 60 * 20,
         gcTime: 1000 * 60 * 10,
     });

@@ -23,15 +23,15 @@ export default function SideMenuBox({}) {
 
     // boardList
     const boardList = useGetBoards();
-    const [board, setBoard] = useState({});
+    const [board, setBoard] = useState({
+        boardId: 0,
+    });
     useEffect(() => {
         if (
             fullPath['*'] === 'service/mentoring' ||
             fullPath['*'].includes('mypage') ||
             fullPath['*'].includes('admin')
         ) {
-            
-
             if (boardList && boardList.data && boardList.data.data) {
                 let newArray = boardList.data.data.filter((board) =>
                     fullPath['*'].includes(`service/${board.boardName}`)
@@ -42,7 +42,7 @@ export default function SideMenuBox({}) {
         }
     }, [fullPath, boardList.data]);
 
-     useEffect(() => {
+    useEffect(() => {
         if (
             fullPath['*'] === 'service/mentoring' ||
             fullPath['*'].includes('mypage') ||
@@ -117,8 +117,7 @@ export default function SideMenuBox({}) {
                             } else {
                                 const to = boardList?.data?.data.find(
                                     (name) =>
-                                        name.boardName ===
-                                        category.categoryName
+                                        name.boardName === category.categoryName
                                 ).boardName;
 
                                 if (fullPath['*'].includes('mypage')) {

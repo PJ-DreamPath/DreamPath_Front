@@ -9,31 +9,30 @@ import { IoSearch } from 'react-icons/io5';
 import Select from 'react-select';
 import { useUserMeQuery } from '../../queries/userQuery';
 
-function NoticePage({ }) {
-
+function NoticePage({}) {
     const navigation = useNavigate();
 
     const pathNm = useParams();
-    
+
     const orderSelectOptions = [
         { value: 'desc', label: '최신순' },
         { value: 'asc', label: '오래된순' },
         { value: 'likeDesc', label: '좋아요많은순' },
     ];
-    
+
     const [searchParams, setSearchParams] = useSearchParams();
-    
-    const page = parseInt(searchParams.get("page") || "1");
-    
+
+    const page = parseInt(searchParams.get('page') || '1');
+
     const [search, setSearch] = useState({
         page: searchParams.get('page') || '1',
         limitCount: 10,
         order: searchParams.get('order') || 'desc',
         searchText: searchParams.get('searchText') || '',
     });
-    
+
     const [searchTextValue, setSearchTextValue] = useState(search.searchText);
-    
+
     const [pageNumbers, setPageNumbers] = useState([]);
 
     function handleSearchOnClick() {
@@ -60,8 +59,9 @@ function NoticePage({ }) {
 
     const boardList = useGetBoards();
 
-    const [board, setBoard] = useState({});
-    
+    const [board, setBoard] = useState({
+        boardId: 0,
+    });
 
     useEffect(() => {
         if (boardList?.data?.data) {
@@ -71,7 +71,7 @@ function NoticePage({ }) {
             setBoard(newArray || {});
         }
     }, [boardList.data]);
-    
+
     const noticePostList = useGetPosts(board.boardId, search);
 
     useEffect(() => {
@@ -86,7 +86,7 @@ function NoticePage({ }) {
             for (let i = startIndex; i <= endIndex; i++) {
                 newPageNumbers = [...newPageNumbers, i];
             }
-            
+
             setPageNumbers(newPageNumbers);
         }
     }, [noticePostList?.data]);
@@ -104,22 +104,22 @@ function NoticePage({ }) {
             <h2 css={s.title}>공지사항</h2>
             <div css={s.searchWrap}>
                 <div css={s.searchBox}>
-                    <input 
+                    <input
                         type="text"
                         name="search"
                         id="search"
-                        placeholder='검색어 입력'
+                        placeholder="검색어 입력"
                         value={searchTextValue}
                         onChange={(e) => setSearchTextValue(e.target.value)}
                         onKeyUp={(e) => {
-                            if(e.key === 'Enter') {
+                            if (e.key === 'Enter') {
                                 handleSearchOnClick();
                             }
-                        }} 
+                        }}
                     />
                     <IoSearch onClick={handleSearchOnClick} />
                 </div>
-                <Select 
+                <Select
                     options={orderSelectOptions}
                     styles={{
                         control: (style) => ({
@@ -144,16 +144,15 @@ function NoticePage({ }) {
                         handleOrderOnClick(option.value);
                     }}
                 />
-                {
-                    roleName === "관리자" && (
-                        <button 
-                            type="button"
-                            onClick={() => {
-                                navigation('/service/notice/regist');
-                            }}
-                        >
-                            글쓰기
-                        </button>
+                {roleName === '관리자' && (
+                    <button
+                        type="button"
+                        onClick={() => {
+                            navigation('/service/notice/regist');
+                        }}
+                    >
+                        글쓰기
+                    </button>
                 )}
             </div>
             <div css={s.tableWrapper}>
@@ -172,14 +171,17 @@ function NoticePage({ }) {
                         {noticePostList && !noticePostList.isLoading ? (
                             noticePostList?.data?.data?.postList?.map(
                                 (post, index) => (
-                                    <tr key={`noticePost${index}`} css={s.tableRow}>
-                                        <td 
+                                    <tr
+                                        key={`noticePost${index}`}
+                                        css={s.tableRow}
+                                    >
+                                        <td
                                             css={s.tableCell}
                                             className="titleName"
                                             onClick={() => {
                                                 navigation(
                                                     `/notice/${post.postId}`
-                                                )
+                                                );
                                             }}
                                         >
                                             {post.title}
@@ -187,12 +189,23 @@ function NoticePage({ }) {
                                         <td css={s.tableCell} className="name">
                                             {post.user.nickname}
                                         </td>
-                                        <td css={s.tableCell}>{new Date(post.createdAt).toLocaleDateString()}</td>
-                                        <td css={s.tableCell}>{post.commentCount}</td>
-                                        <td css={s.tableCell}>{post.likeCount}</td>
-                                        <td css={s.tableCell}>{post.viewCount}</td>
+                                        <td css={s.tableCell}>
+                                            {new Date(
+                                                post.createdAt
+                                            ).toLocaleDateString()}
+                                        </td>
+                                        <td css={s.tableCell}>
+                                            {post.commentCount}
+                                        </td>
+                                        <td css={s.tableCell}>
+                                            {post.likeCount}
+                                        </td>
+                                        <td css={s.tableCell}>
+                                            {post.viewCount}
+                                        </td>
                                     </tr>
-                                ))
+                                )
+                            )
                         ) : (
                             <></>
                         )}
@@ -226,7 +239,6 @@ function NoticePage({ }) {
             </div>
         </div>
     );
-
 }
 
 export default NoticePage;
