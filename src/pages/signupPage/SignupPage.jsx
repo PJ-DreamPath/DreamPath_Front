@@ -1,4 +1,5 @@
 /**@jsxImportSource @emotion/react */
+import { useNavigate } from 'react-router-dom';
 import ValidInput from '../../components/auth/ValidInput/ValidInput';
 import Footer from '../../components/common/Footer/Footer';
 import Header from '../../components/common/Header/Header';
@@ -7,6 +8,7 @@ import * as s from './style';
 import React, { useState } from 'react';
 
 function SignupPage(props) {
+    const navigator = useNavigate();
     const signupMutation = useSignupMutation();
 
     const [roleIdValue, setRoleIdValue] = useState(1);
@@ -69,6 +71,7 @@ function SignupPage(props) {
             })
             .then((response) => {
                 alert('가입해 주셔서 감사합니다');
+                navigator('/home');
             })
             .catch((error) => {
                 if (error.status === 400) {

@@ -101,87 +101,87 @@ function NoticePage({}) {
 
     return (
         <div css={s.container}>
-            <div css={s.topBox}><h2 css={s.title}>공지사항</h2>
-            <div css={s.searchWrap}>
-                <div css={s.searchBox}>
-                    <input
-                        type="text"
-                        name="search"
-                        id="search"
-                        placeholder="검색어 입력"
-                        value={searchTextValue}
-                        onChange={(e) => setSearchTextValue(e.target.value)}
-                        onKeyUp={(e) => {
-                            if (e.key === 'Enter') {
-                                handleSearchOnClick();
-                            }
+            <div css={s.topBox}>
+                <h3>공지사항</h3>
+                <div css={s.searchWrap}>
+                    <div css={s.searchBox}>
+                        <input
+                            type="text"
+                            name="search"
+                            id="search"
+                            placeholder="검색어 입력"
+                            value={searchTextValue}
+                            onChange={(e) => setSearchTextValue(e.target.value)}
+                            onKeyUp={(e) => {
+                                if (e.key === 'Enter') {
+                                    handleSearchOnClick();
+                                }
+                            }}
+                        />
+                        <IoSearch onClick={handleSearchOnClick} />
+                    </div>
+                    <Select
+                        options={orderSelectOptions}
+                        styles={{
+                            control: (style) => ({
+                                ...style,
+                                width: '15rem',
+                                height: '4rem',
+                                minHeight: 'unset',
+                                fontSize: '1.3rem',
+                                boxSizing: 'border-box',
+                            }),
+                            dropdownIndicator: (style) => ({
+                                ...style,
+                                padding: '0.3rem',
+                            }),
+                        }}
+                        value={
+                            orderSelectOptions.find(
+                                (option) => option.value === search.order
+                            ) || ''
+                        }
+                        onChange={(option) => {
+                            handleOrderOnClick(option.value);
                         }}
                     />
-                    <IoSearch onClick={handleSearchOnClick} />
+                    {roleName === '관리자' && (
+                        <button
+                            type="button"
+                            onClick={() => {
+                                navigation('/service/notice/regist');
+                            }}
+                        >
+                            글쓰기
+                        </button>
+                    )}
                 </div>
-                <Select
-                    options={orderSelectOptions}
-                    styles={{
-                        control: (style) => ({
-                            ...style,
-                            width: '15rem',
-                            height: '4rem',
-                            minHeight: 'unset',
-                            fontSize: '1.3rem',
-                            boxSizing: 'border-box',
-                        }),
-                        dropdownIndicator: (style) => ({
-                            ...style,
-                            padding: '0.3rem',
-                        }),
-                    }}
-                    value={
-                        orderSelectOptions.find(
-                            (option) => option.value === search.order
-                        ) || ''
-                    }
-                    onChange={(option) => {
-                        handleOrderOnClick(option.value);
-                    }}
-                />
-                {roleName === '관리자' && (
-                    <button
-                        type="button"
-                        onClick={() => {
-                            navigation('/service/notice/regist');
-                        }}
-                    >
-                        글쓰기
-                    </button>
-                )}
-            </div></div>
+            </div>
             <div css={s.tableWrapper}>
                 <table css={s.table}>
                     <thead>
-                        <tr css={s.tableRowHeader}>
-                            <th css={s.tableHeader}>제목</th>
-                            <th css={s.tableHeader}>작성자</th>
-                            <th css={s.tableHeader}>작성일</th>
-                            <th css={s.tableHeader}>댓글</th>
-                            <th css={s.tableHeader}>좋아요</th>
-                            <th css={s.tableHeader}>조회수</th>
+                        <tr>
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>작성일</th>
+                            <th>댓글</th>
+                            <th>좋아요</th>
+                            <th>조회수</th>
                         </tr>
                     </thead>
                     <tbody>
                         {noticePostList && !noticePostList.isLoading ? (
                             noticePostList?.data?.data?.postList?.map(
                                 (post, index) => (
-                                    <tr
-                                        key={`noticePost${index}`}
-                                        css={s.tableRow}
-                                    >
+                                    <tr key={`noticePost${index}`}>
                                         <td
-                                            css={s.tableCell}
                                             className="titleName"
                                             onClick={() => {
-                                                if(!data){
-                                                    alert("로그인 후 이용해주세요");
-                                                    navigation("/home");
+                                                if (!data) {
+                                                    alert(
+                                                        '로그인 후 이용해주세요'
+                                                    );
+                                                    navigation('/home');
                                                     return;
                                                 }
                                                 navigation(
@@ -191,23 +191,17 @@ function NoticePage({}) {
                                         >
                                             {post.title}
                                         </td>
-                                        <td css={s.tableCell} className="name">
+                                        <td className="name">
                                             {post.user.nickname}
                                         </td>
-                                        <td css={s.tableCell}>
+                                        <td>
                                             {new Date(
                                                 post.createdAt
                                             ).toLocaleDateString()}
                                         </td>
-                                        <td css={s.tableCell}>
-                                            {post.commentCount}
-                                        </td>
-                                        <td css={s.tableCell}>
-                                            {post.likeCount}
-                                        </td>
-                                        <td css={s.tableCell}>
-                                            {post.viewCount}
-                                        </td>
+                                        <td>{post.commentCount}</td>
+                                        <td>{post.likeCount}</td>
+                                        <td>{post.viewCount}</td>
                                     </tr>
                                 )
                             )

@@ -6,19 +6,21 @@ export const container = css`
 `;
 
 export const topBox = css`
-display: flex;
-justify-content: space-between;
-align-items: center;
-width : 100%;
-margin-bottom: 5rem;
-`;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-export const title = css`
-    font-size: 24px;
-    font-weight: bold;
-    color: #1681ff;
-    margin-bottom: 20px;
-    margin: 0;
+    margin-bottom: 5rem;
+
+    width: 100%;
+
+    & h3 {
+        margin: 0;
+        padding: 0;
+        font-size: 2.4rem;
+        font-weight: bold;
+        color: #1681ff;
+    }
 `;
 
 export const searchWrap = css`
@@ -26,6 +28,7 @@ export const searchWrap = css`
     justify-content: flex-end;
     align-items: center;
     gap: 1rem;
+
     height: 4rem;
 
     button {
@@ -54,7 +57,7 @@ export const searchBox = css`
     padding: 0.5rem 1rem;
     border: 1px solid #cccccc;
     border-radius: 0.5rem;
-    
+
     width: 40rem;
     height: 100%;
 
@@ -62,6 +65,7 @@ export const searchBox = css`
         display: inline-block;
         outline: none;
         border: none;
+
         width: calc(100% - 2.5rem);
     }
 
@@ -81,51 +85,74 @@ export const tableWrapper = css`
 `;
 
 export const table = css`
-    width: 100%;
     border-collapse: collapse;
-`;
+    width: 100%;
 
-export const tableRowHeader = css`
-    background-color: #f8f9fa;
-    border-bottom: 2px solid #ddd;
-`;
+    thead {
+        tr {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #ddd;
 
-export const tableHeader = css`
-    padding: 12px;
-    font-weight: bold;
-    text-align: center;
-`;
+            th {
+                box-sizing: border-box;
+                padding: 1rem;
 
-export const tableRow = css`
-    border-bottom: 1px solid #ddd;
-    transition: background-color 0.2s ease-in-out;
+                font-weight: bold;
+                text-align: center;
 
-    &:hover {
-        background-color: #f1f1f1;
+                &:first-of-type {
+                    width: 60rem;
+                }
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            box-sizing: border-box;
+            border-bottom: 1px solid #ddd;
+
+            transition: background-color 0.2s ease-in-out;
+
+            &:hover {
+                background-color: #f1f1f1;
+            }
+
+            td {
+                box-sizing: border-box;
+                padding: 1rem;
+
+                font-size: 1.3rem;
+                text-align: center;
+
+                &:first-of-type {
+                    display: inline-block;
+
+                    width: 60rem;
+                    overflow: hidden;
+
+                    text-align: left;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    cursor: pointer;
+                }
+
+                & > svg {
+                    display: inline-block;
+                    vertical-align: sub;
+                    margin-right: 0.5rem;
+                }
+                & > span {
+                    display: inline-block;
+                    width: 1rem;
+
+                    vertical-align: middle;
+                }
+            }
+        }
     }
 `;
 
-export const tableCell = css`
-    padding: 12px;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    &.titleName {
-        display: flex;
-        justify-content: center; 
-        align-items: center;
-        text-align: center;
-        max-width: 15rem;
-        overflow: hidden;
-        cursor: pointer;
-    }
-
-    &.name {
-        min-width: 7rem;
-    }
-`;
 
 export const deleteButton = css`
     background: none;

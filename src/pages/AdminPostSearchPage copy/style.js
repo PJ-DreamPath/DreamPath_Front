@@ -19,7 +19,7 @@ export const tableWrapper = css`
     margin-bottom: 2rem;
     border-radius: 8px;
 
-    height: 50rem;
+    /* height: 50rem; */
     overflow-x: auto;
 
     background: white;
@@ -59,7 +59,7 @@ export const tableCell = css`
 
     &.titleName {
         display: flex;
-        justify-content: center; 
+        justify-content: center;
         align-items: center;
         text-align: center;
         max-width: 15rem;
@@ -93,7 +93,6 @@ export const footer = css`
     justify-content: center;
     margin-right: 5rem;
     margin-top: 5rem;
-    
 `;
 
 export const pageNumbers = css`
@@ -129,6 +128,5 @@ export const pageNumbers = css`
 `;
 
 export const pageNum = (isSelect) => css`
-    background-color: ${isSelect ? "#eeeeee" : "#ffffff"} !important;
+    background-color: ${isSelect ? '#eeeeee' : '#ffffff'} !important;
 `;
-

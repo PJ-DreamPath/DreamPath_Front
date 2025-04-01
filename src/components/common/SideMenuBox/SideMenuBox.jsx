@@ -11,12 +11,20 @@ import { useGetCategories } from '../../../queries/categoriesQuery';
 import { useGetBoards } from '../../../queries/boardQuery';
 import { useRecoilState } from 'recoil';
 import { sideMenuBoxMentoringState } from '../../../atoms/sideMenuBox';
+import { useQueryClient } from '@tanstack/react-query';
 
 /**
  * 사이드 메뉴를 사용하는 페이지마다 데이터가 다름
  */
 export default function SideMenuBox({}) {
     const navigate = useNavigate();
+
+    const queryClient = useQueryClient();
+    const loginUser = queryClient.getQueryData(['userMeQuery'])?.data;
+
+    useEffect(() => {
+        console.log('loginUser', loginUser);
+    }, [loginUser]);
 
     // path를 가져와서 마이페이지, cms 또는 멘토링 인지 구별 하기 위함
     const fullPath = useParams();
@@ -83,62 +91,131 @@ export default function SideMenuBox({}) {
         fullPath['*'].includes('admin') ? (
         !categories.isLoading ? (
             <ul css={s.sideMenuBox}>
-                {list.map((category, idx) => (
-                    <li
-                        key={`category_${idx}`}
-                        css={s.click(
-                            (fullPath['*'] === 'service/mentoring' &&
-                                searchParams.get('order') ==
-                                    category.categoryName) ||
-                                (category.categoryName === 'mypage' &&
-                                    fullPath['*'] === 'service/mypage') ||
-                                (category.categoryName === 'admin' &&
-                                    fullPath['*'] === 'service/admin') ||
-                                fullPath['*'] ===
-                                    `service/mypage/${category.categoryName}` ||
-                                fullPath['*'] ===
-                                    `service/admin/${category.categoryName}`
-                        )}
-                        onClick={() => {
-                            if (fullPath['*'] === 'service/mentoring') {
-                                if (
-                                    searchParams.get('order') ==
-                                    category.categoryName
-                                ) {
-                                    searchParams.set('order', '');
-                                    setSearchParams(searchParams);
-                                } else {
-                                    searchParams.set(
-                                        'order',
-                                        category.categoryName
-                                    );
-                                    setSearchParams(searchParams);
-                                }
-                            } else {
-                                const to = boardList?.data?.data.find(
-                                    (name) =>
-                                        name.boardName === category.categoryName
-                                ).boardName;
+                {list.map((category, idx) =>
+                    loginUser.roleName === '멘티' ? (
+                        loginUser.roleName === category.type ? (
+                            <li
+                                key={`category_${idx}`}
+                                css={s.click(
+                                    (fullPath['*'] === 'service/mentoring' &&
+                                        searchParams.get('order') ==
+                                            category.categoryName) ||
+                                        (category.categoryName === 'mypage' &&
+                                            fullPath['*'] ===
+                                                'service/mypage') ||
+                                        (category.categoryName === 'admin' &&
+                                            fullPath['*'] ===
+                                                'service/admin') ||
+                                        fullPath['*'] ===
+                                            `service/mypage/${category.categoryName}` ||
+                                        fullPath['*'] ===
+                                            `service/admin/${category.categoryName}`
+                                )}
+                                onClick={() => {
+                                    if (fullPath['*'] === 'service/mentoring') {
+                                        if (
+                                            searchParams.get('order') ==
+                                            category.categoryName
+                                        ) {
+                                            searchParams.set('order', '');
+                                            setSearchParams(searchParams);
+                                        } else {
+                                            searchParams.set(
+                                                'order',
+                                                category.categoryName
+                                            );
+                                            setSearchParams(searchParams);
+                                        }
+                                    } else {
+                                        const to = boardList?.data?.data.find(
+                                            (name) =>
+                                                name.boardName ===
+                                                category.categoryName
+                                        ).boardName;
 
-                                if (fullPath['*'].includes('mypage')) {
-                                    if (to === 'mypage') {
-                                        navigate(`/service/mypage`);
-                                        return;
+                                        if (fullPath['*'].includes('mypage')) {
+                                            if (to === 'mypage') {
+                                                navigate(`/service/mypage`);
+                                                return;
+                                            }
+                                            navigate(`/service/mypage/${to}`);
+                                        } else if (
+                                            fullPath['*'].includes('admin')
+                                        ) {
+                                            if (to === 'admin') {
+                                                navigate(`/service/admin`);
+                                                return;
+                                            }
+                                            navigate(`/service/admin/${to}`);
+                                        }
                                     }
-                                    navigate(`/service/mypage/${to}`);
-                                } else if (fullPath['*'].includes('admin')) {
-                                    if (to === 'admin') {
-                                        navigate(`/service/admin`);
-                                        return;
+                                }}
+                            >
+                                <Link>{category.categoryNameKor}</Link>
+                            </li>
+                        ) : (
+                            <></>
+                        )
+                    ) : (
+                        <li
+                            key={`category_${idx}`}
+                            css={s.click(
+                                (fullPath['*'] === 'service/mentoring' &&
+                                    searchParams.get('order') ==
+                                        category.categoryName) ||
+                                    (category.categoryName === 'mypage' &&
+                                        fullPath['*'] === 'service/mypage') ||
+                                    (category.categoryName === 'admin' &&
+                                        fullPath['*'] === 'service/admin') ||
+                                    fullPath['*'] ===
+                                        `service/mypage/${category.categoryName}` ||
+                                    fullPath['*'] ===
+                                        `service/admin/${category.categoryName}`
+                            )}
+                            onClick={() => {
+                                if (fullPath['*'] === 'service/mentoring') {
+                                    if (
+                                        searchParams.get('order') ==
+                                        category.categoryName
+                                    ) {
+                                        searchParams.set('order', '');
+                                        setSearchParams(searchParams);
+                                    } else {
+                                        searchParams.set(
+                                            'order',
+                                            category.categoryName
+                                        );
+                                        setSearchParams(searchParams);
                                     }
-                                    navigate(`/service/admin/${to}`);
+                                } else {
+                                    const to = boardList?.data?.data.find(
+                                        (name) =>
+                                            name.boardName ===
+                                            category.categoryName
+                                    ).boardName;
+
+                                    if (fullPath['*'].includes('mypage')) {
+                                        if (to === 'mypage') {
+                                            navigate(`/service/mypage`);
+                                            return;
+                                        }
+                                        navigate(`/service/mypage/${to}`);
+                                    } else if (
+                                        fullPath['*'].includes('admin')
+                                    ) {
+                                        if (to === 'admin') {
+                                            navigate(`/service/admin`);
+                                            return;
+                                        }
+                                        navigate(`/service/admin/${to}`);
+                                    }
                                 }
-                            }
-                        }}
-                    >
-                        <Link>{category.categoryNameKor}</Link>
-                    </li>
-                ))}
+                            }}
+                        >
+                            <Link>{category.categoryNameKor}</Link>
+                        </li>
+                    )
+                )}
             </ul>
         ) : (
             <></>
