@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../../components/common/Header/Header';
 import MainLeftlayout from '../../components/common/MainLeftlayout/MainLeftlayout';
 import MainRightLayout from '../../components/common/MainRightLayout/MainRightLayout';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import SigninUserBox from '../../components/common/UserBox/SigninUserBox/SigninUserBox';
 import MainContainer from '../../components/common/MainContainer/MainContainer';
 import NoticePage from '../../pages/NoticePage/NoticePage';
@@ -12,14 +12,21 @@ import PostDetailPage from '../../pages/PostDetailPage/PostDetailPage';
 import SideMenuBox from '../../components/common/SideMenuBox/SideMenuBox';
 
 function MainRoute() {
+    const navigate = useNavigate();
+    const path = useParams();
+    useEffect(() => {
+        if (path['*'] === '') {
+            navigate('/home');
+        }
+    }, [path]);
 
-    return(
+    return (
         <>
             <Header />
             <MainContainer>
                 <MainLeftlayout>
                     {/* 유저 박스 여기 위치 */}
-                    <SigninUserBox /> 
+                    <SigninUserBox />
                     {/* <MainUserBox /> */}
                     <SideMenuBox />
                 </MainLeftlayout>
@@ -27,18 +34,30 @@ function MainRoute() {
                 <MainRightLayout>
                     <Routes>
                         <Route path="/notice" element={<NoticePage />} />
-                        <Route path="/notice/:postId" element={<PostDetailPage />} />
-                        <Route path="/communityBoard" element={<CommunityBoardPage />} />
-                        <Route path="/communityBoard/:postId" element={<PostDetailPage />} />
-                        <Route path="/service/*" element={<AuthenticatedRoute />} />
-                        <Route path="/*" element={<>찾을 수 없는 페이지입니다.</>} />
+                        <Route
+                            path="/notice/:postId"
+                            element={<PostDetailPage />}
+                        />
+                        <Route
+                            path="/communityBoard"
+                            element={<CommunityBoardPage />}
+                        />
+                        <Route
+                            path="/communityBoard/:postId"
+                            element={<PostDetailPage />}
+                        />
+                        <Route
+                            path="/service/*"
+                            element={<AuthenticatedRoute />}
+                        />
+                        <Route
+                            path="/*"
+                            element={<>찾을 수 없는 페이지입니다.</>}
+                        />
                     </Routes>
                 </MainRightLayout>
-
-                
             </MainContainer>
         </>
-        
     );
 }
 
