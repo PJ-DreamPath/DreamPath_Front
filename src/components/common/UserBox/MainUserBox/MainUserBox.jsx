@@ -5,20 +5,22 @@ import * as s from './style';
 import { useNavigate } from 'react-router-dom';
 import { setTokenLocalStorage } from '../../../../configs/axiosConfig';
 import { useQueryClient } from '@tanstack/react-query';
+import { useUpdateProfileImageMutation } from '../../../../mutations/mypageMutation';
+import { useUserMeQuery } from '../../../../queries/userQuery';
 
 const MainUserBox = () => {
     const navigate = useNavigate();
-
     const queryClient = useQueryClient();
+    const loginUser = useUserMeQuery();
+
     const loginUserData = queryClient.getQueryData(['userMeQuery']);
 
-    const profileImg = loginUserData?.data?.profileImg;
     const nickname = loginUserData?.data?.nickname;
     const roleName = loginUserData?.data?.roleName;
     const formattedDate = loginUserData?.data?.createdAt?.substring(0, 10);
     const remainPoint = loginUserData?.data?.remainPoint;
     const remaining = loginUserData?.data?.remaining;
-    
+    const updateProfileImageMutation = useUpdateProfileImageMutation();
 
     const handleMyPageButtonOnClick = () => {
         navigate('/service/mypage');
@@ -34,22 +36,33 @@ const MainUserBox = () => {
         window.location.reload();
     };
 
+    const handleProfileImageFileOnChange = async (e) => {
+        const fileLiST = e.target.files;
+        const file = fileLiST[0];
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        await updateProfileImageMutation.mutateAsync(formData);
+        loginUser.refetch();
+    };
+
     return (
         <div css={s.userBoxContainer}>
-            <div css={s.profileImage}>
-                {profileImg ? (
-                    <img
-                        src={`http://localhost:8080/image/user/profile/${profileImg}`}
-                        alt="프로필 이미지"
-                        css={s.profileImgStyle}
+            <div css={s.profileImageContainer}>
+                <label css={s.profileImage}>
+                    {loginUser.isLoading || (
+                        <img
+                            src={`http://localhost:8080/image/user/profile/${loginUser?.data?.data.profileImg}`}
+                            alt=""
+                        />
+                    )}
+                    <input
+                        type="file"
+                        onChange={handleProfileImageFileOnChange}
                     />
-                ) : (
-                    <img
-                        src="/default.png"
-                        alt="기본 프로필 이미지"
-                        css={s.profileImgStyle}
-                    />
-                )}
+                </label>
+
             </div>
 
             <div css={s.nickname}>{nickname}</div>
