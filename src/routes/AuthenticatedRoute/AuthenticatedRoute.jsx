@@ -33,7 +33,7 @@ function AuthenticatedRoute(props) {
             <Routes>
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/mypage/myMentoring" element={<MyMentoring />} />
-                <Route path="/mypage/mentoringhistory" element={<MentoringApplyHistory />} />
+                <Route path="/mypage/mentoringRequest" element={<MentoringApplyHistory />} />
                 <Route path="/mypage/purchase" element={<PurchaseSectionPage />} />
                 <Route path="/mypage/point/purchase" element={<PointPurchasePage />} />
                 <Route path="/mypage/ticket/purchase" element={<TicketPurchasePage />} />
