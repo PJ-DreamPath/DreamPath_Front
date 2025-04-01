@@ -18,6 +18,7 @@ import Swal from 'sweetalert2';
 import { useGetPostDetail } from '../../queries/postQuery';
 import { useUserMeQuery } from '../../queries/userQuery';
 import { useQueryClient } from '@tanstack/react-query';
+import { useGetCategories } from '../../queries/categoriesQuery';
 
 export default function BoardRegistPage({}) {
     const navigation = useNavigate();
@@ -71,9 +72,7 @@ export default function BoardRegistPage({}) {
     }, []);
 
     // 카테고리 리스트 데이터
-    const queryClient = useQueryClient();
-    const categories = queryClient.getQueryData(['useGetCategories']);
-    // const categories = useGetCategories(board.boardId);
+    const categories = useGetCategories(board.boardId);
     const [categoriesSelectOption, setCategoriesSelectOption] = useState();
 
     useEffect(() => {
