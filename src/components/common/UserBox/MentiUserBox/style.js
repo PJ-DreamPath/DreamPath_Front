@@ -17,6 +17,7 @@ export const profileImage = css`
     & > img {
     width: 60%;
     height: 12rem;
+    margin-top: 1rem;
     border-radius: 50%;
   }
   & > input[type="file"] {

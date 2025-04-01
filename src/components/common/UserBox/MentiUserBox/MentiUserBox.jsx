@@ -6,8 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { setTokenLocalStorage } from '../../../../configs/axiosConfig';
 import { useQueryClient } from '@tanstack/react-query';
 import { useUpdateProfileImageMutation } from '../../../../mutations/mypageMutation';
-import { useUserMeQuery } from '../../../../queries/userQuery';
+import { useGetMentoringApplyHistoryQuery, useUserMeQuery } from '../../../../queries/userQuery';
 import { FaStar } from 'react-icons/fa';
+import { useEffect } from 'react';
 
 const MentiUserBox = () => {
     const navigate = useNavigate();
@@ -15,11 +16,22 @@ const MentiUserBox = () => {
     const loginUser = useUserMeQuery();
 
     const loginUserData = queryClient.getQueryData(['userMeQuery']);
-
+    
     const nickname = loginUserData?.data?.nickname;
     const formattedDate = loginUserData?.data?.createdAt?.substring(0, 10);
-    const remainPoint = loginUserData?.data?.remainPoint;
-    const remaining = loginUserData?.data?.remaining;
+
+    const totalApplyMentoring = useGetMentoringApplyHistoryQuery({
+        page: 1,
+        limitCount: 10,
+        order: "desc",
+        searchText:"",
+    });
+    // const totalApplyMentoring = queryClient.getQueryData(['useGetMentoringApplyHistoryQuery']);
+    // // const totalApplyHistory = totalApplyMentoring?.data?.totalElements;
+    useEffect(()=>{
+        console.log(totalApplyMentoring);
+    },[totalApplyMentoring?.data])
+    
     const updateProfileImageMutation = useUpdateProfileImageMutation();
 
     const handleMyPageButtonOnClick = () => {
@@ -72,8 +84,7 @@ const MentiUserBox = () => {
             </div>
 
             <div css={s.mentoringInfo}>
-                <div> 나의 포인트: {remainPoint}</div>
-                <div>✏️ 멘토 신청: {remaining} </div>
+                <div>✏️ 멘토링 신청 개수 : {totalApplyMentoring?.data?.data.totalElements} </div>
             </div>
 
             <div css={s.buttonContainer}>
