@@ -6,6 +6,7 @@ export const container = css`
     margin-left: -30px;
     background-color: white;
     border-radius: 8px;
+    height: 70rem;
 `;
 
 export const title = css`
@@ -20,7 +21,7 @@ export const tableWrapper = css`
     background: white;
     border-radius: 8px;
     margin-bottom: 2rem;
-    height: 50rem;
+    height: 55rem;
 `;
 
 export const table = css`
@@ -51,6 +52,7 @@ export const tableRow = css`
 export const tableCell = css`
     padding: 12px;
     text-align: center;
+    font-size: 1.3rem;
 `;
 
 export const deleteButton = css`

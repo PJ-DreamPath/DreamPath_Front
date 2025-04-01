@@ -1,5 +1,8 @@
 import { css } from '@emotion/react';
 
+export const container =css`
+  min-height: 100vh;
+`;
 
 export const profileSection = css`
   background: #fff;
@@ -8,6 +11,7 @@ export const profileSection = css`
   margin-top: 4rem;
   border-radius: 1.5rem;
   box-shadow: 0.2rem 0.2rem 3rem rgba(0, 0, 0.2, 0.2);
+  
 `;
 
 export const profileContent = css`

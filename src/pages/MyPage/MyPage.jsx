@@ -127,7 +127,8 @@ function MyPage(props) {
     }
 
     return (
-        <>
+        <>  
+        <div css={s.container}>
             <section css={s.profileSection}>
                 <h2>내 프로필</h2>
                 <div css={s.profileContent}>
@@ -223,6 +224,7 @@ function MyPage(props) {
                     </div>
                 </div>
             </section>
+        </div>  
         </>
     );
 }
