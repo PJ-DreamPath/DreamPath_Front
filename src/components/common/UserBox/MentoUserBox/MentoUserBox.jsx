@@ -83,7 +83,7 @@ const MentoUserBox = () => {
                                 />
                             )
                         )}
-                        <p>{starPoint}</p>
+                        <p>( {starPoint} )</p>
                     </div>
                 )}
             </div>

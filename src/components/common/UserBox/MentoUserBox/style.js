@@ -17,6 +17,8 @@ export const profileImage = css`
     & > img {
     width: 60%;
     height: 12rem;
+    
+    margin-top: 1rem;
     border-radius: 50%;
   }
   & > input[type="file"] {
@@ -58,7 +60,7 @@ export const mentorSection = css`
 
 export const starBox = css`
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     gap: 0.5rem;
 
@@ -74,6 +76,7 @@ export const starBox = css`
         margin-left: 1rem;
         font-size: 1.3rem;
     }
+
 `;
 
 export const mentoringInfo = css`
