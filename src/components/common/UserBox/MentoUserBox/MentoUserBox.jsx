@@ -7,8 +7,9 @@ import { setTokenLocalStorage } from '../../../../configs/axiosConfig';
 import { useQueryClient } from '@tanstack/react-query';
 import { useUpdateProfileImageMutation } from '../../../../mutations/mypageMutation';
 import { useUserMeQuery } from '../../../../queries/userQuery';
+import { FaStar } from 'react-icons/fa';
 
-const MainUserBox = () => {
+const MentoUserBox = () => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const loginUser = useUserMeQuery();
@@ -16,11 +17,11 @@ const MainUserBox = () => {
     const loginUserData = queryClient.getQueryData(['userMeQuery']);
 
     const nickname = loginUserData?.data?.nickname;
-    const roleName = loginUserData?.data?.roleName;
     const formattedDate = loginUserData?.data?.createdAt?.substring(0, 10);
     const remainPoint = loginUserData?.data?.remainPoint;
     const remaining = loginUserData?.data?.remaining;
     const updateProfileImageMutation = useUpdateProfileImageMutation();
+    const starPoint = loginUserData?.data?.starPoint;
 
     const handleMyPageButtonOnClick = () => {
         navigate('/service/mypage');
@@ -49,6 +50,8 @@ const MainUserBox = () => {
 
     return (
         <div css={s.userBoxContainer}>
+            
+            <div css={s.joinDate}>가입 일자: {formattedDate}</div>
             <div css={s.profileImageContainer}>
                 <label css={s.profileImage}>
                     {loginUser.isLoading || (
@@ -67,11 +70,22 @@ const MainUserBox = () => {
 
             <div css={s.nickname}>{nickname}</div>
 
-            <div css={s.joinDate}>가입 일자: {formattedDate}</div>
 
             <div css={s.mentorSection}>
-                <div>{roleName}</div>
-                <div css={s.starRating}>★★★★★</div>
+                
+                {starPoint >= 0 && (
+                    <div css={s.starBox}>
+                        평점: {Array.from(
+                            { length: starPoint },
+                            (_, index) => (
+                                <FaStar
+                                    key={`detailStarPont_${index}`}
+                                />
+                            )
+                        )}
+                        <p>{starPoint}</p>
+                    </div>
+                )}
             </div>
 
             <div css={s.mentoringInfo}>
@@ -101,4 +115,4 @@ const MainUserBox = () => {
     );
 };
 
-export default MainUserBox;
+export default MentoUserBox;

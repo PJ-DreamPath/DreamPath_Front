@@ -6,13 +6,14 @@ import { FcGoogle } from 'react-icons/fc';
 import { data, Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { useLoginMutation } from '../../../../mutations/authMutation';
-import MainUserBox from '../MainUserBox/MainUserBox';
 import Swal from 'sweetalert2';
 import {
     setTokenLocalStorage,
     getTokenFromLocalStorage,
 } from '../../../../configs/axiosConfig';
 import AdminBox from '../AdminBox/AdminBox';
+import MentoUserBox from '../MentoUserBox/MentoUserBox';
+import MentiUserBox from '../MentiUserBox/MentiUserBox';
 
 function SigninUserBox() {
     const navigate = useNavigate();
@@ -78,18 +79,23 @@ function SigninUserBox() {
         }
         
     };
-    
   
     const handleOAuth2LoginOnClick = (provider) => {
         window.location.href = `http://localhost:8080/oauth2/authorization/${provider}`;
-       
-
-        
+               
     };
 
 
     return isLoggedIn && !!userInfoState?.data?.data ? (
-        userInfoState?.data?.data?.roleId === 1 || userInfoState?.data?.data?.roleId === 2 ? <MainUserBox /> : <AdminBox /> 
+        // userInfoState?.data?.data?.roleId === 1 || userInfoState?.data?.data?.roleId === 2 ? <MentoUserBox /> : <AdminBox />
+        userInfoState?.data?.data?.roleId === 1 ? (
+            <MentiUserBox /> // 멘티
+        ) : userInfoState?.data?.data?.roleId === 2 ? (
+            <MentoUserBox /> // 멘토
+        ) :  userInfoState?.data?.data?.roleId === 3 ? (
+            <AdminBox /> // 관리자
+        ) :
+        <></>
     ) : (
         <div css={s.body}>
             <div css={s.signinUserBox}>
