@@ -10,11 +10,23 @@ export const userBoxContainer = css`
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
-export const profileImgStyle = css`
-    width: 60%;
-    height: 60%;
+export const profileImage = css`
     object-fit: cover;
     border-radius: 50%;
+    cursor: pointer;
+    & > img {
+    width: 60%;
+    height: 12rem;
+    border-radius: 50%;
+  }
+  & > input[type="file"] {
+    display: none;
+  }
+    
+`;  
+
+export const profileImgeContainer = css`
+    
 `;
 
 
@@ -22,28 +34,41 @@ export const nickname = css`
     font-size: 16px;
     font-weight: bold;
     margin-top: 8px;
+    overflow: hidden;
+    &:hover{
+        overflow: visible;
+        cursor: default;
+    }
 `;
 
 export const joinDate = css`
     font-size: 12px;
     color: #ddd;
     margin-top: 4px;
+    
+    cursor: default;
 `;
 
 export const mentorSection = css`
     margin-top: 10px;
     font-size: 14px;
+    
+    cursor: default;
 `;
 
 export const starRating = css`
     color: gold;
     font-size: 18px;
     margin-top: 4px;
+    
+    cursor: default;
 `;
 
 export const mentoringInfo = css`
     font-size: 12px;
     margin-top: 6px;
+    
+    cursor: default;
 `;
 
 export const buttonContainer = css`
