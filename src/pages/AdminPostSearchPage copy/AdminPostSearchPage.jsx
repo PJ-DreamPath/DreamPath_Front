@@ -74,10 +74,10 @@ const AdminPostSearchPage = () => {
     const { data } = useUserMeQuery();
 
     useEffect(() => {
-        if (pathNm['*'] && pathNm['*'].includes("admin")) {
-            if (data?.data?.roleName !== "관리자") {
+        if (pathNm['*'] && pathNm['*'].includes('admin')) {
+            if (data?.data?.roleName !== '관리자') {
                 navigation('/');
-                alert("권한이 없습니다.");
+                alert('권한이 없습니다.');
             }
         }
     }, [pathNm, data, navigation]);
@@ -89,7 +89,6 @@ const AdminPostSearchPage = () => {
                 <table css={s.table}>
                     <thead>
                         <tr css={s.tableRowHeader}>
-                            <th css={s.tableHeader}>postId</th>
                             <th css={s.tableHeader}>제목</th>
                             <th css={s.tableHeader}>닉네임</th>
                             <th css={s.tableHeader}>게시판</th>
@@ -103,7 +102,6 @@ const AdminPostSearchPage = () => {
                         {adminPostList?.data?.data?.postList?.map(
                             (post, index) => (
                                 <tr key={`adminPost${index}`} css={s.tableRow}>
-                                    <td css={s.tableCell}>{post.postId}</td>
                                     <td css={s.tableCell} className="titleName">
                                         {post.title}
                                     </td>
@@ -111,7 +109,11 @@ const AdminPostSearchPage = () => {
                                         {post.nickname}
                                     </td>
                                     <td css={s.tableCell}>{post.boardName}</td>
-                                    <td css={s.tableCell}>{new Date(post.createdAt).toLocaleDateString()}</td>
+                                    <td css={s.tableCell}>
+                                        {new Date(
+                                            post.createdAt
+                                        ).toLocaleDateString()}
+                                    </td>
                                     <td css={s.tableCell}>
                                         {post.commentCount}
                                     </td>

@@ -1,4 +1,4 @@
-import { css } from "@emotion/react";
+import { css } from '@emotion/react';
 
 export const userBoxContainer = css`
     width: auto;
@@ -10,24 +10,37 @@ export const userBoxContainer = css`
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
-export const profileImgStyle = css`
-    width: 100%;
-    height: 100%;
+export const profileImage = css`
     object-fit: cover;
     border-radius: 50%;
+    cursor: pointer;
+    & > img {
+        width: 60%;
+        height: 12rem;
+        border-radius: 50%;
+    }
+    & > input[type='file'] {
+        display: none;
+    }
 `;
-
 
 export const nickname = css`
     font-size: 16px;
     font-weight: bold;
     margin-top: 8px;
+    overflow: hidden;
+    &:hover {
+        overflow: visible;
+        cursor: default;
+    }
 `;
 
 export const joinDate = css`
     font-size: 12px;
     color: #ddd;
     margin-top: 4px;
+
+    cursor: default;
 `;
 
 export const mentorSection = css`
@@ -37,7 +50,7 @@ export const mentorSection = css`
 
 export const starRating = css`
     color: gold;
-    font-size: 18px;
+    font-size: 16px;
     margin-top: 4px;
 `;
 
@@ -62,7 +75,7 @@ export const styledButton = css`
     border-radius: 6px;
     font-weight: bold;
     cursor: pointer;
-    transition:0.3s;
+    transition: 0.3s;
 
     &:hover {
         background-color: #e0e0e0;
@@ -77,7 +90,7 @@ export const logoutLink = css`
     text-decoration: none;
     cursor: pointer;
     opacity: 0.8;
-    
+
     &:hover {
         opacity: 1;
         text-decoration: underline;

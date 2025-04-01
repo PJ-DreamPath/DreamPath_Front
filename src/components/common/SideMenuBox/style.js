@@ -8,6 +8,7 @@ export const sideMenuBox = css`
 
     box-sizing: border-box;
     padding: 3rem 5rem 3rem 6rem;
+    margin-top: 3rem;
     border-radius: 2rem;
 
     width: 100%;
