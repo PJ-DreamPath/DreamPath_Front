@@ -123,7 +123,7 @@ function MentoringApplyHistory(props) {
                         </tr>
                     </thead>
                     <tbody>
-                        {mentoringHistoryQuery?.data?.data.myApplySearch.map(
+                        {mentoringHistoryQuery?.data?.data.myMentoringSearchList.map(
                             (my, index) => (
                                 <tr key={`MentoringApplyHistory${index}`} css={s.tableRow}>
                                     <td css={s.tableCell}>
