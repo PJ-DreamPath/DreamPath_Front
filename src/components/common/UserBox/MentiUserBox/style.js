@@ -56,12 +56,24 @@ export const mentorSection = css`
     cursor: default;
 `;
 
-export const starRating = css`
-    color: gold;
-    font-size: 18px;
-    margin-top: 4px;
-    
-    cursor: default;
+export const starBox = css`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+
+    svg {
+        font-size: 2rem;
+
+        path {
+            color: #ffcc00;
+        }
+    }
+
+    p {
+        margin-left: 1rem;
+        font-size: 1.3rem;
+    }
 `;
 
 export const mentoringInfo = css`
