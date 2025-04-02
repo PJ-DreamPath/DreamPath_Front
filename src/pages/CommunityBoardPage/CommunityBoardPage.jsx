@@ -181,7 +181,6 @@ export default function CommunityBoardPage({}) {
                                         onClick={() => {
                                             if (!loginUser) {
                                                 alert('로그인 후 이용해주세요');
-                                                navigation('/home');
                                                 return;
                                             }
                                             navigation(
