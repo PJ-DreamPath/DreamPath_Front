@@ -9,9 +9,18 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useGetBoards } from '../../queries/boardQuery';
 import { useRecoilState } from 'recoil';
 import { sideMenuBoxMentoringState } from '../../atoms/sideMenuBox';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function MentoringPage({}) {
     const navigation = useNavigate();
+
+    // user data
+    const queryClient = useQueryClient();
+    const loginUserData = queryClient.getQueryData(['userMeQuery']);
+
+    useEffect(() => {
+        console.log(loginUserData);
+    }, [loginUserData?.data]);
 
     // 셀렉트 박스 옵션
     const orderSelectOptions = [
@@ -163,14 +172,18 @@ export default function MentoringPage({}) {
                         }}
                     />
 
-                    <button
-                        type="button"
-                        onClick={() => {
-                            navigation('/service/mentoring/regist');
-                        }}
-                    >
-                        글쓰기
-                    </button>
+                    {loginUserData?.data?.roleName === '멘토' ? (
+                        <button
+                            type="button"
+                            onClick={() => {
+                                navigation('/service/mentoring/regist');
+                            }}
+                        >
+                            글쓰기
+                        </button>
+                    ) : (
+                        <></>
+                    )}
                 </div>
             </div>
 

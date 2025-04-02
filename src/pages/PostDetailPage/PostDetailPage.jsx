@@ -32,6 +32,7 @@ import {
 } from '../../mutations/mentoringCommentMutation';
 import { usegGetCommentsQuery } from '../../queries/commentQuery';
 import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
+import { useGetMentoringApplyHistoryQuery } from '../../queries/userQuery';
 
 export default function PostDetailPage({}) {
     const navigate = useNavigate();
@@ -66,6 +67,12 @@ export default function PostDetailPage({}) {
     // user data
     const queryClient = useQueryClient();
     const loginUserData = queryClient.getQueryData(['userMeQuery']);
+    const apply = useGetMentoringApplyHistoryQuery({
+        page: 1,
+        limitCount: 10,
+        order: 'desc',
+        searchText: '',
+    });
 
     // 상세 조회
     const postDetail = useGetPostDetail(fullPath.postId);
@@ -159,6 +166,10 @@ export default function PostDetailPage({}) {
             })
             .then((result) => {
                 Swal.fire(result.data);
+                apply.refetch();
+
+                // alert('123123');
+                // navigate(0);
             });
     };
 
@@ -374,7 +385,7 @@ export default function PostDetailPage({}) {
                         postId: 0,
                         content: '',
                         starPoint: -1,
-                    })
+                    });
                 } else {
                     await Swal.fire({
                         title: '등록 실패',
