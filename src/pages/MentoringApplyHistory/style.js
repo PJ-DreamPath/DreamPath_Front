@@ -27,6 +27,7 @@ export const tableWrapper = css`
 export const table = css`
     width: 100%;
     border-collapse: collapse;
+    
 `;
 
 export const tableRowHeader = css`
@@ -55,9 +56,11 @@ export const tableCell = css`
     padding: 12px;
     text-align: center;
     font-size: 1.3rem;
-    text-overflow: ellipsis;
     overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
+    cursor: pointer;
+
 
     &:nth-of-type(1) {
         width: 50rem;
