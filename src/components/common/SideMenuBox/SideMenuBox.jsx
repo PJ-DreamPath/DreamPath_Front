@@ -93,7 +93,8 @@ export default function SideMenuBox({}) {
             <ul css={s.sideMenuBox}>
                 {list.map((category, idx) =>
                     loginUser.roleName === '멘티' ? (
-                        loginUser.roleName === category.type ? (
+                        loginUser.roleName === category.type ||
+                        category.type === 'mentoring' ? (
                             <li
                                 key={`category_${idx}`}
                                 css={s.click(
