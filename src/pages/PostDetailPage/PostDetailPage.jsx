@@ -355,9 +355,13 @@ export default function PostDetailPage({}) {
         }));
     };
 
+    const [ isSubmitting, setIsSubmitting ] = useState(false);
+
     // 등록
     const handleCommnetSaveOnClick = async () => {
+        setIsSubmitting(true);
         if (pathNm.includes('mentoring')) {
+
             if (
                 saveCommentValue.starPoint <= 0 ||
                 saveCommentValue.content === ''
@@ -414,6 +418,7 @@ export default function PostDetailPage({}) {
                     });
                 }
             });
+            setIsSubmitting(false);
     };
 
     const handleFileDownload = async () => {
@@ -653,6 +658,7 @@ export default function PostDetailPage({}) {
                             <button
                                 onClick={handleCommnetSaveOnClick}
                                 css={s.commentSave}
+                                disabled={isSubmitting}
                             >
                                 등록
                             </button>
