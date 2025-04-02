@@ -35,11 +35,11 @@ function AuthenticatedRoute(props) {
                 <Routes>
                     <Route path="/mypage" element={<MyPage />} />
                     <Route
-                        path="/mypage/myMentoring"
+                        path="/mypage/mymentoring"
                         element={<MyMentoring />}
                     />
                     <Route
-                        path="/mypage/mentoringRequest"
+                        path="/mypage/mentoringrequest"
                         element={<MentoringApplyHistory />}
                     />
                     <Route

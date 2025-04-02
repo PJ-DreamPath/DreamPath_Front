@@ -79,6 +79,11 @@ function SigninUserBox() {
         }
         
     };
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            handleLoginOnClick();
+        }
+    };
   
     const handleOAuth2LoginOnClick = (provider) => {
         window.location.href = `http://localhost:8080/oauth2/authorization/${provider}`;
@@ -115,7 +120,8 @@ function SigninUserBox() {
                         id="password"
                         name="password"
                         placeholder="비밀번호 입력"
-                        onChange={handleInputOnChange}
+                        onChange={handleInputOnChange}         
+                         onKeyDown={handleKeyDown}  
                     />
 
                     <div css={s.buttonContainer}>

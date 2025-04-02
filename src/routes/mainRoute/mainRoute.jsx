@@ -35,15 +35,15 @@ function MainRoute() {
                     <Routes>
                         <Route path="/notice" element={<NoticePage />} />
                         <Route
-                            path="/notice/:postId"
+                            path="/notice/:postid"
                             element={<PostDetailPage />}
                         />
                         <Route
-                            path="/communityBoard"
+                            path="/communityboard"
                             element={<CommunityBoardPage />}
                         />
                         <Route
-                            path="/communityBoard/:postId"
+                            path="/communityboard/:postid"
                             element={<PostDetailPage />}
                         />
                         <Route

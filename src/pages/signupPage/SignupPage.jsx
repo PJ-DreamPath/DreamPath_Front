@@ -191,8 +191,6 @@ function SignupPage(props) {
                     >
                         가입하기
                     </button>
-                    <button css={s.oauthButton}>Google로 가입</button>
-                    <button css={s.oauthButton2}>Naver로 가입</button>
                 </div>
             </div>
         </div>

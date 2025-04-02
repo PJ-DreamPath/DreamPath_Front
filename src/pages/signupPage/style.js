@@ -74,6 +74,7 @@ export const signupButton = css`
     width: 50rem;
     padding: 1rem;
     margin-top: 2rem;
+    margin-bottom: 18rem;
     font-size: 1.8rem;
     color: white;
     background-color: #007bff;
@@ -86,33 +87,3 @@ export const signupButton = css`
     }
 `;
 
-export const oauthButton = css`
-    width: 50rem;
-    padding: 1rem;
-    margin-top: 1rem;
-    font-size: 1.6rem;
-    border: 1px solid #ccc;
-    border-radius: 0.5rem;
-    background-color: white;
-    cursor: pointer;
-
-    &:hover {
-        background-color: #f1f1f1;
-    }
-`
-
-export const oauthButton2 = css`
-    width: 50rem;
-    padding: 1rem;
-    margin-top: 1rem;
-    font-size: 1.6rem;
-    border: 1px solid #ccc;
-    border-radius: 0.5rem;
-    background-color: white;
-    margin-bottom: 5rem;
-    cursor: pointer;
-    
-    &:hover {
-        background-color: #f1f1f1;
-    }
-`
