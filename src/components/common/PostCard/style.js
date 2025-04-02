@@ -97,6 +97,11 @@ export const infoBox = css`
 
     & > p {
         color: #aaa;
+        width: 4rem;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 `;
 
@@ -104,6 +109,10 @@ export const starBox = css`
     display: flex;
     justify-content: flex-start;
     align-items: center;
+
+    p {
+        margin: 0;
+    }
 
     path {
         color: #ffcc00;
