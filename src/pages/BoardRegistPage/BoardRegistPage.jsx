@@ -271,7 +271,7 @@ export default function BoardRegistPage({}) {
     }
 
     useEffect(() => {
-        // 페이지 체크
+        // 페이지 체크 체크체크크
         if (board.boardId > 3) {
             // 등록 페이지가 없는 게시판일 경우 무조건 메인으로
             navigation('/');
