@@ -34,7 +34,6 @@ export const chip = (status) => css`
     background-color: ${status ? '#1681ff' : '#aaa'};
 `;
 
-
 export const heartBox = css`
     display: flex;
     justify-content: flex-end;
@@ -94,10 +93,15 @@ export const infoBox = css`
         justify-content: space-between;
         align-items: center;
         gap: 1rem;
-    }
 
-    & > p {
-        color: #aaa;
+        & > p {
+            color: #aaa;
+
+            width: 20rem;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
     }
 `;
 
