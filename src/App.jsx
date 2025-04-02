@@ -4,27 +4,35 @@ import { global } from './styles/global';
 import Mainlayout from './components/common/Mainlayout/Mainlayout';
 import MainRoute from './routes/mainRoute/mainRoute';
 import Footer from './components/common/Footer/Footer';
-import { useUserMeQuery } from './queries/userQuery';
+import {
+    useGetMentoringApplyHistoryQuery,
+    useUserMeQuery,
+} from './queries/userQuery';
 import HomeRoute from './routes/HomeRoute.jsx/HomeRoute';
 import AuthRoute from './routes/authRoute/AuthRoute';
 
 function App() {
+    useUserMeQuery();
+    useGetMentoringApplyHistoryQuery({
+        page: 1,
+        limitCount: 10,
+        order: 'desc',
+        searchText: '',
+    });
+    return (
+        <>
+            <Global styles={global} />
 
-  useUserMeQuery();
-  return (
-    <>
-      <Global styles={global} />
-
-      <Mainlayout>
-        <Routes>
-          <Route path="/auth/*" element={<AuthRoute />} />
-          <Route path="/home" element={<HomeRoute />} />
-          <Route path="/*" element={<MainRoute />} />
-        </Routes>
-        <Footer />
-      </Mainlayout>
-    </>
-  );
+            <Mainlayout>
+                <Routes>
+                    <Route path="/auth/*" element={<AuthRoute />} />
+                    <Route path="/home" element={<HomeRoute />} />
+                    <Route path="/*" element={<MainRoute />} />
+                </Routes>
+                <Footer />
+            </Mainlayout>
+        </>
+    );
 }
 
 export default App;
