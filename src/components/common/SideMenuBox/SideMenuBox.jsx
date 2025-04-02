@@ -81,7 +81,7 @@ export default function SideMenuBox({}) {
     useEffect(() => {
         if (fullPath['*'] === 'service/mentoring')
             setSearch({
-                order: searchParams.get('order') || 'desc',
+                category: searchParams.get('category') || '',
                 searchTxt: searchParams.get('searchTxt') || '',
             });
     }, [searchParams]);
@@ -99,7 +99,7 @@ export default function SideMenuBox({}) {
                                 key={`category_${idx}`}
                                 css={s.click(
                                     (fullPath['*'] === 'service/mentoring' &&
-                                        searchParams.get('order') ==
+                                        searchParams.get('category') ==
                                             category.categoryName) ||
                                         (category.categoryName === 'mypage' &&
                                             fullPath['*'] ===
@@ -115,14 +115,14 @@ export default function SideMenuBox({}) {
                                 onClick={() => {
                                     if (fullPath['*'] === 'service/mentoring') {
                                         if (
-                                            searchParams.get('order') ==
+                                            searchParams.get('category') ==
                                             category.categoryName
                                         ) {
-                                            searchParams.set('order', '');
+                                            searchParams.set('category', '');
                                             setSearchParams(searchParams);
                                         } else {
                                             searchParams.set(
-                                                'order',
+                                                'category',
                                                 category.categoryName
                                             );
                                             setSearchParams(searchParams);
@@ -162,7 +162,7 @@ export default function SideMenuBox({}) {
                             key={`category_${idx}`}
                             css={s.click(
                                 (fullPath['*'] === 'service/mentoring' &&
-                                    searchParams.get('order') ==
+                                    searchParams.get('category') ==
                                         category.categoryName) ||
                                     (category.categoryName === 'mypage' &&
                                         fullPath['*'] === 'service/mypage') ||
@@ -176,14 +176,14 @@ export default function SideMenuBox({}) {
                             onClick={() => {
                                 if (fullPath['*'] === 'service/mentoring') {
                                     if (
-                                        searchParams.get('order') ==
+                                        searchParams.get('category') ==
                                         category.categoryName
                                     ) {
-                                        searchParams.set('order', '');
+                                        searchParams.set('category', '');
                                         setSearchParams(searchParams);
                                     } else {
                                         searchParams.set(
-                                            'order',
+                                            'category',
                                             category.categoryName
                                         );
                                         setSearchParams(searchParams);

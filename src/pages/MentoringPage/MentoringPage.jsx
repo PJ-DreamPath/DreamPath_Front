@@ -26,8 +26,6 @@ export default function MentoringPage({}) {
     const orderSelectOptions = [
         { value: 'desc', label: '최신순' },
         { value: 'asc', label: '오래된순' },
-        { value: 'recruiting', label: '모집중' },
-        { value: 'closedRecruitment', label: '모집마감' },
         { value: 'starDesc', label: '평점높은순' },
         // { value: 'commentDesc', label: '후기많은순' },
         { value: 'likeDesc', label: '좋아요많은순' },
@@ -36,6 +34,12 @@ export default function MentoringPage({}) {
         // { value: 'front', label: '프론트엔드' },
         // { value: 'security', label: '정보보안' },
         // { value: 'full', label: '풀스택' },
+    ];
+
+    const statusSelectOptions = [
+        { value: '', label: '전체' },
+        { value: 'recruiting', label: '모집중' },
+        { value: 'closedRecruitment', label: '모집마감' },
     ];
 
     // 검색 조건
@@ -54,9 +58,16 @@ export default function MentoringPage({}) {
         setSearchParams(searchParams);
     }
 
+    function handleStatusOnClick(value) {
+        searchParams.set('status', value);
+        setSearchParams(searchParams);
+    }
+
     useEffect(() => {
         setSearch({
             order: searchParams.get('order') || 'desc',
+            status: searchParams.get('status') || '',
+            category: searchParams.get('category') || '',
             searchTxt: searchParams.get('searchTxt') || '',
         });
     }, [searchParams]);
@@ -147,6 +158,31 @@ export default function MentoringPage({}) {
                     </div>
 
                     <Select
+                        options={statusSelectOptions}
+                        styles={{
+                            control: (style) => ({
+                                ...style,
+                                width: '15rem',
+                                height: '4rem',
+                                minHeight: 'unset',
+                                fontSize: '1.3rem',
+                                boxSizing: 'border-box',
+                            }),
+                            dropdownIndicator: (style) => ({
+                                ...style,
+                                padding: '0.3rem',
+                            }),
+                        }}
+                        value={
+                            statusSelectOptions.find(
+                                (option) => option.value === search.status
+                            ) || ''
+                        }
+                        onChange={(option) => {
+                            handleStatusOnClick(option.value);
+                        }}
+                    />
+                    <Select
                         options={orderSelectOptions}
                         styles={{
                             control: (style) => ({
@@ -165,7 +201,7 @@ export default function MentoringPage({}) {
                         value={
                             orderSelectOptions.find(
                                 (option) => option.value === search.order
-                            ) || ''
+                            ) || 'desc'
                         }
                         onChange={(option) => {
                             handleOrderOnClick(option.value);
