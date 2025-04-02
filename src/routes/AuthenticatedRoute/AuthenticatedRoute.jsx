@@ -59,12 +59,12 @@ function AuthenticatedRoute(props) {
                         element={<BoardRegistPage />}
                     />
                     <Route
-                        path="/:boardName/update/:postId"
+                        path="/:boardName/update/:postid"
                         element={<BoardRegistPage />}
                     />
                     <Route path="/mentoring" element={<MentoringPage />} />
                     <Route
-                        path="/mentoring/:postId"
+                        path="/mentoring/:postid"
                         element={<PostDetailPage />}
                     />
                     <Route path="/admin" element={<AdminPage />} />
