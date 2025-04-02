@@ -12,7 +12,7 @@ import HomeRoute from './routes/HomeRoute.jsx/HomeRoute';
 import AuthRoute from './routes/authRoute/AuthRoute';
 
 function App() {
-    useUserMeQuery();
+    const user = useUserMeQuery();
     useGetMentoringApplyHistoryQuery({
         page: 1,
         limitCount: 10,

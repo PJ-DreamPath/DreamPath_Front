@@ -75,7 +75,7 @@ export default function PostDetailPage({}) {
     });
 
     // 상세 조회
-    const postDetail = useGetPostDetail(fullPath.postId);
+    const postDetail = useGetPostDetail(fullPath.postid);
     const [post, setPost] = useState({
         postId: 0,
     });
@@ -165,7 +165,7 @@ export default function PostDetailPage({}) {
                 email: post.user.email,
             })
             .then((result) => {
-                Swal.fire(result.data);
+                Swal.fire("이메일 전송에 성공했습니다.");
                 apply.refetch();
 
                 // alert('123123');

@@ -4,7 +4,7 @@ export const cardBox = css`
     box-sizing: border-box;
     padding: 2rem;
     border-radius: 3rem 3rem 3rem 0;
-
+    cursor: pointer;
     width: calc((100% - 3rem) / 4);
     height: auto;
 
@@ -97,7 +97,7 @@ export const infoBox = css`
         & > p {
             color: #aaa;
 
-            width: 20rem;
+            width: 10rem;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
