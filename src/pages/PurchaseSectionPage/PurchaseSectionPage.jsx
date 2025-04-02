@@ -6,11 +6,15 @@ import { usePointChargeMutation } from '../../mutations/pointMutation';
 import PortOne from '@portone/browser-sdk/v2';
 
 import { v4 as uuid } from 'uuid';
+import { useQueryClient } from '@tanstack/react-query';
+import { useUserMeQuery } from '../../queries/userQuery';
 
 function PurchaseSectionPage(props) {
 
     const ticketPurchase = useTicketPurchaseMutation();
     const pointCharge = usePointChargeMutation();
+    const queryClient = useQueryClient();
+    const loginUser = useUserMeQuery();
 
 
     //상품
@@ -78,6 +82,7 @@ function PurchaseSectionPage(props) {
             }
     
             await pointCharge.mutateAsync({ pointId, mid: paymentResponse.paymentId});
+            loginUser.refetch();
            
         } catch (error) {
             console.error("결제 처리 중 에러 발생:", error);
@@ -92,6 +97,9 @@ const handlePurchaseButtonOnClick = async (e) => {
     await ticketPurchase.mutateAsync({ ticketId: Number(e.target.value) }).then((response) => {
         console.log(response);
         Swal.fire(response.data);
+        console.log("loginUser", loginUser);
+        loginUser.refetch();
+
     });
 
 }

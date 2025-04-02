@@ -96,7 +96,7 @@ export const table = css`
                 text-align: center;
 
                 &:first-of-type {
-                    width: 60rem;
+                    width: 50rem;
                 }
             }
         }
@@ -123,7 +123,7 @@ export const table = css`
                 &:first-of-type {
                     display: inline-block;
                     
-                    width: 60rem;
+                    width: 50rem;
                     overflow: hidden;
                     
                     text-align: left;

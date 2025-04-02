@@ -15,7 +15,7 @@ import {
     useUpdatePostMutation,
 } from '../../mutations/postMutation';
 import Swal from 'sweetalert2';
-import { useGetPostDetail } from '../../queries/postQuery';
+import { useGetPostDetail, useGetPosts } from '../../queries/postQuery';
 import { useUserMeQuery } from '../../queries/userQuery';
 import { useQueryClient } from '@tanstack/react-query';
 import { useGetCategories } from '../../queries/categoriesQuery';
@@ -108,7 +108,7 @@ export default function BoardRegistPage({}) {
     });
 
     const [attacheFile, setAttachedFile] = useState(null);
-
+    
     // 상세 조회
     const postDetail = useGetPostDetail(pathNm.postId);
     const [post, setPost] = useState({});

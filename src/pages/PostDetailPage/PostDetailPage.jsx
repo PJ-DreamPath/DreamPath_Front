@@ -369,6 +369,12 @@ export default function PostDetailPage({}) {
                         timer: 1000,
                         showConfirmButton: false,
                     });
+                    useGetComments.refetch();
+                    setSaveCommentValue({
+                        postId: 0,
+                        content: '',
+                        starPoint: -1,
+                    })
                 } else {
                     await Swal.fire({
                         title: '등록 실패',
@@ -636,6 +642,7 @@ export default function PostDetailPage({}) {
                         <div css={s.commentBottonBox}>
                             <textarea
                                 onChange={handleReviewOnChange}
+                                value={saveCommentValue.content}
                                 placeholder="후기입력"
                             ></textarea>
                         </div>
