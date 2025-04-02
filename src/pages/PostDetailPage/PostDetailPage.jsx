@@ -359,9 +359,9 @@ export default function PostDetailPage({}) {
 
     // 등록
     const handleCommnetSaveOnClick = async () => {
-        setIsSubmitting(true);
         if (pathNm.includes('mentoring')) {
-
+                
+        setIsSubmitting(true);
             if (
                 saveCommentValue.starPoint <= 0 ||
                 saveCommentValue.content === ''
@@ -416,9 +416,12 @@ export default function PostDetailPage({}) {
                         timer: 1000,
                         showConfirmButton: false,
                     });
+                    
                 }
             });
-            setIsSubmitting(false);
+            
+        setIsSubmitting(false);
+            
     };
 
     const handleFileDownload = async () => {
