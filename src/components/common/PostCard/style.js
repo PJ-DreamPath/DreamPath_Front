@@ -93,15 +93,15 @@ export const infoBox = css`
         justify-content: space-between;
         align-items: center;
         gap: 1rem;
-    }
 
-    & > p {
-        color: #aaa;
-        width: 4rem;
+        & > p {
+            color: #aaa;
+            width: 4rem;
 
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
     }
 `;
 
