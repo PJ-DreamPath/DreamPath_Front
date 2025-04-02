@@ -7,7 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useGetBoards } from '../../queries/boardQuery';
 import Select from 'react-select';
 import DaumPostcode from 'react-daum-postcode';
-import { IoClose } from 'react-icons/io5';
+import { IoClose, IoReturnUpBackOutline } from 'react-icons/io5';
 import { DatePicker } from '@mui/x-date-pickers';
 import moment from 'moment/moment';
 import {
@@ -108,7 +108,7 @@ export default function BoardRegistPage({}) {
     });
 
     const [attacheFile, setAttachedFile] = useState(null);
-    
+
     // 상세 조회
     const postDetail = useGetPostDetail(pathNm.postId);
     const [post, setPost] = useState({});
@@ -153,7 +153,7 @@ export default function BoardRegistPage({}) {
     const registPostMutation = useRegistPostMutation();
     const updatePostMutation = useUpdatePostMutation();
     async function handleRegistPostBtnOnClick() {
-        if (!registData.title) {
+        if (!registData.title || registData.title === '') {
             await Swal.fire({
                 titleText: '게시글 제목을 입력하세요.',
                 icon: 'error',
@@ -161,7 +161,7 @@ export default function BoardRegistPage({}) {
                 showConfirmButton: false,
             });
             return;
-        } else if (!registData.content) {
+        } else if (registData.content || registData.content === '') {
             await Swal.fire({
                 titleText: '게시글을 입력하세요.',
                 icon: 'error',
@@ -364,6 +364,19 @@ export default function BoardRegistPage({}) {
                                     format="YYYY-MM-DD"
                                     value={registData.startDate}
                                     onChange={(e) => {
+                                        // const startDt = moment(
+                                        //     registData.startDate
+                                        // ).format('YYYY-MM-DD');
+                                        // const endDt = moment(
+                                        //     registData.endDate
+                                        // ).format('YYYY-MM-DD');
+
+                                        // if (startDt > endDt) {
+                                        //     alert(
+                                        //         '시작 날짜는 종료 날짜 이후일 수없습니다.'
+                                        //     );
+                                        //     return;
+                                        // }
                                         setRegistData((prev) => ({
                                             ...prev,
                                             startDate: e,
@@ -376,6 +389,21 @@ export default function BoardRegistPage({}) {
                                     format="YYYY-MM-DD"
                                     value={registData.endDate}
                                     onChange={(e) => {
+                                        // const startDt = moment(
+                                        //     registData.startDate
+                                        // ).format('YYYY-MM-DD');
+                                        // const endDt = moment(
+                                        //     registData.endDate
+                                        // ).format('YYYY-MM-DD');
+
+                                        // console.log(startDt > endDt);
+
+                                        // if (startDt < endDt) {
+                                        //     alert(
+                                        //         '종료 날짜는 시작 날짜 이전일 수없습니다.'
+                                        //     );
+                                        //     return;
+                                        // }
                                         setRegistData((prev) => ({
                                             ...prev,
                                             endDate: e,
