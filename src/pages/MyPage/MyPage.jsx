@@ -29,7 +29,7 @@ function MyPage(props) {
     const confirmPhoneNumberMutation = useConfirmPhoneNumberMutation();
 
     const [nicknameValue, setNicknameValue] = useState('');
-    const [emailValue, setEmailValue] = useState('');
+    const [emailValue, setEmailValue] = useState("");
     const [passwordValue, setPasswordValue] = useState('');
     const [userValue, setUserValue] = useState('');
     const [phoneNumberInputValue, setPhoneNumberInputValue] = useState({
@@ -68,6 +68,10 @@ function MyPage(props) {
         
         loginUser.refetch();
     };
+
+    useEffect(() => {
+        setEmailValue(loginUser?.data?.data.email || '');
+    }, [loginUser.isFetched]);
 
     const handleEmailInputOnChange = (e) => {
         setEmailValue(e.target.value);
