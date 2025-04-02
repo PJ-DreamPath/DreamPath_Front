@@ -78,7 +78,7 @@ export const tableWrapper = css`
     margin-bottom: 2rem;
     border-radius: 8px;
 
-    height: 50rem;
+    /* height: 50rem; */
     overflow-x: auto;
 
     background: white;

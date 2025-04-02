@@ -7,9 +7,12 @@ import { setTokenLocalStorage } from '../../../../configs/axiosConfig';
 import { useQueryClient } from '@tanstack/react-query';
 import { useUserMeQuery } from '../../../../queries/userQuery';
 import { useGetAdminUsers } from '../../../../queries/adminQuery';
+import { useEffect } from 'react';
+import moment from 'moment';
 
 const AdminBox = () => {
     const navigate = useNavigate();
+    const loginUser = useUserMeQuery();
 
     const { data: adminUserList } = useGetAdminUsers({
         page: 1,
@@ -17,17 +20,20 @@ const AdminBox = () => {
     });
 
     const totalUser = adminUserList?.data?.userList?.[0]?.totalUser;
-    const createdAt = adminUserList?.data?.userList?.[0]?.createdAt;
-    const formattedDate = createdAt
-        ? createdAt.split('T')[0]
-        : '가입 날짜 없음';
+    
 
     const queryClient = useQueryClient();
     const loginUserData = queryClient.getQueryData(['userMeQuery']);
 
+    const createdAt = moment(loginUserData.data.createdAt).format("YYYY-MM-DD");
+
     const handleAdminOnClick = () => {
         navigate('/service/admin');
     };
+
+    useEffect(() => {
+        console.log(loginUser);
+    }, loginUser?.data)
 
     const handleLogoutButtonOnClick = async () => {
         setTokenLocalStorage('AccessToken', null);
@@ -57,11 +63,11 @@ const AdminBox = () => {
             <div css={s.nickname}>
                 {nickname ? nickname : '닉네임이 없습니다.'}
             </div>
-            <div css={s.joinDate}>가입:{formattedDate}</div>
+            <div css={s.joinDate}>가입 : {createdAt}</div>
 
             <div css={s.mentorSection}>
                 <div>관리자</div>
-                <div css={s.starRating}>총 회원수:{totalUser}</div>
+                <div css={s.starRating}>총 회원수 : {totalUser}</div>
             </div>
 
             <div css={s.buttonContainer}>
