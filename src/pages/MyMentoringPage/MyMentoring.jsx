@@ -32,7 +32,9 @@ function MyMentoring(props) {
         order,
         searchText,
     });
-
+    useEffect(() => {
+        console.log(searchMyMentoringList);
+    }, searchMyMentoringList?.data)
     const [searchInputValue, setSearchInputValue] = useState('');
     const handleSearchButtonOnClick = () => {
         searchParams.set('page', 1);
