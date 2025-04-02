@@ -16,7 +16,7 @@ import { useQueryClient } from '@tanstack/react-query';
 export default function CommunityBoardPage({}) {
     const navigation = useNavigate();
     const queryClient = useQueryClient();
-    const loginUser = queryClient.getQueryData(["userMeQuery"]);
+    const loginUser = queryClient.getQueryData(['userMeQuery']);
     // 셀렉트 박스 옵션
     const orderSelectOptions = [
         { value: 'desc', label: '최신순' },
@@ -179,9 +179,9 @@ export default function CommunityBoardPage({}) {
                                 <tr key={`communityBoard_${idx}`}>
                                     <td
                                         onClick={() => {
-                                            if(!loginUser){
-                                                alert("로그인 후 이용해주세요");
-                                                navigation("/home");
+                                            if (!loginUser) {
+                                                alert('로그인 후 이용해주세요');
+                                                navigation('/home');
                                                 return;
                                             }
                                             navigation(
@@ -189,9 +189,13 @@ export default function CommunityBoardPage({}) {
                                             );
                                         }}
                                     >
-                                        {board.title}
+                                        <p css={s.tdTitle}>{board.title}</p>
                                     </td>
-                                    <td>{board.user.nickname}</td>
+                                    <td>
+                                        <p css={s.writer}>
+                                            {board.user.nickname}
+                                        </p>
+                                    </td>
                                     <td>
                                         {moment(board.createdAt).format(
                                             'YYYY-MM-DD'
