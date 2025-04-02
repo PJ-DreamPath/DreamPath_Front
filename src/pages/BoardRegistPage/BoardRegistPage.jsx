@@ -159,7 +159,7 @@ export default function BoardRegistPage({}) {
     const registPostMutation = useRegistPostMutation();
     const updatePostMutation = useUpdatePostMutation();
     async function handleRegistPostBtnOnClick() {
-        if (!registData.title || registData.title.replace(/\s+/g, "") === '') {
+        if (!registData.title || registData.title.replace(/\s+/g, '') === '') {
             await Swal.fire({
                 titleText: '게시글 제목을 입력하세요.',
                 icon: 'error',
@@ -167,9 +167,12 @@ export default function BoardRegistPage({}) {
                 showConfirmButton: false,
             });
             return;
-        } 
-        
-        if (!registData.content || registData.content.replace(/\s+/g, "") === '') {
+        }
+
+        if (
+            !registData.content ||
+            registData.content.replace(/\s+/g, '') === ''
+        ) {
             await Swal.fire({
                 titleText: '게시글을 입력하세요.',
                 icon: 'error',
@@ -470,7 +473,23 @@ export default function BoardRegistPage({}) {
                         </div>
                     </>
                 ) : (
-                    <input type="file" name="" id="" />
+                    <div>
+                        <label className="choice">첨부파일</label>
+                        <label htmlFor="attachedFile" className="attachedFile">
+                            <input
+                                type="file"
+                                name="attachedFile"
+                                id="attachedFile"
+                                style={{ display: 'none' }}
+                                onChange={(e) => {
+                                    setAttachedFile(e.target.files[0]);
+                                }}
+                            />
+                            {!!attacheFile && typeof attacheFile == 'object'
+                                ? attacheFile.name
+                                : attacheFile}
+                        </label>
+                    </div>
                 )}
 
                 <div css={s.btnBox}>
