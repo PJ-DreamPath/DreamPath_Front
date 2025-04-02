@@ -69,6 +69,8 @@ export default function BoardRegistPage({}) {
                 content: quill.root.innerHTML,
             }));
         });
+
+        console.log(registData.content);
     }, []);
 
     // 카테고리 리스트 데이터
@@ -157,7 +159,7 @@ export default function BoardRegistPage({}) {
     const registPostMutation = useRegistPostMutation();
     const updatePostMutation = useUpdatePostMutation();
     async function handleRegistPostBtnOnClick() {
-        if (!registData.title || registData.title === '') {
+        if (!registData.title || registData.title.replace(/\s+/g, "") === '') {
             await Swal.fire({
                 titleText: '게시글 제목을 입력하세요.',
                 icon: 'error',
@@ -165,7 +167,9 @@ export default function BoardRegistPage({}) {
                 showConfirmButton: false,
             });
             return;
-        } else if (registData.content || registData.content === '') {
+        } 
+        
+        if (!registData.content || registData.content.replace(/\s+/g, "") === '') {
             await Swal.fire({
                 titleText: '게시글을 입력하세요.',
                 icon: 'error',
@@ -471,7 +475,7 @@ export default function BoardRegistPage({}) {
 
                 <div css={s.btnBox}>
                     <button type="button" onClick={handleRegistPostBtnOnClick}>
-                        {!pathNm.postId ? '등록' : '수정'}
+                        {!pathNm.postid ? '등록' : '수정'}
                     </button>
                     <button
                         type="button"
