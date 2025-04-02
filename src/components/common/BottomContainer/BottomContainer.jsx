@@ -51,7 +51,7 @@ function BottomContainer(props) {
                         }}
                     >
                         <div>{post.title}</div>
-                        <div>{post.user.nickname}</div>
+                        <div css={s.write}>{post.user.nickname}</div>
                         <div>{moment(post.createdAt).format(`yyyy-MM-DD`)}</div>
                     </div>
                 ))}
@@ -75,7 +75,7 @@ function BottomContainer(props) {
                         }}
                     >
                         <div>{post.title}</div>
-                        <div>{post.user.nickname}</div>
+                        <div css={s.write}>{post.user.nickname}</div>
                         <div>{moment(post.createdAt).format(`yyyy-MM-DD`)}</div>
                     </div>
                 ))}

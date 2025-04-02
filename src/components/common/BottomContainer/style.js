@@ -1,4 +1,4 @@
-import { css } from "@emotion/react";
+import { css } from '@emotion/react';
 
 export const boardContainer = css`
     display: flex;
@@ -13,7 +13,7 @@ export const boardContainer = css`
 
 export const board = css`
     box-sizing: border-box;
-    
+
     width: 50%;
     border-radius: 4rem;
     border: solid 0.1rem #dbdbdb;
@@ -67,6 +67,13 @@ export const row = css`
     }
 
     &:hover {
-      background-color: #eeeeee ;
+        background-color: #eeeeee;
     }
+`;
+
+export const write = css`
+    width: 10rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 `;
