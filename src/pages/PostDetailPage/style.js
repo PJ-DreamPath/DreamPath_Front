@@ -96,6 +96,13 @@ export const right = css`
     & > p {
         font-size: 1.3rem;
         color: #aaa;
+        
+        &:nth-of-type(1) {
+            width: 10rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
         &:not(:last-of-type):after {
             content: '';

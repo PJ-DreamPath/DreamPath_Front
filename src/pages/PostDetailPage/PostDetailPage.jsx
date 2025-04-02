@@ -289,6 +289,7 @@ export default function PostDetailPage({}) {
                 Swal.fire(response.data);
                 if (response.status === 200) {
                     useGetComments.refetch();
+                    postDetail.refetch();
                     setIsModify(false);
                 }
             })
@@ -331,6 +332,7 @@ export default function PostDetailPage({}) {
 
                     if (response.status === 200) {
                         useGetComments.refetch();
+                        postDetail.refetch();
                     }
                 })
                 .catch((error) => {
@@ -381,6 +383,7 @@ export default function PostDetailPage({}) {
                         showConfirmButton: false,
                     });
                     useGetComments.refetch();
+                    postDetail.refetch();
                     setSaveCommentValue({
                         postId: 0,
                         content: '',
@@ -692,7 +695,7 @@ export default function PostDetailPage({}) {
                                         {comment?.userId ===
                                         loginUserData?.data?.userId ? (
                                             <div css={s.buttonContainer}>
-                                                {isModify ? (
+                                                {isModify && comment.commentId === updateCommentValue.commentId ? (
                                                     <button
                                                         onClick={
                                                             handleUpdateOnClick
@@ -787,7 +790,7 @@ export default function PostDetailPage({}) {
                                     <div css={s.commentBottonBox}>
                                         {isModify &&
                                         loginUserData?.data?.userId ===
-                                            comment.userId ? (
+                                            comment.userId && comment.commentId === updateCommentValue.commentId ? (
                                             <textarea
                                                 onChange={
                                                     handleUpdateTextAriaOnChange
