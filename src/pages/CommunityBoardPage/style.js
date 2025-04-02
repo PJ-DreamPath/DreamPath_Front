@@ -108,24 +108,24 @@ export const table = css`
             border-bottom: 1px solid #ddd;
 
             transition: background-color 0.2s ease-in-out;
-            
+
             &:hover {
                 background-color: #f1f1f1;
             }
-            
+
             td {
                 box-sizing: border-box;
                 padding: 1rem;
-                
+
                 font-size: 1.3rem;
                 text-align: center;
-                
+
                 &:first-of-type {
                     display: inline-block;
-                    
+
                     width: 50rem;
                     overflow: hidden;
-                    
+
                     text-align: left;
                     text-overflow: ellipsis;
                     white-space: nowrap;
@@ -146,6 +146,21 @@ export const table = css`
             }
         }
     }
+`;
+
+export const tdTitle = css`
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+`;
+
+export const writer = css`
+    margin: 0 auto;
+    width: 10rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `;
 
 export const footer = css`
