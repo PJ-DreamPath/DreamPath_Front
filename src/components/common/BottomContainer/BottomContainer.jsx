@@ -16,7 +16,7 @@ function BottomContainer(props) {
     };
 
     const handleCommunityMoreOnClick = () => {
-        navigate('/communityBoard');
+        navigate('/communityboard');
     };
 
     const [search, setSearch] = useState({
@@ -71,7 +71,7 @@ function BottomContainer(props) {
                                 navigate('/home');
                                 return;
                             }
-                            navigate(`/communityBoard/${post.postId}`);
+                            navigate(`/communityboard/${post.postId}`);
                         }}
                     >
                         <div>{post.title}</div>

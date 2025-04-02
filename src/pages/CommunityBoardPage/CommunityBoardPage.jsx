@@ -68,7 +68,7 @@ export default function CommunityBoardPage({}) {
     useEffect(() => {
         if (boardList?.data?.data) {
             let newArray = boardList.data.data.find(
-                (board) => board.boardName === 'communityBoard'
+                (board) => board.boardName === 'communityboard'
             );
             setBoard(newArray || {});
         }
@@ -153,7 +153,7 @@ export default function CommunityBoardPage({}) {
                     <button
                         type="button"
                         onClick={() => {
-                            navigation('/service/communityBoard/regist');
+                            navigation('/service/communityboard/regist');
                         }}
                     >
                         글쓰기
@@ -176,7 +176,7 @@ export default function CommunityBoardPage({}) {
                     <tbody>
                         {postList && !postList.isLoading ? (
                             postList.data?.data.postList.map((board, idx) => (
-                                <tr key={`communityBoard_${idx}`}>
+                                <tr key={`communityboard_${idx}`}>
                                     <td
                                         onClick={() => {
                                             if (!loginUser) {
@@ -185,7 +185,7 @@ export default function CommunityBoardPage({}) {
                                                 return;
                                             }
                                             navigation(
-                                                `/communityBoard/${board.postId}`
+                                                `/communityboard/${board.postId}`
                                             );
                                         }}
                                     >

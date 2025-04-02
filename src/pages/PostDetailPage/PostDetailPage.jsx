@@ -507,23 +507,28 @@ export default function PostDetailPage({}) {
 
             <div css={s.contentBox}>{parse(String(post.content || ''))}</div>
 
-            {loginUserData.data.userId === post.userId ||
-            post.status !== 'recruiting' ? (
-                <></>
+            {pathNm.includes('mentoring') ? (
+                loginUserData.data.userId === post.userId ||
+                post.status !== 'recruiting' ? (
+                    <></>
+                ) : (
+                    <button
+                        type="button"
+                        css={s.likeBtn}
+                        onClick={handlelikeBtnOnClick}
+                    >
+                        {isMyLike?.data?.data === undefined ||
+                        isMyLike?.data?.data === '' ? (
+                            <FaRegHeart />
+                        ) : (
+                            <FaHeart />
+                        )}
+
+                        {post.likeCount}
+                    </button>
+                )
             ) : (
-                <button
-                    type="button"
-                    css={s.likeBtn}
-                    onClick={handlelikeBtnOnClick}
-                >
-                    {isMyLike?.data?.data === undefined ||
-                    isMyLike?.data?.data === '' ? (
-                        <FaRegHeart />
-                    ) : (
-                        <FaHeart />
-                    )}
-                    {post.likeCount}
-                </button>
+                <></>
             )}
 
             {/* 주소 박스 */}
@@ -649,25 +654,28 @@ export default function PostDetailPage({}) {
                                 </div>
                             </div>
 
-                            <div css={s.starPointBox}>
-                                {' '}
-                                {Array.from({ length: 5 }, (_, idx) => (
-                                    <FaStar
-                                        key={`vcv` + idx}
-                                        className={
-                                            saveCommentValue.starPoint > idx
-                                                ? 'on'
-                                                : ''
-                                        }
-                                        onClick={() =>
-                                            setSaveCommentValue((prev) => ({
-                                                ...prev,
-                                                starPoint: idx + 1,
-                                            }))
-                                        }
-                                    />
-                                ))}
-                            </div>
+                            {pathNm.includes('mentoring') ? (
+                                <div css={s.starPointBox}>
+                                    {Array.from({ length: 5 }, (_, idx) => (
+                                        <FaStar
+                                            key={`vcv` + idx}
+                                            className={
+                                                saveCommentValue.starPoint > idx
+                                                    ? 'on'
+                                                    : ''
+                                            }
+                                            onClick={() =>
+                                                setSaveCommentValue((prev) => ({
+                                                    ...prev,
+                                                    starPoint: idx + 1,
+                                                }))
+                                            }
+                                        />
+                                    ))}
+                                </div>
+                            ) : (
+                                <></>
+                            )}
                         </div>
                         <div css={s.commentBottonBox}>
                             <textarea
@@ -757,53 +765,60 @@ export default function PostDetailPage({}) {
                                         ) : (
                                             <></>
                                         )}
-                                        <div css={s.starPointBox}>
-                                            {' '}
-                                            {Array.from(
-                                                { length: 5 },
-                                                (_, idx) => (
-                                                    <FaStar
-                                                        key={`vcv` + idx}
-                                                        className={
-                                                            // comment.userId === loginUserData?.data?.userId ? updateCommentValue.starPoint === -1 ? comment.starPoint > idx ? 'on' : "" : updateCommentValue.starPoint > idx ? 'on' : "": comment.starPoint > idx ? 'on' : ""
 
-                                                            comment.userId ===
-                                                                loginUserData
-                                                                    ?.data
-                                                                    ?.userId &&
-                                                            comment.commentId ===
-                                                                updateCommentValue.commentId
-                                                                ? updateCommentValue.starPoint >
-                                                                  idx
-                                                                    ? 'on'
-                                                                    : ''
-                                                                : comment.starPoint >
-                                                                  idx
-                                                                ? 'on'
-                                                                : ''
-                                                        }
-                                                        onClick={() => {
-                                                            if (
+                                        {pathNm.includes('mentoring') ? (
+                                            <div css={s.starPointBox}>
+                                                {' '}
+                                                {Array.from(
+                                                    { length: 5 },
+                                                    (_, idx) => (
+                                                        <FaStar
+                                                            key={`vcv` + idx}
+                                                            className={
+                                                                // comment.userId === loginUserData?.data?.userId ? updateCommentValue.starPoint === -1 ? comment.starPoint > idx ? 'on' : "" : updateCommentValue.starPoint > idx ? 'on' : "": comment.starPoint > idx ? 'on' : ""
+
                                                                 comment.userId ===
                                                                     loginUserData
                                                                         ?.data
                                                                         ?.userId &&
-                                                                isModify
-                                                            ) {
-                                                                setUpdateCommentValue(
-                                                                    (prev) => ({
-                                                                        ...prev,
-                                                                        starPoint:
-                                                                            idx +
-                                                                            1,
-                                                                    })
-                                                                );
+                                                                comment.commentId ===
+                                                                    updateCommentValue.commentId
+                                                                    ? updateCommentValue.starPoint >
+                                                                      idx
+                                                                        ? 'on'
+                                                                        : ''
+                                                                    : comment.starPoint >
+                                                                      idx
+                                                                    ? 'on'
+                                                                    : ''
                                                             }
-                                                        }}
-                                                    />
-                                                )
-                                            )}
-                                        </div>
+                                                            onClick={() => {
+                                                                if (
+                                                                    comment.userId ===
+                                                                        loginUserData
+                                                                            ?.data
+                                                                            ?.userId &&
+                                                                    isModify
+                                                                ) {
+                                                                    setUpdateCommentValue(
+                                                                        (
+                                                                            prev
+                                                                        ) => ({
+                                                                            ...prev,
+                                                                            starPoint:
+                                                                                idx +
+                                                                                1,
+                                                                        })
+                                                                    );
+                                                                }
+                                                            }}
+                                                        />
+                                                    )
+                                                )}
+                                            </div>
+                                        ) : (
+                                            <></>
+                                        )}
                                     </div>
                                     <div css={s.commentBottonBox}>
                                         {isModify &&
