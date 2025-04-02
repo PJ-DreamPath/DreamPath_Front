@@ -75,7 +75,7 @@ export default function CommunityBoardPage({}) {
     }, [boardList.data]);
 
     // listdata
-    const postList = useGetPosts(board.boardId, search);
+    const postList = useGetPosts(2, search);
 
     useEffect(() => {
         if (postList && postList.data && postList.data.data) {

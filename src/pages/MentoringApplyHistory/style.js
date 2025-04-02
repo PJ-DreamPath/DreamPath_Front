@@ -21,7 +21,7 @@ export const tableWrapper = css`
     background: white;
     border-radius: 8px;
     margin-bottom: 2rem;
-    height: 55rem;
+    height: 60rem;
 `;
 
 export const table = css`
@@ -39,9 +39,7 @@ export const tableHeader = css`
     font-weight: bold;
     text-align: center;
 
-    &:nth-of-type(2) {
-        width: 50rem;
-    }
+    
 `;
 
 export const tableRow = css`
@@ -57,17 +55,18 @@ export const tableCell = css`
     padding: 12px;
     text-align: center;
     font-size: 1.3rem;
-    
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
     &:nth-of-type(1) {
-        width: 10rem;
+        width: 50rem;
+        text-align: start;
     }
 
     &:nth-of-type(2) {
-        text-align: start;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-        width: 40rem;
+        
+        width: 5rem;
         display: inline-block;
         cursor: pointer;
     }

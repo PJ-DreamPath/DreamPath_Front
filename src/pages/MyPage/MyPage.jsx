@@ -60,8 +60,12 @@ function MyPage(props) {
     };
 
     const handleNicknameUpdateButtonOnClick = async () => {
-        await updateNicknameMutation.mutateAsync(nicknameValue);
-
+        await updateNicknameMutation.mutateAsync(nicknameValue).then(() => {
+            alert("닉네임이 변경되었습니다.");
+        }).catch(() => {
+            alert("닉네임 변경에 실패했습니다.");
+        });
+        
         loginUser.refetch();
     };
 
@@ -70,7 +74,11 @@ function MyPage(props) {
     };
 
     const handleEmailUpdateButtonOnClick = async () => {
-        await updateEmailMutation.mutateAsync(emailValue);
+        await updateEmailMutation.mutateAsync(emailValue).then(()=> {
+            alert("이메일 변경에 성공했습니다.");
+        }).catch(() => {
+            alert("이메일 변경에 실패했습니다.");
+        });
 
         loginUser.refetch();
     };
@@ -80,8 +88,11 @@ function MyPage(props) {
     };
 
     const handlePasswordUpdateButtonOnClick = async () => {
-        await updatePasswordMutation.mutateAsync(passwordValue);
-
+        await updatePasswordMutation.mutateAsync(passwordValue).then(() => {
+            alert("비밀번호가 성공적으로 변경되었습니다.");
+        }).catch(() => {
+            alert("비밀번호 변경에 실패했습니다.");
+        });
         loginUser.refetch();
     };
 

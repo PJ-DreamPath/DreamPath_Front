@@ -28,6 +28,10 @@ function MentoringApplyHistory(props) {
         searchText,
     });
 
+    useEffect(()=>{
+        console.log(mentoringHistoryQuery);
+    },[mentoringHistoryQuery?.data])
+
     const [searchInputValue, setSearchInputValue] = useState('');
     const handleSearchButtonOnClick = () => {
         searchParams.set('page', 1);
@@ -69,6 +73,7 @@ function MentoringApplyHistory(props) {
     };
 
     const handleTitleOnClick = (postId) => {
+        console.log(postId);
         navigate(`/service/mentoring/${postId}`);
     };
 
@@ -117,8 +122,8 @@ function MentoringApplyHistory(props) {
                 <table css={s.table}>
                     <thead>
                         <tr css={s.tableRowHeader}>
-                            <th css={s.tableHeader}>작성자</th>
                             <th css={s.tableHeader}>제목</th>
+                            <th css={s.tableHeader}>작성자</th>
                             <th css={s.tableHeader}>작성일</th>
                         </tr>
                     </thead>
@@ -126,14 +131,14 @@ function MentoringApplyHistory(props) {
                         {mentoringHistoryQuery?.data?.data.myMentoringSearchList.map(
                             (my, index) => (
                                 <tr key={`MentoringApplyHistory${index}`} css={s.tableRow}>
-                                    <td css={s.tableCell}>
-                                        {my.mento}
-                                    </td>
                                     <td
                                         css={s.tableCell}
                                         onClick={() => handleTitleOnClick(my.postId)}
                                     >
                                         {my.title}
+                                    </td>
+                                    <td css={s.tableCell}>
+                                        {my.mento}
                                     </td>
                                     <td css={s.tableCell}>{my.createdAt}</td>
                                     
