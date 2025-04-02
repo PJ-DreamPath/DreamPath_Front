@@ -6,7 +6,6 @@ import Select from 'react-select';
 import { useGetPostsInfinityScroll } from '../../queries/postQuery';
 import { IoSearch } from 'react-icons/io5';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
 import { useGetBoards } from '../../queries/boardQuery';
 import { useRecoilState } from 'recoil';
 import { sideMenuBoxMentoringState } from '../../atoms/sideMenuBox';
