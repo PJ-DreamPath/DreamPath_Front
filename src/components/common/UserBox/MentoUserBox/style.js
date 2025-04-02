@@ -36,6 +36,9 @@ export const nickname = css`
     font-size: 16px;
     font-weight: bold;
     margin-top: 8px;
+    
+    text-overflow: ellipsis;
+    white-space: nowrap;
     color:#ddd;
     overflow: hidden;
     &:hover{

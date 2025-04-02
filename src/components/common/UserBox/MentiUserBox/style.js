@@ -35,13 +35,12 @@ export const nickname = css`
     font-size: 17px;
     font-weight: bold;
     margin-top: 8px;
+    white-space: nowrap;
     overflow: hidden;
     color: #ddd;
-
-    &:hover{
-        overflow: visible;
-        cursor: default;
-    }
+    
+    text-overflow: ellipsis;
+    cursor: default;
 `;
 
 export const joinDate = css`
