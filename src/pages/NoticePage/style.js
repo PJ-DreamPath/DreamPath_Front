@@ -153,7 +153,6 @@ export const table = css`
     }
 `;
 
-
 export const deleteButton = css`
     background: none;
     border: none;
@@ -176,7 +175,6 @@ export const footer = css`
     justify-content: center;
     margin-right: 5rem;
     margin-top: 5rem;
-    
 `;
 
 export const pageNumbers = css`
@@ -212,6 +210,20 @@ export const pageNumbers = css`
 `;
 
 export const pageNum = (isSelect) => css`
-    background-color: ${isSelect ? "#eeeeee" : "#ffffff"} !important;
+    background-color: ${isSelect ? '#eeeeee' : '#ffffff'} !important;
 `;
 
+export const tdTitle = css`
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+`;
+
+export const writer = css`
+    margin: 0 auto;
+    width: 10rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+`;

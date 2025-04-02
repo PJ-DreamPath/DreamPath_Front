@@ -8,6 +8,7 @@ import { useGetBoards } from '../../queries/boardQuery';
 import { IoSearch } from 'react-icons/io5';
 import Select from 'react-select';
 import { useUserMeQuery } from '../../queries/userQuery';
+import { GrView } from 'react-icons/gr';
 
 function NoticePage({}) {
     const navigation = useNavigate();
@@ -164,8 +165,6 @@ function NoticePage({}) {
                             <th>제목</th>
                             <th>작성자</th>
                             <th>작성일</th>
-                            <th>댓글</th>
-                            <th>좋아요</th>
                             <th>조회수</th>
                         </tr>
                     </thead>
@@ -189,19 +188,23 @@ function NoticePage({}) {
                                                 );
                                             }}
                                         >
-                                            {post.title}
+                                            <p css={s.tdTitle}>{post.title}</p>
                                         </td>
                                         <td className="name">
-                                            {post.user.nickname}
+                                            <p css={s.writer}>
+                                                {post.user.nickname}
+                                            </p>
                                         </td>
                                         <td>
                                             {new Date(
                                                 post.createdAt
                                             ).toLocaleDateString()}
                                         </td>
-                                        <td>{post.commentCount}</td>
-                                        <td>{post.likeCount}</td>
-                                        <td>{post.viewCount}</td>
+
+                                        <td>
+                                            <GrView />
+                                            <span>{post.viewCount}</span>
+                                        </td>
                                     </tr>
                                 )
                             )
