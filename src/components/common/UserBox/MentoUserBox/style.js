@@ -41,10 +41,7 @@ export const nickname = css`
     white-space: nowrap;
     color:#ddd;
     overflow: hidden;
-    &:hover{
-        overflow: visible;
-        cursor: default;
-    }
+    cursor: default;
 `;
 
 export const joinDate = css`
