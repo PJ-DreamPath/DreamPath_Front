@@ -107,6 +107,10 @@ export default function BoardRegistPage({}) {
         endDate: moment(),
     });
 
+    useEffect(() => {
+        console.log('registData', registData);
+    }, [registData]);
+
     const [attacheFile, setAttachedFile] = useState(null);
 
     // 상세 조회
@@ -364,23 +368,26 @@ export default function BoardRegistPage({}) {
                                     format="YYYY-MM-DD"
                                     value={registData.startDate}
                                     onChange={(e) => {
-                                        // const startDt = moment(
-                                        //     registData.startDate
-                                        // ).format('YYYY-MM-DD');
-                                        // const endDt = moment(
-                                        //     registData.endDate
-                                        // ).format('YYYY-MM-DD');
+                                        const startDt =
+                                            moment(e).format('YYYY-MM-DD');
+                                        const endDt = moment(
+                                            registData.endDate
+                                        ).format('YYYY-MM-DD');
 
-                                        // if (startDt > endDt) {
-                                        //     alert(
-                                        //         '시작 날짜는 종료 날짜 이후일 수없습니다.'
-                                        //     );
-                                        //     return;
-                                        // }
-                                        setRegistData((prev) => ({
-                                            ...prev,
-                                            startDate: e,
-                                        }));
+                                        if (startDt > endDt) {
+                                            alert(
+                                                '시작 날짜는 종료 날짜 이후일 수없습니다.'
+                                            );
+                                            setRegistData((prev) => ({
+                                                ...prev,
+                                                startDate: moment(),
+                                            }));
+                                        } else {
+                                            setRegistData((prev) => ({
+                                                ...prev,
+                                                startDate: e,
+                                            }));
+                                        }
                                     }}
                                 />
                                 <DatePicker
@@ -389,25 +396,26 @@ export default function BoardRegistPage({}) {
                                     format="YYYY-MM-DD"
                                     value={registData.endDate}
                                     onChange={(e) => {
-                                        // const startDt = moment(
-                                        //     registData.startDate
-                                        // ).format('YYYY-MM-DD');
-                                        // const endDt = moment(
-                                        //     registData.endDate
-                                        // ).format('YYYY-MM-DD');
+                                        const startDt = moment(
+                                            registData.startDate
+                                        ).format('YYYY-MM-DD');
+                                        const endDt =
+                                            moment(e).format('YYYY-MM-DD');
 
-                                        // console.log(startDt > endDt);
-
-                                        // if (startDt < endDt) {
-                                        //     alert(
-                                        //         '종료 날짜는 시작 날짜 이전일 수없습니다.'
-                                        //     );
-                                        //     return;
-                                        // }
-                                        setRegistData((prev) => ({
-                                            ...prev,
-                                            endDate: e,
-                                        }));
+                                        if (startDt > endDt) {
+                                            alert(
+                                                '종료 날짜는 시작 날짜 이전일 수없습니다.'
+                                            );
+                                            setRegistData((prev) => ({
+                                                ...prev,
+                                                endDate: moment(),
+                                            }));
+                                        } else {
+                                            setRegistData((prev) => ({
+                                                ...prev,
+                                                endDate: e,
+                                            }));
+                                        }
                                     }}
                                 />
                             </div>
