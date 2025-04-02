@@ -33,6 +33,7 @@ import {
 import { usegGetCommentsQuery } from '../../queries/commentQuery';
 import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
 import { useGetMentoringApplyHistoryQuery } from '../../queries/userQuery';
+import { api } from '../../configs/axiosConfig';
 
 export default function PostDetailPage({}) {
     const navigate = useNavigate();
@@ -165,7 +166,7 @@ export default function PostDetailPage({}) {
                 email: post.user.email,
             })
             .then((result) => {
-                Swal.fire("이메일 전송에 성공했습니다.");
+                Swal.fire('이메일 전송에 성공했습니다.');
                 apply.refetch();
 
                 // alert('123123');
@@ -275,7 +276,7 @@ export default function PostDetailPage({}) {
     const [updateCommentValue, setUpdateCommentValue] = useState({
         commentId: 0,
         content: '',
-        starPoint: -1,
+        starPoint: 0,
     });
 
     const updateCommentMutation = useUpdateCommentMutation();
@@ -415,6 +416,27 @@ export default function PostDetailPage({}) {
             });
     };
 
+    const handleFileDownload = async () => {
+        await api
+            .get(`/api/file/download/${post.attachedFiles}`, {
+                responseType: 'blob',
+            }) // responseType 추가
+            .then((response) => {
+                // response.data가 Blob 객체가 됩니다.
+                const url = window.URL.createObjectURL(response.data);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = post.attachedFiles;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            })
+            .catch((error) => {
+                console.error('파일 다운로드 오류:', error);
+            });
+    };
+
     return !postDetail.isLoading ? (
         <>
             <div css={s.titleBox}>
@@ -495,13 +517,17 @@ export default function PostDetailPage({}) {
                     </div>
                     <div css={s.row}>
                         <p>첨부파일</p>
-                        <span>{post.attachedFiles}</span>
+                        <span css={s.fileClick} onClick={handleFileDownload}>
+                            {post.attachedFiles}
+                        </span>
                     </div>
                 </div>
             ) : (
                 <div css={s.row}>
                     <p>첨부파일</p>
-                    <span>{post.attachedFiles}</span>
+                    <span css={s.fileClick} onClick={handleFileDownload}>
+                        {post.attachedFiles}
+                    </span>
                 </div>
             )}
 

@@ -54,13 +54,12 @@ export const title = css`
 `;
 
 export const buttonContainer = css`
-
     /* display: flex;
     justify-content: end;
     align-items: center;
     gap: 1rem; */
 
-    margin-left: auto ;
+    margin-left: auto;
     button {
         margin-right: 1.5rem;
     }
@@ -96,7 +95,7 @@ export const right = css`
     & > p {
         font-size: 1.3rem;
         color: #aaa;
-        
+
         &:nth-of-type(1) {
             width: 10rem;
             white-space: nowrap;
@@ -176,6 +175,10 @@ export const row = css`
         margin-right: 1rem;
         width: 8rem;
     }
+`;
+
+export const fileClick = css`
+    cursor: pointer;
 `;
 
 export const contentBox = css`
@@ -358,7 +361,6 @@ export const userInfo = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    
 `;
 
 export const img = css`
@@ -381,22 +383,20 @@ export const info = css`
     & > p {
         margin: 0;
     }
-`
+`;
 export const nickname = css`
     font-size: 1.6rem;
     font-weight: bold;
-`
+`;
 
 export const date = css`
     color: #aaa;
-`
+`;
 
 export const starPointBox = css`
     display: flex;
     gap: 1rem;
     font-size: 2.5rem;
-
-
 
     svg {
         &.on {
@@ -406,8 +406,9 @@ export const starPointBox = css`
         }
         path {
             color: #aaa;
-    }}
-`
+        }
+    }
+`;
 export const commentBottonBox = css`
     width: 100%;
     padding: 2rem;
@@ -425,13 +426,7 @@ export const commentBottonBox = css`
             font-weight: bold;
         }
     }
-`
-
-
-
-
-
-
+`;
 
 export const commentBox = css`
     box-sizing: border-box;
@@ -441,11 +436,11 @@ export const commentBox = css`
     height: 100%;
     background-color: #f1f5fd;
     position: relative;
-    z-index:1;
+    z-index: 1;
     padding: 5rem 5rem 0;
 
-     ::before {
-        content: "";
+    ::before {
+        content: '';
         width: 100vw;
         height: 100%;
         position: absolute;
@@ -454,14 +449,12 @@ export const commentBox = css`
         background-color: #f1f5fd;
         z-index: -1;
     }
-
 `;
 export const footer = css`
     display: flex;
     justify-content: center;
     margin-right: 5rem;
     margin-top: 1rem;
-    
 `;
 
 export const pageNumbers = css`
@@ -497,20 +490,20 @@ export const pageNumbers = css`
 `;
 
 export const pageNum = (isSelect) => css`
-    background-color: ${isSelect ? "#eeeeee" : "#ffffff"} !important;
+    background-color: ${isSelect ? '#eeeeee' : '#ffffff'} !important;
 `;
 
 export const saveAndCount = css`
     display: flex;
     justify-content: space-between;
     position: relative;
-    z-index:1;
-`
+    z-index: 1;
+`;
 
 export const reviewCount = css`
     font-size: 1.5rem;
     font-weight: bold;
-`
+`;
 
 export const commentSave = css`
     display: flex;
@@ -520,14 +513,12 @@ export const commentSave = css`
     width: 8rem;
     height: 3rem;
     border-radius: 0.5rem;
-    background-color: #1681FF;
+    background-color: #1681ff;
     font-size: 1.5rem;
     font-weight: bold;
     color: #ffffff;
     border: none;
-
-
-`
+`;
 
 export const commentReviewBox = css`
     position: relative;
@@ -539,46 +530,43 @@ export const commentReviewBox = css`
     width: auto;
     height: 30rem;
     background-color: #ffffff;
-`
+`;
 
 export const profile_section = css`
     display: flex;
     justify-content: space-between;
-    align-items: center;    
+    align-items: center;
     margin-bottom: 10rem;
     width: 100%;
-    
-`
+`;
 
 export const profile_img = css`
-  overflow: hidden;
-  width: 6rem;
-  height: 6rem;
-  margin-left: 3rem;
-  border-radius: 50%;
-  
+    overflow: hidden;
+    width: 6rem;
+    height: 6rem;
+    margin-left: 3rem;
+    border-radius: 50%;
 
-  & > img {
-    width: 100%;
-  }
-`
+    & > img {
+        width: 100%;
+    }
+`;
 
 export const profile_Info = css`
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      margin-left: 1.5rem;
-
-`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 1.5rem;
+`;
 
 export const saveNickname = css`
     font-size: 1.5rem;
     font-weight: bold;
-`
+`;
 
 export const createDate = css`
-    white-space: nowrap ;
-`
+    white-space: nowrap;
+`;
 
 export const comment_action = css`
     display: flex;
@@ -586,27 +574,25 @@ export const comment_action = css`
     margin-right: 3rem;
     gap: 1.5rem;
     width: 100%;
-    
-`
+`;
 
 export const line = css`
     position: absolute;
-    top: 50%; 
+    top: 50%;
     left: 0;
     width: 100%;
-    border-top: 3px solid rgba(201, 201, 201, 0.3) ;
-  ;
-`
+    border-top: 3px solid rgba(201, 201, 201, 0.3);
+`;
 
 export const updateBox = css`
     width: 10rem;
     height: 3.5rem;
     border-radius: 0.5rem;
     border: none;
-    background-color: #1681FF;
+    background-color: #1681ff;
     color: #fafafa;
     font-weight: bold;
-`
+`;
 export const deleteBox = css`
     width: 10rem;
     height: 3.5rem;
@@ -615,14 +601,14 @@ export const deleteBox = css`
     background-color: red;
     color: #fafafa;
     font-weight: bold;
-`
+`;
 
 export const starPoint = css`
     font-size: 3rem;
     letter-spacing: 1.5rem;
     line-height: 1;
     cursor: pointer;
-`
+`;
 
 export const review = css`
     position: absolute;
@@ -633,6 +619,4 @@ export const review = css`
     font-size: 0.5rem;
     height: auto;
     color: #000000;
-
-`
-
+`;
