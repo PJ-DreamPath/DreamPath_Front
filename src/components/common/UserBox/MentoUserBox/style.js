@@ -36,6 +36,7 @@ export const nickname = css`
     font-size: 16px;
     font-weight: bold;
     margin-top: 8px;
+    color:#ddd;
     overflow: hidden;
     &:hover{
         overflow: visible;
@@ -51,18 +52,14 @@ export const joinDate = css`
     cursor: default;
 `;
 
-export const mentorSection = css`
-    margin-top: 10px;
-    font-size: 14px;
-    
-    cursor: default;
-`;
+
 
 export const starBox = css`
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
+    color: #ddd;
 
     svg {
         font-size: 2rem;
@@ -75,6 +72,8 @@ export const starBox = css`
     p {
         margin-left: 1rem;
         font-size: 1.3rem;
+        color: #ddd;
+
     }
 
 `;
@@ -82,8 +81,15 @@ export const starBox = css`
 export const mentoringInfo = css`
     font-size: 12px;
     margin-top: 6px;
+
     
     cursor: default;
+    
+    margin-top: 6px;
+    & > div {
+        color: #ddd;
+
+    }
 `;
 
 export const buttonContainer = css`
