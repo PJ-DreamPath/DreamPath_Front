@@ -169,7 +169,7 @@ export default function CommunityBoardPage({}) {
                             <th>작성자</th>
                             <th>작성일</th>
                             <th>댓글</th>
-                            <th>좋아요</th>
+                            {/* <th>좋아요</th> */}
                             <th>조회수</th>
                         </tr>
                     </thead>
@@ -205,10 +205,10 @@ export default function CommunityBoardPage({}) {
                                         <FaRegCommentDots />
                                         <span>{board.commentCount}</span>
                                     </td>
-                                    <td>
+                                    {/* <td>
                                         <FcLike />
                                         <span>{board.likeCount}</span>
-                                    </td>
+                                    </td> */}
                                     <td>
                                         <GrView />
                                         <span>{board.viewCount}</span>

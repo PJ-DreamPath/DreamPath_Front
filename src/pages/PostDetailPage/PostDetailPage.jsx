@@ -356,19 +356,33 @@ export default function PostDetailPage({}) {
 
     // 등록
     const handleCommnetSaveOnClick = async () => {
-        if (
-            saveCommentValue.starPoint <= 0 ||
-            saveCommentValue.content === ''
-        ) {
-            await Swal.fire({
-                title: '등록 실패',
-                text: '후기 등록이 실패되었습니다.',
-                icon: 'error',
-                timer: 1000,
-                showConfirmButton: false,
-            });
+        if (pathNm.includes('mentoring')) {
+            if (
+                saveCommentValue.starPoint <= 0 ||
+                saveCommentValue.content === ''
+            ) {
+                await Swal.fire({
+                    title: '등록 실패',
+                    text: '후기 등록이 실패되었습니다.',
+                    icon: 'error',
+                    timer: 1000,
+                    showConfirmButton: false,
+                });
 
-            return;
+                return;
+            }
+        } else {
+            if (saveCommentValue.content === '') {
+                await Swal.fire({
+                    title: '등록 실패',
+                    text: '후기 등록이 실패되었습니다.',
+                    icon: 'error',
+                    timer: 1000,
+                    showConfirmButton: false,
+                });
+
+                return;
+            }
         }
 
         await saveCommentMutation
@@ -485,7 +499,10 @@ export default function PostDetailPage({}) {
                     </div>
                 </div>
             ) : (
-                <div css={s.row}>파일</div>
+                <div css={s.row}>
+                    <p>첨부파일</p>
+                    <span>{post.attachedFiles}</span>
+                </div>
             )}
 
             <div css={s.contentBox}>{parse(String(post.content || ''))}</div>
@@ -549,9 +566,8 @@ export default function PostDetailPage({}) {
                                         timer: 1000,
                                     });
                                     navigate(
-                                        pathNm === 'mentoring'
-                                            ? `/service/mentoring/update/${post.postId}`
-                                            : `/${pathNm}/update/${post.postId}`
+                                        `/service/${pathNm}/update/${post.postId}`
+                                        // : `//update/${post.postId}`
                                     );
                                 }}
                             >
@@ -695,7 +711,9 @@ export default function PostDetailPage({}) {
                                         {comment?.userId ===
                                         loginUserData?.data?.userId ? (
                                             <div css={s.buttonContainer}>
-                                                {isModify && comment.commentId === updateCommentValue.commentId ? (
+                                                {isModify &&
+                                                comment.commentId ===
+                                                    updateCommentValue.commentId ? (
                                                     <button
                                                         onClick={
                                                             handleUpdateOnClick
@@ -790,7 +808,9 @@ export default function PostDetailPage({}) {
                                     <div css={s.commentBottonBox}>
                                         {isModify &&
                                         loginUserData?.data?.userId ===
-                                            comment.userId && comment.commentId === updateCommentValue.commentId ? (
+                                            comment.userId &&
+                                        comment.commentId ===
+                                            updateCommentValue.commentId ? (
                                             <textarea
                                                 onChange={
                                                     handleUpdateTextAriaOnChange
