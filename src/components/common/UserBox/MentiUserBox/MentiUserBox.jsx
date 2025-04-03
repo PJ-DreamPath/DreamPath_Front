@@ -8,7 +8,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useUpdateProfileImageMutation } from '../../../../mutations/mypageMutation';
 import { useGetMentoringApplyHistoryQuery, useUserMeQuery } from '../../../../queries/userQuery';
 import { FaStar } from 'react-icons/fa';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const MentiUserBox = () => {
     const navigate = useNavigate();
@@ -16,23 +16,23 @@ const MentiUserBox = () => {
     const loginUser = useUserMeQuery();
 
     const loginUserData = queryClient.getQueryData(['userMeQuery']);
+    const [ isModalOpen, setIsModalOpen ] = useState(false);
     
     const nickname = loginUserData?.data?.nickname;
     const formattedDate = loginUserData?.data?.createdAt?.substring(0, 10);
 
+    const profileImg = `http://localhost:8080/image/user/profile/${loginUser?.data?.data.profileImg}`
     const totalApplyMentoring = useGetMentoringApplyHistoryQuery({
         page: 1,
         limitCount: 10,
         order: "desc",
         searchText:"",
     });
-    // const totalApplyMentoring = queryClient.getQueryData(['useGetMentoringApplyHistoryQuery']);
-    // // const totalApplyHistory = totalApplyMentoring?.data?.totalElements;
+
     useEffect(()=>{
         console.log(totalApplyMentoring);
     },[totalApplyMentoring?.data])
     
-    const updateProfileImageMutation = useUpdateProfileImageMutation();
 
     const handleMyPageButtonOnClick = () => {
         navigate('/service/mypage');
@@ -44,44 +44,35 @@ const MentiUserBox = () => {
         window.location.reload();
     };
 
-    const handleProfileImageFileOnChange = async (e) => {
-        const fileLiST = e.target.files;
-        const file = fileLiST[0];
+    const handleImgClickBtn = () =>{
+        setIsModalOpen(true);
+    }
 
-        const formData = new FormData();
-        formData.append('file', file);
+    const handleImgCloseBtn = () => {
+        setIsModalOpen(false);
+    }
 
-        await updateProfileImageMutation.mutateAsync(formData);
-        loginUser.refetch();
-    };
+    
 
     return (
         <div css={s.userBoxContainer}>
             
             <div css={s.joinDate}>가입 일자: {formattedDate}</div>
             <div css={s.profileImageContainer}>
-                <label css={s.profileImage}>
+                <label css={s.profileImage} onClick={handleImgClickBtn}>
                     {loginUser.isLoading || (
                         <img
-                            src={`http://localhost:8080/image/user/profile/${loginUser?.data?.data.profileImg}`}
+                            src={profileImg}
                             alt=""
                         />
                     )}
-                    <input
-                        type="file"
-                        onChange={handleProfileImageFileOnChange}
-                    />
+                    
                 </label>
 
             </div>
 
             <div css={s.nickname}>{nickname}</div>
 
-
-            <div css={s.mentorSection}>
-                
-                
-            </div>
 
             <div css={s.mentoringInfo}>
                 <div>✏️ 멘토링 신청 개수 : {totalApplyMentoring?.data?.data.totalElements} </div>
@@ -99,7 +90,17 @@ const MentiUserBox = () => {
             <a href="/" css={s.logoutLink} onClick={handleLogoutButtonOnClick}>
                 로그아웃
             </a>
+
+            {isModalOpen && (
+                <div css={s.modalOverlay} >
+                    <div css={s.modalContent}>
+                        <img src={profileImg} alt="Profile" css={s.modalImage} />
+                        <button css={s.closeButton} onClick={handleImgCloseBtn}>닫기</button>
+                    </div>
+                </div>
+            )}
         </div>
+        
     );
 };
 
