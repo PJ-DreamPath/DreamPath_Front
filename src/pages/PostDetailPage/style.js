@@ -522,6 +522,11 @@ export const commentSave = css`
     font-weight: bold;
     color: #ffffff;
     border: none;
+    &:hover{
+        cursor: pointer;
+        background-color: #5a9eec;
+
+    }
 `;
 
 export const commentReviewBox = css`
@@ -596,6 +601,11 @@ export const updateBox = css`
     background-color: #1681ff;
     color: #fafafa;
     font-weight: bold;
+    &:hover{
+        cursor: pointer;
+        background-color: #5a9eec;
+
+    }
 `;
 export const deleteBox = css`
     width: 10rem;
@@ -605,6 +615,11 @@ export const deleteBox = css`
     background-color: red;
     color: #fafafa;
     font-weight: bold;
+    &:hover{
+        cursor: pointer;
+        background-color: #dc6666;
+
+    }
 `;
 
 export const starPoint = css`

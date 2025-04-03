@@ -284,8 +284,20 @@ export default function PostDetailPage({}) {
     const [isModify, setIsModify] = useState(false);
 
     const handleUpdateOnClick = async () => {
+        if (updateCommentValue.content.trim() === '') {
+            await Swal.fire({
+                title: '수정 실패',
+                text: '댓글 내용을 입력해주세요.',
+                icon: 'error',
+                timer: 1000,
+                showConfirmButton: false,
+            });
+            return;
+        }
         await updateCommentMutation
-            .mutateAsync(updateCommentValue)
+            .mutateAsync(
+                updateCommentValue
+            )
             .then((response) => {
                 Swal.fire(response.data);
                 if (response.status === 200) {
@@ -359,9 +371,10 @@ export default function PostDetailPage({}) {
 
     // 등록
     const handleCommnetSaveOnClick = async () => {
+        if(isSubmitting) return;
+        setIsSubmitting(true);
         if (pathNm.includes('mentoring')) {
                 
-        setIsSubmitting(true);
             if (
                 saveCommentValue.starPoint <= 0 ||
                 saveCommentValue.content === ''
@@ -373,6 +386,7 @@ export default function PostDetailPage({}) {
                     timer: 1000,
                     showConfirmButton: false,
                 });
+                setIsSubmitting(false);
 
                 return;
             }
@@ -385,6 +399,8 @@ export default function PostDetailPage({}) {
                     timer: 1000,
                     showConfirmButton: false,
                 });
+
+                setIsSubmitting(false);
 
                 return;
             }
@@ -401,6 +417,7 @@ export default function PostDetailPage({}) {
                         timer: 1000,
                         showConfirmButton: false,
                     });
+
                     useGetComments.refetch();
                     postDetail.refetch();
                     setSaveCommentValue({
@@ -416,11 +433,15 @@ export default function PostDetailPage({}) {
                         timer: 1000,
                         showConfirmButton: false,
                     });
-                    
+
                 }
-            });
+            })
+            .finally(() => {
+                setIsSubmitting(false);
+
+            })
             
-        setIsSubmitting(false);
+        
             
     };
 
