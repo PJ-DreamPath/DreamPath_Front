@@ -3,7 +3,7 @@ import * as s from './style';
 import React, { useEffect, useRef, useState } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useGetBoards } from '../../queries/boardQuery';
 import Select from 'react-select';
 import DaumPostcode from 'react-daum-postcode';
@@ -71,6 +71,7 @@ export default function BoardRegistPage({}) {
         });
 
         console.log(registData.content);
+        console.log("여기",loginUser);
     }, []);
 
     // 카테고리 리스트 데이터
