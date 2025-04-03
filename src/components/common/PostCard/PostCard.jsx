@@ -31,11 +31,19 @@ const PostCard = React.forwardRef(
                     <span css={s.chip(isRecruiting)}>
                         {status === 'recruiting' ? '모집중' : '모집마감'}
                     </span>
+                    <div css={s.starBox}>
+                        {Array.from({ length: starPoint }, (_, index) => (
+                            <p key={`starPont_${index}`}>
+                                <FaStar />
+                            </p>
+                        ))}
+                    </div>
                     <div css={s.heartBox}>
                         <FaHeart />
                         <span>{likeCount}</span>
                     </div>
                 </div>
+
                 <div css={s.titleBox}>
                     <p>{title}</p>
                     <div>{parse(content)}</div>
@@ -44,13 +52,6 @@ const PostCard = React.forwardRef(
                 <div css={s.infoBox}>
                     <div>
                         <p>{nickname}</p>
-                        <div css={s.starBox}>
-                            {Array.from({ length: starPoint }, (_, index) => (
-                                <p key={`starPont_${index}`}>
-                                    <FaStar />
-                                </p>
-                            ))}
-                        </div>
                     </div>
                     <p>{moment(createdAt).format('YYYY-MM-DD')}</p>
                 </div>
