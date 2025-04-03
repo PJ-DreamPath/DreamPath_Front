@@ -42,8 +42,12 @@ export const heartBox = css`
 
     font-size: 1.3rem;
 
-    & svg path {
-        color: #ff3b30;
+    & svg {
+        display: inline-block;
+        margin-top: 0.3rem;
+        path {
+            color: #ff3b30;
+        }
     }
 `;
 
@@ -109,9 +113,14 @@ export const starBox = css`
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    margin-top: 0.5rem;
+    height: 2.2rem;
+    margin-left: auto;
+    margin-right: 1rem;
 
     p {
         margin: 0;
+        font-size: 1.5rem;
     }
 
     path {

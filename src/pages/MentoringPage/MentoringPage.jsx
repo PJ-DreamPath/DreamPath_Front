@@ -239,7 +239,7 @@ export default function MentoringPage({}) {
                                 title={post.title}
                                 content={post.content}
                                 nickname={post.user.nickname}
-                                starPoint={post.user.starPoint}
+                                starPoint={post.starPoint}
                                 createdAt={post.createdAt}
                                 onClick={() => {
                                     navigation(
