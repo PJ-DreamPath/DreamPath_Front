@@ -10,6 +10,10 @@ export const cardBox = css`
 
     background-color: #fff;
     box-shadow: 0.4rem 0.4rem 1.3rem rgba(0, 0, 0, 0.12);
+    &:hover{
+        
+    box-shadow: 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.12);
+    }
 `;
 
 export const top = css`
