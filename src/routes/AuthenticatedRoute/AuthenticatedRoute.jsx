@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import PointPurchasePage from '../../pages/PointPurchasePage/PointPurchasePage';
 import MentoringPage from '../../pages/MentoringPage/MentoringPage';
 import PurchaseSectionPage from '../../pages/PurchaseSectionPage/PurchaseSectionPage';
@@ -16,6 +16,7 @@ import MentoringApplyHistory from '../../pages/MentoringApplyHistory/MentoringAp
 
 function AuthenticatedRoute(props) {
     const navigate = useNavigate();
+    const location = useLocation();
     const queryClient = useQueryClient();
     const principalState = queryClient.getQueryState(['userMeQuery']);
     const apply = queryClient.getQueryData([
@@ -28,6 +29,8 @@ function AuthenticatedRoute(props) {
             navigate('/home');
         }
     }, [principalState.status]);
+
+
 
     return (
         <>
