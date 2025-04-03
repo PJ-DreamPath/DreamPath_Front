@@ -3,7 +3,7 @@ import * as s from './style';
 import React, { useEffect, useRef, useState } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useGetBoards } from '../../queries/boardQuery';
 import Select from 'react-select';
 import DaumPostcode from 'react-daum-postcode';
@@ -20,7 +20,7 @@ import { useUserMeQuery } from '../../queries/userQuery';
 import { useQueryClient } from '@tanstack/react-query';
 import { useGetCategories } from '../../queries/categoriesQuery';
 
-export default function BoardRegistPage({}) {
+export default function BoardRegistPage({ }) {
     const navigation = useNavigate();
     const pathNm = useParams();
     const loginUser = useUserMeQuery();
@@ -28,6 +28,7 @@ export default function BoardRegistPage({}) {
     const boardList = useGetBoards();
 
     const [board, setBoard] = useState({});
+    const [isLoad, setIsLoad] = useState(false);
 
     useEffect(() => {
         if (boardList && boardList.data && boardList.data.data) {
@@ -37,6 +38,8 @@ export default function BoardRegistPage({}) {
             setBoard(newArray);
         }
     }, [boardList.data]);
+
+
 
     // quill
     const contaiinerQuillRef = useRef();
@@ -71,7 +74,7 @@ export default function BoardRegistPage({}) {
         });
 
         console.log(registData.content);
-        console.log("여기",loginUser);
+        console.log("여기", loginUser);
     }, []);
 
     // 카테고리 리스트 데이터
@@ -307,8 +310,29 @@ export default function BoardRegistPage({}) {
         }
     }, [pathNm]);
 
+    useEffect( () => {
+        console.log("boardList", boardList);
+        if (loginUser?.data?.data.remaining === 0 && pathNm.boardName === "mentoring") {
+             Swal.fire("남은 등록 가능 횟수가 없습니다.");
+             navigation("/service/mentoring");
+        }
+        if (loginUser?.data?.data.roleName === "멘티" && pathNm.boardName === "mentoring") {
+             Swal.fire("멘티는 이용할 수 없는 페이지입니다.");
+            navigation("/service/mentoring");
+        }
+        if(!!pathNm.postid && (loginUser?.data?.data.userId !== postDetail?.data?.data.user.userId)) {
+            Swal.fire("다른 사람의 게시글은 수정할 수 없습니다.");
+            navigation("/home");
+        } 
+
+        console.log("loginUser", loginUser);
+        console.log("postDetail", postDetail); 
+        setIsLoad(true);
+    }, [])
+
     return (
         <>
+
             <div css={s.titleBox}>
                 <h3>
                     {board.boardNameKor} {!pathNm.postid ? '등록' : '수정'}
@@ -544,6 +568,9 @@ export default function BoardRegistPage({}) {
                     />
                 </div>
             </div>
+            :
+            <></>
+
         </>
     );
 }
