@@ -629,6 +629,7 @@ export default function PostDetailPage({}) {
                         type="button"
                         className="regist"
                         onClick={handleOnApplyButtonOnClick}
+                        disabled={!post.apply}
                     >
                         신청하기
                     </button>
