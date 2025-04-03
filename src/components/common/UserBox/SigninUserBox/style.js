@@ -41,6 +41,9 @@ export const signinUserBox = css`
         color: white;
         outline: none;
         font-weight: 600;
+        &::placeholder{
+            color: #ddd;
+        }
     }
 `
 
