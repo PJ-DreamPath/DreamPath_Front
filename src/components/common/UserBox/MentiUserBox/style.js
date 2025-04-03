@@ -119,3 +119,43 @@ export const logoutLink = css`
         text-decoration: underline;
     }
 `;
+
+export const modalOverlay = css`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+`;
+
+export const modalContent = css`
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+export const modalImage = css`
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+`;
+
+export const closeButton = css`
+    margin-top: 10px;
+    padding: 10px;
+    cursor: pointer;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+`;
+
