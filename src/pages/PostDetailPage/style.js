@@ -324,6 +324,7 @@ export const btnBox = css`
 
         background-color: #fff;
         box-shadow: 0.4rem 0.4rem 1.3rem rgba(0, 0, 0, 0.12);
+       
 
         &.update,
         &.regist {
@@ -333,6 +334,9 @@ export const btnBox = css`
         &.del {
             color: #fff;
             background-color: red;
+        }
+        &:disabled {
+            background-color: #dbdbdb;
         }
     }
 `;
