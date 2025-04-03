@@ -23,7 +23,7 @@ import { useGetCategories } from '../../queries/categoriesQuery';
 export default function BoardRegistPage({}) {
     const navigation = useNavigate();
     const pathNm = useParams();
-
+    const loginUser = useUserMeQuery();
     // boardList
     const boardList = useGetBoards();
 
@@ -116,7 +116,7 @@ export default function BoardRegistPage({}) {
     const [attacheFile, setAttachedFile] = useState(null);
 
     // 상세 조회
-    const postDetail = useGetPostDetail(pathNm.postId);
+    const postDetail = useGetPostDetail(pathNm.postid);
     const [post, setPost] = useState({});
 
     useEffect(() => {
@@ -128,7 +128,7 @@ export default function BoardRegistPage({}) {
     }, [postDetail.data]);
 
     useEffect(() => {
-        if (!!post && !!pathNm.postId) {
+        if (!!post && !!pathNm.postid) {
             setRegistData({
                 boardId: post.boardId,
                 categoryId: post.categoryId,
@@ -143,7 +143,7 @@ export default function BoardRegistPage({}) {
             });
 
             // 여기에 작성해줘
-            if (!!pathNm.postId && quill && contaiinerQuillRef.current) {
+            if (!!pathNm.postid && quill && contaiinerQuillRef.current) {
                 quill.clipboard.dangerouslyPasteHTML(post.content);
             }
         }
@@ -229,11 +229,14 @@ export default function BoardRegistPage({}) {
             formData.append(entry[0], entry[1])
         );
 
-        if (!!attacheFile) {
+        if (
+            !!attacheFile &&
+            attacheFile !== postDetail.data.data.attachedFiles
+        ) {
             formData.append('file', attacheFile);
         }
 
-        if (!!pathNm.postId) {
+        if (!!pathNm.postid) {
             const params = {
                 postId: post.postId,
                 formData: formData,
@@ -261,6 +264,7 @@ export default function BoardRegistPage({}) {
 
             if (resp.status == 200) {
                 postDetail.refetch();
+                loginUser.refetch();
                 navigation(
                     board.boardName === 'mentoring'
                         ? `/service/${board.boardName}`
@@ -291,8 +295,6 @@ export default function BoardRegistPage({}) {
         }));
     }, [board]);
 
-    const { data } = useUserMeQuery();
-
     console.log(pathNm, 'pathNm');
 
     useEffect(() => {
@@ -308,7 +310,7 @@ export default function BoardRegistPage({}) {
         <>
             <div css={s.titleBox}>
                 <h3>
-                    {board.boardNameKor} {!pathNm.postId ? '등록' : '수정'}
+                    {board.boardNameKor} {!pathNm.postid ? '등록' : '수정'}
                 </h3>
             </div>
 
