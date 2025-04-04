@@ -106,6 +106,8 @@ export default function MentoringPage({}) {
                 })
             );
 
+            console.log('newArray', newArray);
+
             setPostList(newArray);
         }
     }, [getPostList.data]);
@@ -213,8 +215,10 @@ export default function MentoringPage({}) {
                         <button
                             type="button"
                             onClick={() => {
-                                if(loginUserData.data.remaining === 0) {
-                                    Swal.fire("남은 등록 가능 횟수가 없습니다.");
+                                if (loginUserData.data.remaining === 0) {
+                                    Swal.fire(
+                                        '남은 등록 가능 횟수가 없습니다.'
+                                    );
                                     return;
                                 }
                                 navigation('/service/mentoring/regist');
@@ -246,6 +250,7 @@ export default function MentoringPage({}) {
                                 nickname={post.user.nickname}
                                 starPoint={post.starPoint}
                                 createdAt={post.createdAt}
+                                category={post.categoryNameKor}
                                 onClick={() => {
                                     navigation(
                                         `/service/mentoring/${post.postId}`
