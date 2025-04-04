@@ -157,7 +157,7 @@ export default function MentoringPage({}) {
                                 }
                             }}
                         />
-                        <IoSearch onClick={handleSearchOnClick} />
+                        <IoSearch onClick={handleSearchOnClick} style={{cursor: 'pointer'}} />
                     </div>
 
                     <Select

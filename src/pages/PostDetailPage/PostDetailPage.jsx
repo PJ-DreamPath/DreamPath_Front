@@ -173,6 +173,7 @@ export default function PostDetailPage({}) {
         Swal.fire('이메일 전송에 성공했습니다.');
         apply.refetch();
         setIsLoading(true);
+        loginUserData.refetch();
     }catch(error){
         console.error("신청 오류:", error);
     }
