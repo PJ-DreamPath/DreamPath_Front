@@ -197,7 +197,11 @@ export default function BoardRegistPage({}) {
 
     const registPostMutation = useRegistPostMutation();
     const updatePostMutation = useUpdatePostMutation();
+
+    const [isClick, setIsClick] = useState(true);
     async function handleRegistPostBtnOnClick() {
+        setIsClick(false);
+
         if (!registData.title || registData.title.replace(/\s+/g, '') === '') {
             await Swal.fire({
                 titleText: '게시글 제목을 입력하세요.',
@@ -280,7 +284,6 @@ export default function BoardRegistPage({}) {
                 postId: post.postId,
                 formData: formData,
             };
-
             const resp = await updatePostMutation.mutateAsync(params);
 
             if (resp.status == 200) {
@@ -543,7 +546,10 @@ export default function BoardRegistPage({}) {
                 )}
 
                 <div css={s.btnBox}>
-                    <button type="button" onClick={handleRegistPostBtnOnClick}>
+                    <button
+                        type="button"
+                        onClick={isClick && handleRegistPostBtnOnClick}
+                    >
                         {!pathNm.postid ? '등록' : '수정'}
                     </button>
                     <button
