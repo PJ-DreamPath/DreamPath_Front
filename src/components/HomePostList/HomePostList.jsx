@@ -20,35 +20,30 @@ function HomePostList(props) {
     const mentoringPostList = useGetPosts(1, search);
 
     useEffect(() => {
-        if (
-            mentoringPostList &&
-            mentoringPostList.data &&
-            mentoringPostList.data.data
-        ) {
-            console.log('mentoringPostList', mentoringPostList);
-        }
-    }, [mentoringPostList?.data]);
+        mentoringPostList.refetch();
+    }, []);
+
     return (
         <div>
             <h3 css={s.popular}>인기 멘토링</h3>
-        <div css={s.postListContainer}>
-            {mentoringPostList?.data?.data.postList.map((post) => (
-                <HomePostCard
-                key={`mentoring_main_${post.postId}`}
-                status={post.status}
-                likeCount={post.likeCount}
-                title={post.title}
-                content={post.content}
-                nickname={post.user.nickname}
-                starPoint={post.starPoint}
-                createdAt={post.createdAt}
-                onClick={() => {
-                    navigation(`/service/mentoring/${post.postId}`);
-                }}
-                />
-            ))}
+            <div css={s.postListContainer}>
+                {mentoringPostList?.data?.data.postList.map((post) => (
+                    <HomePostCard
+                        key={`mentoring_main_${post.postId}`}
+                        status={post.status}
+                        likeCount={post.likeCount}
+                        title={post.title}
+                        content={post.content}
+                        nickname={post.user.nickname}
+                        starPoint={post.starPoint}
+                        createdAt={post.createdAt}
+                        onClick={() => {
+                            navigation(`/service/mentoring/${post.postId}`);
+                        }}
+                    />
+                ))}
+            </div>
         </div>
-    </div>
     );
 }
 
