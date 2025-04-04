@@ -51,8 +51,14 @@ function AdminPage(props) {
     };
 
     const handleNicknameUpdateButtonOnClick = async () => {
-        await updateNicknameMutation.mutateAsync(nicknameValue);
-
+        await updateNicknameMutation
+            .mutateAsync(nicknameValue)
+            .then(() => {
+                alert('닉네임이 변경되었습니다.');
+            })
+            .catch(() => {
+                alert('닉네임 변경에 실패했습니다.');
+            });
         loginUser.refetch();
     };
 
@@ -61,7 +67,14 @@ function AdminPage(props) {
     };
 
     const handleEmailUpdateButtonOnClick = async () => {
-        await updateEmailMutation.mutateAsync(emailValue);
+        await updateEmailMutation
+            .mutateAsync(emailValue)
+            .then(() => {
+                alert('이메일 변경에 성공했습니다.');
+            })
+            .catch(() => {
+                alert('이메일 변경에 실패했습니다.');
+            });
 
         loginUser.refetch();
     };
@@ -71,11 +84,14 @@ function AdminPage(props) {
     };
 
     const handlePasswordUpdateButtonOnClick = async () => {
-        await updatePasswordMutation.mutateAsync(passwordValue).then(()=> {
-            Swal.fire("비밀번호가 변경되었습니다.");
-        }).catch(() => {
-            Swal.fire("올바르지 않은 비밀번호입니다.");
-        });
+        await updatePasswordMutation
+            .mutateAsync(passwordValue)
+            .then(() => {
+                alert('비밀번호가 성공적으로 변경되었습니다.');
+            })
+            .catch(() => {
+                alert('비밀번호 변경에 실패했습니다.');
+            });
 
         loginUser.refetch();
     };
@@ -83,15 +99,15 @@ function AdminPage(props) {
     const { data } = useUserMeQuery();
 
     useEffect(() => {
-        console.log(location.pathname, "path");
-        if (location.pathname.includes("admin")) {
-            if (data?.data?.roleName !== "ROLE_ADMIN") {
+        console.log(location.pathname, 'path');
+        if (location.pathname.includes('admin')) {
+            if (data?.data?.roleName !== 'ROLE_ADMIN') {
                 navigation('/');
-                alert("권한이 없습니다.");
+                alert('권한이 없습니다.');
             }
         }
     }, [location, data, navigation]);
-    
+
     return (
         <>
             <section css={s.profileSection}>
