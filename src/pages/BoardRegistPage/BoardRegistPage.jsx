@@ -348,7 +348,7 @@ export default function BoardRegistPage({}) {
                 alert('권한이 없습니다.');
             }
         }
-    }, [pathNm, loginUser?.data]);
+    }, [loginUser?.data]);
 
     return isLoad ? (
         <>

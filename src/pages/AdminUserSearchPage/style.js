@@ -53,13 +53,13 @@ export const tableRow = css`
 export const tableCell = css`
     padding: 12px;
     text-align: center;
+    
 
-    &.name {
-        display: inline-block;
-        overflow: hidden;
-        white-space: nowrap;
+    &.name{
         text-overflow: ellipsis;
-        width: 7rem;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 7rem;
     }
 `;
 

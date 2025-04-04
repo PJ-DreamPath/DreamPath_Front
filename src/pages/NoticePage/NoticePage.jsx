@@ -94,7 +94,7 @@ function NoticePage({}) {
 
     useEffect(() => {
         noticePostList.refetch();
-    }, []);
+    }, [board]);
 
     const { data } = useUserMeQuery();
 
