@@ -101,8 +101,14 @@ export const infoContent = css`
 export const infoRow = css`
   display: flex;
   align-items: center;
-  gap: 1rem;
   margin: 0 30rem 1rem 1rem;
+  box-sizing: border-box;
+  width: 60%;
+  gap: 1rem;
+
+  & > span {
+    width: 5rem;
+  }
 
   input {
     flex: 1;
@@ -110,6 +116,7 @@ export const infoRow = css`
     border: 1px solid #ddd;
     border-radius: 0.5rem;
     background: #f5f5f5;
+    
   }
 
   button {
