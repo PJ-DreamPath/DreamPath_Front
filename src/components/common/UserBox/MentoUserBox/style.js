@@ -1,4 +1,4 @@
-import { css } from "@emotion/react";
+import { css } from '@emotion/react';
 
 export const userBoxContainer = css`
     width: auto;
@@ -11,35 +11,40 @@ export const userBoxContainer = css`
 `;
 
 export const profileImage = css`
+    margin-top: 1rem;
     object-fit: cover;
     border-radius: 50%;
     cursor: pointer;
-    & > img {
-    width: 60%;
+    background-color: white;
     height: 12rem;
-    
-    margin-top: 1rem;
-    border-radius: 50%;
-  }
-  & > input[type="file"] {
-    display: none;
-  }
-    
-`;  
+    width: 60%;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    & > img {
+        width: 100%;
+        height: auto;
 
-export const profileImgeContainer = css`
-    
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    & > input[type='file'] {
+        display: none;
+    }
 `;
 
+export const profileImgeContainer = css``;
 
 export const nickname = css`
     font-size: 16px;
     font-weight: bold;
     margin-top: 8px;
-    
+
     text-overflow: ellipsis;
     white-space: nowrap;
-    color:#ddd;
+    color: #ddd;
     overflow: hidden;
     cursor: default;
 `;
@@ -48,11 +53,9 @@ export const joinDate = css`
     font-size: 12px;
     color: #ddd;
     margin-top: 4px;
-    
+
     cursor: default;
 `;
-
-
 
 export const starBox = css`
     display: flex;
@@ -73,22 +76,18 @@ export const starBox = css`
         margin-left: 1rem;
         font-size: 1.3rem;
         color: #ddd;
-
     }
-
 `;
 
 export const mentoringInfo = css`
     font-size: 12px;
     margin-top: 6px;
 
-    
     cursor: default;
-    
+
     margin-top: 6px;
     & > div {
         color: #ddd;
-
     }
 `;
 
@@ -108,7 +107,7 @@ export const styledButton = css`
     border-radius: 6px;
     font-weight: bold;
     cursor: pointer;
-    transition:0.3s;
+    transition: 0.3s;
 
     &:hover {
         background-color: #e0e0e0;
@@ -123,13 +122,12 @@ export const logoutLink = css`
     text-decoration: none;
     cursor: pointer;
     opacity: 0.8;
-    
+
     &:hover {
         opacity: 1;
         text-decoration: underline;
     }
 `;
-
 
 export const modalOverlay = css`
     position: fixed;

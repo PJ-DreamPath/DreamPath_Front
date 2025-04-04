@@ -29,10 +29,6 @@ const MentiUserBox = () => {
         searchText:"",
     });
 
-    useEffect(()=>{
-        console.log(totalApplyMentoring);
-    },[totalApplyMentoring?.data])
-    
 
     const handleMyPageButtonOnClick = () => {
         navigate('/service/mypage');

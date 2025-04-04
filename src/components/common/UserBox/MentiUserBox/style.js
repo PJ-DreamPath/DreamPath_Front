@@ -1,4 +1,4 @@
-import { css } from "@emotion/react";
+import { css } from '@emotion/react';
 
 export const userBoxContainer = css`
     width: auto;
@@ -14,22 +14,27 @@ export const profileImage = css`
     object-fit: cover;
     border-radius: 50%;
     cursor: pointer;
-    & > img {
-    width: 60%;
+    background-color: white;
     height: 12rem;
-    margin-top: 1rem;
-    border-radius: 50%;
-  }
-  & > input[type="file"] {
-    display: none;
-  }
-    
-`;  
+    width: 60%;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    & > img {
+        width: 100%;
+        height: auto;
 
-export const profileImgeContainer = css`
-    
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    & > input[type='file'] {
+        display: none;
+    }
 `;
 
+export const profileImgeContainer = css``;
 
 export const nickname = css`
     font-size: 17px;
@@ -38,7 +43,7 @@ export const nickname = css`
     white-space: nowrap;
     overflow: hidden;
     color: #ddd;
-    
+
     text-overflow: ellipsis;
     cursor: default;
 `;
@@ -47,11 +52,9 @@ export const joinDate = css`
     font-size: 12px;
     color: #ddd;
     margin-top: 4px;
-    
+
     cursor: default;
 `;
-
-
 
 export const starBox = css`
     display: flex;
@@ -79,9 +82,8 @@ export const mentoringInfo = css`
     margin-top: 6px;
     & > div {
         color: #ddd;
-
     }
-`
+`;
 export const buttonContainer = css`
     display: flex;
     justify-content: space-between;
@@ -98,7 +100,7 @@ export const styledButton = css`
     border-radius: 6px;
     font-weight: bold;
     cursor: pointer;
-    transition:0.3s;
+    transition: 0.3s;
 
     &:hover {
         background-color: #e0e0e0;
@@ -113,7 +115,7 @@ export const logoutLink = css`
     text-decoration: none;
     cursor: pointer;
     opacity: 0.8;
-    
+
     &:hover {
         opacity: 1;
         text-decoration: underline;
@@ -158,4 +160,3 @@ export const closeButton = css`
     border: none;
     border-radius: 5px;
 `;
-

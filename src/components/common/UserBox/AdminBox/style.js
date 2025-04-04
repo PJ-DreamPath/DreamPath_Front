@@ -14,10 +14,20 @@ export const profileImage = css`
     object-fit: cover;
     border-radius: 50%;
     cursor: pointer;
+    background-color: white;
+    height: 12rem;
+    width: 60%;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
     & > img {
-        width: 60%;
-        height: 12rem;
-        border-radius: 50%;
+        width: 100%;
+        height: auto;
+
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
     }
     & > input[type='file'] {
         display: none;
