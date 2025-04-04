@@ -122,7 +122,7 @@ export default function CommunityBoardPage({}) {
                                 }
                             }}
                         />
-                        <IoSearch onClick={handleSearchOnClick} />
+                        <IoSearch onClick={handleSearchOnClick} style={{cursor: 'pointer'}} />
                     </div>
 
                     <Select

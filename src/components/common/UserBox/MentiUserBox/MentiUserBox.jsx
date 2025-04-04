@@ -41,7 +41,7 @@ const MentiUserBox = () => {
     const handleLogoutButtonOnClick = async () => {
         setTokenLocalStorage('AccessToken', null);
         await queryClient.invalidateQueries({ queryKey: ['userMeQuery'] });
-        window.location.reload();
+        navigate('/home');
     };
 
     const handleImgClickBtn = () =>{
