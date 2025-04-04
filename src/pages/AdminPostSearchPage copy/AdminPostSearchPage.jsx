@@ -8,11 +8,13 @@ import { useGetAdminPost } from '../../queries/adminQuery';
 import { FaRegTrashCan } from 'react-icons/fa6';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useUserMeQuery } from '../../queries/userQuery';
+import Swal from 'sweetalert2';
 
 const AdminPostSearchPage = () => {
     const [posts, getPosts] = useState([]);
     const navigation = useNavigate();
     const pathNm = useParams();
+    const loginUser = useUserMeQuery();
 
     const [searchParams, setSearchParams] = useSearchParams();
     const page = parseInt(searchParams.get('page') || '1');
@@ -23,6 +25,14 @@ const AdminPostSearchPage = () => {
         order: 'desc',
         searchText: '',
     });
+
+    useEffect(() => {
+        console.log(loginUser);
+        
+        if(loginUser?.data?.data.roleName !== "ROLE_ADMIN") {
+            navigation("/home");
+        }
+    }, [])
 
     useEffect(() => {
         setParams((prev) => ({
@@ -75,7 +85,7 @@ const AdminPostSearchPage = () => {
 
     useEffect(() => {
         if (pathNm['*'] && pathNm['*'].includes('admin')) {
-            if (data?.data?.roleName !== '관리자') {
+            if (data?.data?.roleName !== 'ROLE_ADMIN') {
                 navigation('/');
                 alert('권한이 없습니다.');
             }

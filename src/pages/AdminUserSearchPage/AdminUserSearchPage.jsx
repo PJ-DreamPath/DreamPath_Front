@@ -12,6 +12,7 @@ import { useUserMeQuery } from '../../queries/userQuery';
 const AdminUserSearchPage = () => {
     const navigation = useNavigate();
     const pathNm = useParams();
+    const loginUser = useUserMeQuery();
 
     const [users, setUsers] = useState([]);
 
@@ -24,6 +25,12 @@ const AdminUserSearchPage = () => {
         order: 'desc',
         searchText: '',
     });
+
+    useEffect(() => {
+        if(loginUser?.data?.data.roleName !== "ROLE_ADMIN") {
+            navigation("/home");
+        }
+    }, [])
 
     useEffect(() => {
         setParams((prev) => ({
@@ -76,7 +83,7 @@ const AdminUserSearchPage = () => {
 
     useEffect(() => {
         if (pathNm['*'] && pathNm['*'].includes('admin')) {
-            if (data?.data?.roleName !== '관리자') {
+            if (data?.data?.roleName !== 'ROLE_ADMIN') {
                 navigation('/');
                 alert('권한이 없습니다.');
             }

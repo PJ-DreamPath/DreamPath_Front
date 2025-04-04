@@ -61,7 +61,7 @@ export default function SideMenuBox({}) {
     }, [fullPath]);
 
     // 각 페이지 데이터 리스트
-    const categories = useGetCategories(board.boardId);
+    const categories = useGetCategories(board?.boardId);
     const [list, setList] = useState([]);
 
     useEffect(() => {
@@ -92,7 +92,7 @@ export default function SideMenuBox({}) {
         !categories.isLoading ? (
             <ul css={s.sideMenuBox}>
                 {list.map((category, idx) =>
-                    loginUser.roleName === '멘티' ? (
+                    loginUser.roleName === 'ROLE_MENTI' ? (
                         loginUser.roleName === category.type ||
                         category.type === 'mentoring' ? (
                             <li

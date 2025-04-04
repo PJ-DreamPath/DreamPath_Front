@@ -151,7 +151,7 @@ export default function BoardRegistPage({}) {
             Swal.fire('남은 등록 가능 횟수가 없습니다.');
         }
         if (
-            loginUser?.data?.data.roleName === '멘티' &&
+            loginUser?.data?.data.roleName === 'ROLE_MENTI' &&
             pathNm.boardName === 'mentoring'
         ) {
             setIsLoad(false);
@@ -342,7 +342,7 @@ export default function BoardRegistPage({}) {
 
             if (
                 loginUser?.data?.data &&
-                loginUser.data?.data.roleName !== '관리자'
+                loginUser.data?.data.roleName !== 'ROLE_ADMIN'
             ) {
                 navigation('/notice');
                 alert('권한이 없습니다.');
