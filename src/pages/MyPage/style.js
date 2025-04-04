@@ -62,6 +62,10 @@ export const nicknameBox = css`
     &:hover{
       background: #3a6fc4;
     }
+    &:disabled{
+      background-color: #ddd;
+      cursor: default;
+    }
   }
 `;
 
