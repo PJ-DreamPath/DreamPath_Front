@@ -324,15 +324,12 @@ export const btnBox = css`
 
         background-color: #fff;
         box-shadow: 0.4rem 0.4rem 1.3rem rgba(0, 0, 0, 0.12);
-       cursor: pointer;
+          cursor: pointer;
 
         &.update,
         &.regist {
             color: #fff;
             background-color: #1683ff;
-            &:hover{
-            background-color: #1a71d5
-        }
         }
         &.del {
             color: #fff;
@@ -340,10 +337,10 @@ export const btnBox = css`
         }
         &:disabled {
             background-color: #dbdbdb;
+            cursor: default;
+
         }
-        &:hover{
-            background-color: #dbdbdbd5;
-        }
+       
           
 
     }
