@@ -58,16 +58,12 @@ export const tableCell = css`
     text-overflow: ellipsis;
 
     &.titleName {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
+        
         max-width: 15rem;
-        overflow: hidden;
     }
 
     &.name {
-        min-width: 7rem;
+        max-width: 7rem;
     }
 `;
 

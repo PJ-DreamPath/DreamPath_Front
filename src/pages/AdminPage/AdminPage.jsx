@@ -13,6 +13,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useUserMeQuery } from '../../queries/userQuery';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 function AdminPage(props) {
     const navigation = useNavigate();
@@ -26,7 +27,7 @@ function AdminPage(props) {
     const location = useLocation();
 
     const [nicknameValue, setNicknameValue] = useState('');
-    const [emailValue, setEmailValue] = useState('');
+    const [emailValue, setEmailValue] = useState(loginUser?.data?.data.email);
     const [passwordValue, setPasswordValue] = useState('');
     const [userValue, setUserValue] = useState('');
 
@@ -70,7 +71,11 @@ function AdminPage(props) {
     };
 
     const handlePasswordUpdateButtonOnClick = async () => {
-        await updatePasswordMutation.mutateAsync(passwordValue);
+        await updatePasswordMutation.mutateAsync(passwordValue).then(()=> {
+            Swal.fire("비밀번호가 변경되었습니다.");
+        }).catch(() => {
+            Swal.fire("올바르지 않은 비밀번호입니다.");
+        });
 
         loginUser.refetch();
     };

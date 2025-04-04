@@ -85,26 +85,44 @@ export const infoContent = css`
 `;
 
 export const infoRow = css`
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin: 0 30rem 1rem 1rem;
+   display: flex;
+  align-items: center;
+  margin: 0 30rem 1rem 1rem;
+  box-sizing: border-box;
+  width: 60%;
+  gap: 1rem;
 
-    input {
-        flex: 1;
-        padding: 0.5rem;
-        border: 1px solid #ddd;
-        border-radius: 0.5rem;
-        background: #f5f5f5;
-    }
+  & > span {
+    width: 5rem;
+  }
 
-    button {
-        background: #3b82f6;
-        color: white;
-        font-weight: 500;
-        padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-        cursor: pointer;
-        border: none;
+  input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    background: #f5f5f5;
+    
+  }
+
+  button {
+    background: #3b82f6;
+    color: white ;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    border: none;
+    &:disabled {
+      background-color: #aaa;
+      &:hover{
+        background-color: #aaa;
+        cursor: default;
+      }
+    };
+
+    &:hover{
+      background: #3a6fc4;
     }
+  }
 `;
