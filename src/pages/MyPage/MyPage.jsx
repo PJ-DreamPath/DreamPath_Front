@@ -114,13 +114,26 @@ function MyPage(props) {
         });
     }
 
+
+    const [isSendMail, setIsSendMail] = useState(false);
     const handelAuthPhoneOnClick = async () => {
-       await sendAuthPhoneMutation.mutateAsync(phoneNumberInputValue).then((response) => {
+        if(isSendMail) {return};
+
+        setIsSendMail(true)
+
+        try{
+            const response = await sendAuthPhoneMutation.mutateAsync(phoneNumberInputValue);
             setAuthNumber(response.data);
             Swal.fire("인증 번호가 전송되었습니다.");
-       }).catch((error) => {
+
+        }catch(error) {
             Swal.fire("인증 번호 전송에 실패했습니다.");
-       });
+       } finally{
+            setTimeout(() => setIsSendMail(false), 3000);
+       
+       }
+       
+    
     }
 
     const handleAuthPhoneCheckOnChange = (e) => {
@@ -231,7 +244,7 @@ function MyPage(props) {
                     <div css={s.infoRow}>
                         <span>휴대폰 번호</span>
                         <input onChange={handleAuthPhoneOnChange} type="tel" />
-                        <button onClick={handelAuthPhoneOnClick}>인증하기</button>
+                        <button onClick={handelAuthPhoneOnClick} disabled={isSendMail}>인증하기</button>
                         {
                             authNumber !== '' ?  <input onChange={handleAuthPhoneCheckOnChange} type="text" /> : <></>
                         }
