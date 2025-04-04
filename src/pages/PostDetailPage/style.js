@@ -324,12 +324,15 @@ export const btnBox = css`
 
         background-color: #fff;
         box-shadow: 0.4rem 0.4rem 1.3rem rgba(0, 0, 0, 0.12);
-       
+       cursor: pointer;
 
         &.update,
         &.regist {
             color: #fff;
             background-color: #1683ff;
+            &:hover{
+            background-color: #1a71d5
+        }
         }
         &.del {
             color: #fff;
@@ -338,6 +341,11 @@ export const btnBox = css`
         &:disabled {
             background-color: #dbdbdb;
         }
+        &:hover{
+            background-color: #dbdbdbd5;
+        }
+          
+
     }
 `;
 
@@ -401,7 +409,7 @@ export const starPointBox = css`
     display: flex;
     gap: 1rem;
     font-size: 2.5rem;
-
+    cursor: pointer;
     svg {
         &.on {
             path {
