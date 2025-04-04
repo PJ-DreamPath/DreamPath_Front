@@ -90,7 +90,7 @@ export const topBox = css`
     width: 100%;
     height: 7rem;
 
-    input {
+    input { 
         box-sizing: border-box;
         outline: none;
         border: none;
@@ -114,6 +114,9 @@ export const qullBox = css`
 
     width: 100%;
     height: 50rem;
+    &:hover{
+        border-color: #7d6b6b;
+    }
 
     & .ql-toolbar {
         display: flex;
