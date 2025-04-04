@@ -134,10 +134,10 @@ export default function BoardRegistPage({}) {
             Swal.fire('다른 사람의 게시글은 수정할 수 없습니다.');
             setIsLoad(false);
         } else {
-            setPost(postDetail.data.data);
+            setPost(postDetail?.data?.data);
             setIsLoad(true);
 
-            setAttachedFile(postDetail.data.data.attachedFiles);
+            setAttachedFile(postDetail?.data?.data.attachedFiles);
         }
     }, [postDetail?.data]);
 
