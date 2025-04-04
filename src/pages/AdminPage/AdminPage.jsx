@@ -85,7 +85,7 @@ function AdminPage(props) {
     useEffect(() => {
         console.log(location.pathname, "path");
         if (location.pathname.includes("admin")) {
-            if (data?.data?.roleName !== "관리자") {
+            if (data?.data?.roleName !== "ROLE_ADMIN") {
                 navigation('/');
                 alert("권한이 없습니다.");
             }

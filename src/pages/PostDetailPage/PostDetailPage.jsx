@@ -562,8 +562,7 @@ export default function PostDetailPage({}) {
             <div css={s.contentBox}>{parse(String(post.content || ''))}</div>
 
             {pathNm.includes('mentoring') ? (
-                loginUserData.data.userId === post.userId ||
-                post.status !== 'recruiting' ? (
+                loginUserData.data.userId === post.userId ? (
                     <></>
                 ) : (
                     <button

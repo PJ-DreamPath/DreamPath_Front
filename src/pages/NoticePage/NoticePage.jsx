@@ -146,7 +146,7 @@ function NoticePage({}) {
                             handleOrderOnClick(option.value);
                         }}
                     />
-                    {roleName === '관리자' && (
+                    {roleName === 'ROLE_ADMIN' && (
                         <button
                             type="button"
                             onClick={() => {

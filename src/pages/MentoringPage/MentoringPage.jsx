@@ -211,7 +211,7 @@ export default function MentoringPage({}) {
                         }}
                     />
 
-                    {loginUserData?.data?.roleName === '멘토' ? (
+                    {loginUserData?.data?.roleName === 'ROLE_MENTO' ? (
                         <button
                             type="button"
                             onClick={() => {
