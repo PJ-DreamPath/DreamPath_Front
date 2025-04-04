@@ -270,7 +270,7 @@ export default function BoardRegistPage({}) {
 
         if (
             !!attacheFile &&
-            attacheFile !== postDetail.data.data.attachedFiles
+            attacheFile !== postDetail?.data?.data.attachedFiles
         ) {
             formData.append('file', attacheFile);
         }
@@ -338,12 +338,17 @@ export default function BoardRegistPage({}) {
 
     useEffect(() => {
         if (pathNm.boardName.includes('notice')) {
-            if (data?.data?.roleName !== '관리자') {
+            console.log('Asd', loginUser);
+
+            if (
+                loginUser?.data?.data &&
+                loginUser.data?.data.roleName !== '관리자'
+            ) {
                 navigation('/notice');
                 alert('권한이 없습니다.');
             }
         }
-    }, [pathNm]);
+    }, [pathNm, loginUser?.data]);
 
     return isLoad ? (
         <>
