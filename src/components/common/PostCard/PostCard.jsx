@@ -16,6 +16,7 @@ const PostCard = React.forwardRef(
             starPoint,
             createdAt,
             onClick,
+            category,
         },
         ref
     ) => {
@@ -47,6 +48,7 @@ const PostCard = React.forwardRef(
                 <div css={s.titleBox}>
                     <p>{title}</p>
                     <div>{parse(content)}</div>
+                    <span>{category}</span>
                 </div>
 
                 <div css={s.infoBox}>

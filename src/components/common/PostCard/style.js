@@ -10,7 +10,7 @@ export const cardBox = css`
 
     background-color: #fff;
     box-shadow: 0.4rem 0.4rem 1.3rem rgba(0, 0, 0, 0.12);
-    &:hover{
+    &:hover {
         cursor: pointer;
         box-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.12);
     }
@@ -79,6 +79,8 @@ export const titleBox = css`
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
 
+        word-break: break-all;
+
         &:first-of-type {
             margin: 0;
             height: 7rem;
@@ -86,6 +88,11 @@ export const titleBox = css`
             font-weight: bold;
             -webkit-line-clamp: 3;
         }
+    }
+
+    & > span {
+        margin-top: 0.5rem;
+        font-size: 1.2rem;
     }
 `;
 
