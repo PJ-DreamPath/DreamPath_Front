@@ -99,6 +99,7 @@ export default function CommunityBoardPage({}) {
     }, [postList?.data]);
 
     useEffect(() => {
+        console.log(postList);
         postList.refetch();
     }, []);
 
@@ -225,14 +226,14 @@ export default function CommunityBoardPage({}) {
                 <div css={s.pageNumbers}>
                     <button
                         disabled={postList?.data?.data.firstPage}
-                        onClick={() => handlePageNumbersOnClick(page - 1)}
+                        onClick={() => handlePageNumbersOnClick(postList.data.data.page - 1)}
                     >
                         <GoChevronLeft />
                     </button>
                     {pageNumbers.map((number) => (
                         <button
-                            key={`postListPage${number}`}
-                            css={s.pageNum(search.page === number)}
+                            key={`communityListPage${number}`}
+                            css={s.pageNum(postList?.data?.data.page === number)}
                             onClick={() => handlePageNumbersOnClick(number)}
                         >
                             <span>{number}</span>
@@ -240,7 +241,7 @@ export default function CommunityBoardPage({}) {
                     ))}
                     <button
                         disabled={postList?.data?.data.lastPage}
-                        onClick={() => handlePageNumbersOnClick(page + 1)}
+                        onClick={() => handlePageNumbersOnClick(postList.data.data.page + 1)}
                     >
                         <GoChevronRight />
                     </button>
