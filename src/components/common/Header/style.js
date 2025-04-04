@@ -44,5 +44,8 @@ export const nav = css`
     font-size: 1.8rem;
     text-decoration: none;
     color: #fff;
+    &:hover{
+      color: #ffffff83;
+    }
   }
 `;
