@@ -161,20 +161,23 @@ export default function PostDetailPage({}) {
 
     // 신청 클릭
     const mentoringApply = useMentoringApplyMutation();
+    const [ isLoading, setIsLoading ] = useState(false);
 
-    const handleOnApplyButtonOnClick = () => {
-        mentoringApply
-            .mutateAsync({
+    const handleOnApplyButtonOnClick = async ()  => {
+        try{
+            await mentoringApply.mutateAsync({
                 postId: post.postId,
                 email: post.user.email,
-            })
-            .then((result) => {
-                Swal.fire('이메일 전송에 성공했습니다.');
-                apply.refetch();
-
-                // alert('123123');
-                // navigate(0);
             });
+        
+        Swal.fire('이메일 전송에 성공했습니다.');
+        apply.refetch();
+        setIsLoading(true);
+    }catch(error){
+        console.error("신청 오류:", error);
+    }
+                // alert('123123');
+                // navigate(0);    
     };
 
     // 삭제 클릭
@@ -377,7 +380,7 @@ export default function PostDetailPage({}) {
         if (pathNm.includes('mentoring')) {
             if (
                 saveCommentValue.starPoint <= 0 ||
-                saveCommentValue.content === ''
+                saveCommentValue.content.replace(/\s+/g, '') === ''
             ) {
                 await Swal.fire({
                     title: '등록 실패',
@@ -391,7 +394,7 @@ export default function PostDetailPage({}) {
                 return;
             }
         } else {
-            if (saveCommentValue.content === '') {
+            if (saveCommentValue.content.replace(/\s+/g, '') === '') {
                 await Swal.fire({
                     title: '등록 실패',
                     text: '후기 등록이 실패되었습니다.',
@@ -426,6 +429,7 @@ export default function PostDetailPage({}) {
                         starPoint: -1,
                     });
                 } else {
+                    
                     await Swal.fire({
                         title: '등록 실패',
                         text: '후기 등록이 실패되었습니다.',
@@ -664,7 +668,7 @@ export default function PostDetailPage({}) {
                         type="button"
                         className="regist"
                         onClick={handleOnApplyButtonOnClick}
-                        disabled={!post.apply}
+                        disabled={!post.apply || isLoading}
                     >
                         신청하기
                     </button>
