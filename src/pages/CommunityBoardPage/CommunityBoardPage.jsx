@@ -170,7 +170,7 @@ export default function CommunityBoardPage({}) {
                             <th>작성자</th>
                             <th>작성일</th>
                             <th>댓글</th>
-                            {/* <th>좋아요</th> */}
+                            <th>좋아요</th>
                             <th>조회수</th>
                         </tr>
                     </thead>
@@ -205,10 +205,10 @@ export default function CommunityBoardPage({}) {
                                         <FaRegCommentDots />
                                         <span>{board.commentCount}</span>
                                     </td>
-                                    {/* <td>
+                                    <td>
                                         <FcLike />
                                         <span>{board.likeCount}</span>
-                                    </td> */}
+                                    </td>
                                     <td>
                                         <GrView />
                                         <span>{board.viewCount}</span>
@@ -226,14 +226,20 @@ export default function CommunityBoardPage({}) {
                 <div css={s.pageNumbers}>
                     <button
                         disabled={postList?.data?.data.firstPage}
-                        onClick={() => handlePageNumbersOnClick(postList.data.data.page - 1)}
+                        onClick={() =>
+                            handlePageNumbersOnClick(
+                                postList.data.data.page - 1
+                            )
+                        }
                     >
                         <GoChevronLeft />
                     </button>
                     {pageNumbers.map((number) => (
                         <button
                             key={`communityListPage${number}`}
-                            css={s.pageNum(postList?.data?.data.page === number)}
+                            css={s.pageNum(
+                                postList?.data?.data.page === number
+                            )}
                             onClick={() => handlePageNumbersOnClick(number)}
                         >
                             <span>{number}</span>
@@ -241,7 +247,11 @@ export default function CommunityBoardPage({}) {
                     ))}
                     <button
                         disabled={postList?.data?.data.lastPage}
-                        onClick={() => handlePageNumbersOnClick(postList.data.data.page + 1)}
+                        onClick={() =>
+                            handlePageNumbersOnClick(
+                                postList.data.data.page + 1
+                            )
+                        }
                     >
                         <GoChevronRight />
                     </button>

@@ -3,7 +3,12 @@ import * as s from './style';
 import React, { useEffect, useRef, useState } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
-import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
+import {
+    Navigate,
+    useLocation,
+    useNavigate,
+    useParams,
+} from 'react-router-dom';
 import { useGetBoards } from '../../queries/boardQuery';
 import Select from 'react-select';
 import DaumPostcode from 'react-daum-postcode';
@@ -20,10 +25,11 @@ import { useUserMeQuery } from '../../queries/userQuery';
 import { useQueryClient } from '@tanstack/react-query';
 import { useGetCategories } from '../../queries/categoriesQuery';
 
-export default function BoardRegistPage({ }) {
+export default function BoardRegistPage({}) {
     const navigation = useNavigate();
     const pathNm = useParams();
     const loginUser = useUserMeQuery();
+
     // boardList
     const boardList = useGetBoards();
 
@@ -39,43 +45,43 @@ export default function BoardRegistPage({ }) {
         }
     }, [boardList.data]);
 
-
-
     // quill
     const contaiinerQuillRef = useRef();
 
     const [quill, setQuill] = useState(null);
 
     useEffect(() => {
-        const toolbarOptions = [
-            [{ header: [1, 2, 3, 4, 5, 6, false] }],
-            [{ font: [] }],
-            ['bold', 'italic', 'underline', 'strike'],
-            [{ color: [] }, { background: [] }],
-            [{ align: [] }],
-            ['link', 'image', 'video', 'formula'],
-        ];
+        if (isLoad) {
+            const toolbarOptions = [
+                [{ header: [1, 2, 3, 4, 5, 6, false] }],
+                [{ font: [] }],
+                ['bold', 'italic', 'underline', 'strike'],
+                [{ color: [] }, { background: [] }],
+                [{ align: [] }],
+                ['link', 'image', 'video', 'formula'],
+            ];
 
-        const quill = new Quill(contaiinerQuillRef.current, {
-            modules: {
-                toolbar: toolbarOptions,
-            },
-            theme: 'snow',
-            placeholder: 'Write, Enter your contents...',
-        });
+            const quill = new Quill(contaiinerQuillRef.current, {
+                modules: {
+                    toolbar: toolbarOptions,
+                },
+                theme: 'snow',
+                placeholder: 'Write, Enter your contents...',
+            });
 
-        setQuill(quill);
+            setQuill(quill);
 
-        quill.on('text-change', () => {
-            setRegistData((prev) => ({
-                ...prev,
-                content: quill.root.innerHTML,
-            }));
-        });
+            quill.on('text-change', () => {
+                setRegistData((prev) => ({
+                    ...prev,
+                    content: quill.root.innerHTML,
+                }));
+            });
 
-        console.log(registData.content);
-        console.log("여기", loginUser);
-    }, []);
+            console.log(registData.content);
+            console.log('여기', loginUser);
+        }
+    }, [isLoad]);
 
     // 카테고리 리스트 데이터
     const categories = useGetCategories(board.boardId);
@@ -113,10 +119,6 @@ export default function BoardRegistPage({ }) {
         endDate: moment(),
     });
 
-    useEffect(() => {
-        console.log('registData', registData);
-    }, [registData]);
-
     const [attacheFile, setAttachedFile] = useState(null);
 
     // 상세 조회
@@ -124,12 +126,45 @@ export default function BoardRegistPage({ }) {
     const [post, setPost] = useState({});
 
     useEffect(() => {
-        if (postDetail && postDetail.data && postDetail.data.data) {
+        if (
+            !!pathNm.postid &&
+            loginUser?.data?.data.userId !== postDetail?.data?.data.user.userId
+        ) {
+            navigation('/home');
+            Swal.fire('다른 사람의 게시글은 수정할 수 없습니다.');
+            setIsLoad(false);
+        } else {
             setPost(postDetail.data.data);
+            setIsLoad(true);
 
             setAttachedFile(postDetail.data.data.attachedFiles);
         }
-    }, [postDetail.data]);
+    }, [postDetail?.data]);
+
+    useEffect(() => {
+        if (
+            loginUser?.data?.data.remaining === 0 &&
+            pathNm.boardName === 'mentoring'
+        ) {
+            navigation('/service/mentoring');
+            setIsLoad(false);
+            Swal.fire('남은 등록 가능 횟수가 없습니다.');
+        }
+        if (
+            loginUser?.data?.data.roleName === '멘티' &&
+            pathNm.boardName === 'mentoring'
+        ) {
+            setIsLoad(false);
+            navigation('/service/mentoring');
+            Swal.fire('멘티는 이용할 수 없는 페이지입니다.');
+        }
+
+        // setIsLoad(true);
+    }, [pathNm]);
+
+    useEffect(() => {
+        console.log('isLoad', isLoad);
+    }, [isLoad]);
 
     useEffect(() => {
         if (!!post && !!pathNm.postid) {
@@ -310,39 +345,13 @@ export default function BoardRegistPage({ }) {
         }
     }, [pathNm]);
 
-    useEffect(() => {
-        setIsLoad(true);
-        console.log("boardList", boardList);
-        if (loginUser?.data?.data.remaining === 0 && pathNm.boardName === "mentoring") {
-            navigation("/service/mentoring");
-            Swal.fire("남은 등록 가능 횟수가 없습니다.");
-        }
-        if (loginUser?.data?.data.roleName === "멘티" && pathNm.boardName === "mentoring") {
-            navigation("/service/mentoring");
-            Swal.fire("멘티는 이용할 수 없는 페이지입니다.");
-        }
-        if (!!pathNm.postid && (loginUser?.data?.data.userId !== postDetail?.data?.data.user.userId)) {
-            navigation("/home");
-            Swal.fire("다른 사람의 게시글은 수정할 수 없습니다.");
-        }
-
-        console.log("loginUser", loginUser);
-        console.log("postDetail", postDetail);
-        setIsLoad(false);
-    }, [])
-
-    return (
+    return isLoad ? (
         <>
-           {/* {
-            !isLoad
-            ?
-            <> */}
-                <div css={s.titleBox}>
+            <div css={s.titleBox}>
                 <h3>
                     {board.boardNameKor} {!pathNm.postid ? '등록' : '수정'}
                 </h3>
             </div>
-
             <div css={s.contentBox}>
                 <div css={s.topBox}>
                     <input
@@ -541,7 +550,6 @@ export default function BoardRegistPage({ }) {
                     </button>
                 </div>
             </div>
-
             {/* 주소 찾기 모달창 */}
             <div css={s.findAddressModalBox(findAddressModalOpen)}>
                 <div>
@@ -572,14 +580,9 @@ export default function BoardRegistPage({ }) {
                     />
                 </div>
             </div>
-            :
-            <></>
-            {/* </>
-            :
-            <></>
-           } */}
-            
-
+            :<></>
         </>
+    ) : (
+        <></>
     );
 }

@@ -82,8 +82,11 @@ export default function PostDetailPage({}) {
     });
 
     useEffect(() => {
+        postDetail.refetch();
+    }, []);
+
+    useEffect(() => {
         if (postDetail && postDetail.data && postDetail.data.data) {
-            console.log('ASdasd', postDetail.data.data);
             setPost(postDetail.data.data);
         }
     }, [postDetail.data]);
@@ -295,9 +298,7 @@ export default function PostDetailPage({}) {
             return;
         }
         await updateCommentMutation
-            .mutateAsync(
-                updateCommentValue
-            )
+            .mutateAsync(updateCommentValue)
             .then((response) => {
                 Swal.fire(response.data);
                 if (response.status === 200) {
@@ -367,14 +368,13 @@ export default function PostDetailPage({}) {
         }));
     };
 
-    const [ isSubmitting, setIsSubmitting ] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     // 등록
     const handleCommnetSaveOnClick = async () => {
-        if(isSubmitting) return;
+        if (isSubmitting) return;
         setIsSubmitting(true);
         if (pathNm.includes('mentoring')) {
-                
             if (
                 saveCommentValue.starPoint <= 0 ||
                 saveCommentValue.content === ''
@@ -433,16 +433,11 @@ export default function PostDetailPage({}) {
                         timer: 1000,
                         showConfirmButton: false,
                     });
-
                 }
             })
             .finally(() => {
                 setIsSubmitting(false);
-
-            })
-            
-        
-            
+            });
     };
 
     const handleFileDownload = async () => {
@@ -565,6 +560,25 @@ export default function PostDetailPage({}) {
             {pathNm.includes('mentoring') ? (
                 loginUserData.data.userId === post.userId ||
                 post.status !== 'recruiting' ? (
+                    <></>
+                ) : (
+                    <button
+                        type="button"
+                        css={s.likeBtn}
+                        onClick={handlelikeBtnOnClick}
+                    >
+                        {isMyLike?.data?.data === undefined ||
+                        isMyLike?.data?.data === '' ? (
+                            <FaRegHeart />
+                        ) : (
+                            <FaHeart />
+                        )}
+
+                        {post.likeCount}
+                    </button>
+                )
+            ) : pathNm.includes('community') ? (
+                loginUserData.data.userId === post.userId ? (
                     <></>
                 ) : (
                     <button
