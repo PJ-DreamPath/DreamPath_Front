@@ -14,6 +14,7 @@ function HomePostList(props) {
         limitCount: 4,
         order: 'starDesc',
         searchTxt: '',
+        status: 'recruiting',
     });
 
     const mentoringPostList = useGetPosts(1, search);
@@ -28,23 +29,26 @@ function HomePostList(props) {
         }
     }, [mentoringPostList?.data]);
     return (
+        <div>
+            <h3 css={s.popular}>인기 멘토링</h3>
         <div css={s.postListContainer}>
             {mentoringPostList?.data?.data.postList.map((post) => (
                 <HomePostCard
-                    key={`mentoring_main_${post.postId}`}
-                    status={post.status}
-                    likeCount={post.likeCount}
-                    title={post.title}
-                    content={post.content}
-                    nickname={post.user.nickname}
-                    starPoint={post.starPoint}
-                    createdAt={post.createdAt}
-                    onClick={() => {
-                        navigation(`/service/mentoring/${post.postId}`);
-                    }}
+                key={`mentoring_main_${post.postId}`}
+                status={post.status}
+                likeCount={post.likeCount}
+                title={post.title}
+                content={post.content}
+                nickname={post.user.nickname}
+                starPoint={post.starPoint}
+                createdAt={post.createdAt}
+                onClick={() => {
+                    navigation(`/service/mentoring/${post.postId}`);
+                }}
                 />
             ))}
         </div>
+    </div>
     );
 }
 

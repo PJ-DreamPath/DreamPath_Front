@@ -310,30 +310,34 @@ export default function BoardRegistPage({ }) {
         }
     }, [pathNm]);
 
-    useEffect( () => {
+    useEffect(() => {
+        setIsLoad(true);
         console.log("boardList", boardList);
         if (loginUser?.data?.data.remaining === 0 && pathNm.boardName === "mentoring") {
-             Swal.fire("남은 등록 가능 횟수가 없습니다.");
-             navigation("/service/mentoring");
+            navigation("/service/mentoring");
+            Swal.fire("남은 등록 가능 횟수가 없습니다.");
         }
         if (loginUser?.data?.data.roleName === "멘티" && pathNm.boardName === "mentoring") {
-             Swal.fire("멘티는 이용할 수 없는 페이지입니다.");
             navigation("/service/mentoring");
+            Swal.fire("멘티는 이용할 수 없는 페이지입니다.");
         }
-        if(!!pathNm.postid && (loginUser?.data?.data.userId !== postDetail?.data?.data.user.userId)) {
-            Swal.fire("다른 사람의 게시글은 수정할 수 없습니다.");
+        if (!!pathNm.postid && (loginUser?.data?.data.userId !== postDetail?.data?.data.user.userId)) {
             navigation("/home");
-        } 
+            Swal.fire("다른 사람의 게시글은 수정할 수 없습니다.");
+        }
 
         console.log("loginUser", loginUser);
-        console.log("postDetail", postDetail); 
-        setIsLoad(true);
+        console.log("postDetail", postDetail);
+        setIsLoad(false);
     }, [])
 
     return (
         <>
-
-            <div css={s.titleBox}>
+           {/* {
+            !isLoad
+            ?
+            <> */}
+                <div css={s.titleBox}>
                 <h3>
                     {board.boardNameKor} {!pathNm.postid ? '등록' : '수정'}
                 </h3>
@@ -570,6 +574,11 @@ export default function BoardRegistPage({ }) {
             </div>
             :
             <></>
+            {/* </>
+            :
+            <></>
+           } */}
+            
 
         </>
     );

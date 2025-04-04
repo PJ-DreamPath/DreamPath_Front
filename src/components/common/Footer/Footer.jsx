@@ -22,7 +22,7 @@ function Footer(props) {
 
             <div css={s.nameAndEmail}>
                 <div>홍문일</div>
-                <div>email@naver.com</div>
+                <div>child4564@gmail.com</div>
             </div>
 
             <div css={s.nameAndEmail}>
