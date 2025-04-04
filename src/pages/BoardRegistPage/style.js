@@ -15,7 +15,10 @@ export const titleBox = css`
         font-size: 2.4rem;
         font-weight: bold;
         color: #1681ff;
+        
     }
+    
+   
 `;
 
 export const contentBox = css`
@@ -62,12 +65,17 @@ export const contentBox = css`
 
                 width: 100%;
                 height: 4rem;
+                
             }
 
             .attachedFile {
                 font-size: 1.6rem;
                 font-weight: normal;
                 line-height: 3.6rem;
+                &:hover{
+        background-color: #eeeeeec9;
+        cursor: pointer;
+    }
             }
         }
     }
@@ -91,7 +99,13 @@ export const topBox = css`
         height: 100%;
 
         font-size: 2rem;
+   
     }
+    &:hover{
+        border-color: #766b6bf2;
+
+    }
+   
 `;
 export const qullBox = css`
     box-sizing: border-box;
@@ -128,7 +142,9 @@ export const qullBox = css`
     }
 `;
 
-export const selectBox = css``;
+export const selectBox = css`
+    
+`;
 
 export const dtBox = css`
     display: flex;
@@ -145,6 +161,10 @@ export const dtBox = css`
         & + div {
             width: auto !important;
         }
+        &:hover{
+        background-color: #eeeeeeda;
+        cursor: pointer;
+    }
     }
 `;
 
@@ -171,6 +191,10 @@ export const addressBox = css`
 
         background-color: #1681ff;
         cursor: pointer;
+        &:hover{
+                background-color: #1472de;
+
+            }
     }
 `;
 
@@ -191,12 +215,20 @@ export const btnBox = css`
 
         font-size: 1.6rem;
         color: #fff;
-
+        
         background-color: red;
+        &:hover{
+                background-color: #da0707;
+
+            }
         cursor: pointer;
 
         &:first-of-type {
             background-color: #1681ff;
+            &:hover{
+                background-color: #1472de;
+
+            }
         }
     }
 `;
@@ -250,3 +282,4 @@ export const findAddressModalBox = (findAddressModalOpen) => css`
         }
     }
 `;
+

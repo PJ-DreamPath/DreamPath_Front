@@ -59,6 +59,9 @@ export const nicknameBox = css`
     border-radius: 0.5rem;
     cursor: pointer;
     border: none;
+    &:hover{
+      background: #3a6fc4;
+    }
   }
 `;
 
@@ -85,6 +88,10 @@ export const deleteBtn = css`
   border-radius: 0.5rem;
   cursor: pointer;
   border: none;
+  &:hover{
+    background: #cd2e2eff;
+
+  }
 `;
 
 export const infoContent = css`
@@ -115,6 +122,14 @@ export const infoRow = css`
     border: none;
     &:disabled {
       background-color: #aaa;
+      &:hover{
+        background-color: #aaa;
+        cursor: default;
+      }
     };
+
+    &:hover{
+      background: #3a6fc4;
+    }
   }
 `;
