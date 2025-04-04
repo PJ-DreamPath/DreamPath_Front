@@ -333,11 +333,11 @@ export default function BoardRegistPage({ }) {
 
     return (
         <>
-           {/* {
+            {/* {
             !isLoad
             ?
             <> */}
-                <div css={s.titleBox}>
+            <div css={s.titleBox}>
                 <h3>
                     {board.boardNameKor} {!pathNm.postid ? '등록' : '수정'}
                 </h3>
@@ -370,16 +370,19 @@ export default function BoardRegistPage({ }) {
                                 options={categoriesSelectOption}
                                 name="categoryId"
                                 styles={{
-                                    control: (style) => ({
+                                    control: (style, { isFocused }) => ({
                                         ...style,
                                         boxSizing: 'border-box',
                                         borderRadius: '1rem',
-                                        borderColor: '#aaa',
+                                        borderColor: isFocused ? '#666' : '#aaa',
                                         width: '100%',
                                         height: '4rem',
                                         minHeight: 'unset',
                                         fontSize: '1.3rem',
-                                    }),
+                                        ":hover": {
+                                            borderColor: '#666',
+                                        }
+                                        }),
                                     dropdownIndicator: (style) => ({
                                         ...style,
                                         padding: '0.3rem',
@@ -578,7 +581,7 @@ export default function BoardRegistPage({ }) {
             :
             <></>
            } */}
-            
+
 
         </>
     );

@@ -23,6 +23,10 @@ export const sideMenuBox = css`
             font-size: 1.6rem;
             text-decoration: none;
         }
+        &:hover{
+            background-color: #eeeeee;
+            cursor: pointer;
+        }
     }
 `;
 

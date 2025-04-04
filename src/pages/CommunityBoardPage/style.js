@@ -40,6 +40,10 @@ export const searchWrap = css`
         color: #fff;
 
         background-color: #1681ff;
+        &:hover{
+            background-color: #146bce;
+            cursor: pointer;
+        }
     }
 `;
 
