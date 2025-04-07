@@ -200,6 +200,7 @@ export default function BoardRegistPage({}) {
 
     const [isClick, setIsClick] = useState(true);
     async function handleRegistPostBtnOnClick() {
+        if(isClick ===false){return;}
         setIsClick(false);
 
         if (!registData.title || registData.title.replace(/\s+/g, '') === '') {
@@ -209,6 +210,7 @@ export default function BoardRegistPage({}) {
                 timer: 1000,
                 showConfirmButton: false,
             });
+            setIsClick(true);
             return;
         }
 
@@ -222,6 +224,8 @@ export default function BoardRegistPage({}) {
                 timer: 1000,
                 showConfirmButton: false,
             });
+            setIsClick(true);
+
             return;
         }
 
@@ -234,6 +238,8 @@ export default function BoardRegistPage({}) {
                     timer: 1000,
                     showConfirmButton: false,
                 });
+                setIsClick(true);
+
                 return;
             } else if (!registData.startDate || !registData.endDate) {
                 await Swal.fire({
@@ -242,6 +248,8 @@ export default function BoardRegistPage({}) {
                     timer: 1000,
                     showConfirmButton: false,
                 });
+                setIsClick(true);
+
                 return;
             } else if (registData.startDate > registData.endDate) {
                 await Swal.fire({
@@ -251,6 +259,8 @@ export default function BoardRegistPage({}) {
                     timer: 1000,
                     showConfirmButton: false,
                 });
+                setIsClick(true);
+
                 return;
             }
         }
