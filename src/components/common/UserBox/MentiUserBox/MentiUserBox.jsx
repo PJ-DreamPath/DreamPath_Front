@@ -50,9 +50,7 @@ const MentiUserBox = () => {
         setIsModalOpen(false);
     };
 
-    useEffect(() => {
-        console.log('totalApplyMentoring', totalApplyMentoring);
-    }, [totalApplyMentoring?.data]);
+   
 
     return (
         <div css={s.userBoxContainer}>

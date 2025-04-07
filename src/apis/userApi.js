@@ -33,7 +33,6 @@ export const sendUserAuthPhoneApi = async (params) => {
 }
 
 export const updatePhoneNumberApi = async (params) => {
-    console.log("params", params);
     return await api.put('/api/user/me/phoneNumber', params);
 }
 

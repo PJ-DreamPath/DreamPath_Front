@@ -31,9 +31,7 @@ const AdminBox = () => {
         navigate('/service/admin');
     };
 
-    useEffect(() => {
-        console.log(loginUser);
-    }, loginUser?.data)
+    
 
     const handleLogoutButtonOnClick = async () => {
         setTokenLocalStorage('AccessToken', null);

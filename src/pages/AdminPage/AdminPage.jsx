@@ -100,7 +100,6 @@ function AdminPage(props) {
     const { data } = useUserMeQuery();
 
     useEffect(() => {
-        console.log(location.pathname, 'path');
         if (location.pathname.includes('admin')) {
             if (data?.data?.roleName !== 'ROLE_ADMIN') {
                 navigation('/');

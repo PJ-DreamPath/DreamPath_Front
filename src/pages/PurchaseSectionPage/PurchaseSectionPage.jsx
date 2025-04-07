@@ -43,7 +43,6 @@ function PurchaseSectionPage(props) {
 
     
     const handlePointChargeButtonOnClick = async (productId) => {
-        console.log("Received productId:", productId);
         const foundProduct = products.find((p) => p.productId === productId);
     
         if (!foundProduct) {
@@ -95,9 +94,7 @@ const handlePurchaseButtonOnClick = async (e) => {
 
 
     await ticketPurchase.mutateAsync({ ticketId: Number(e.target.value) }).then((response) => {
-        console.log(response);
         Swal.fire(response.data);
-        console.log("loginUser", loginUser);
         loginUser.refetch();
 
     });

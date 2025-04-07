@@ -37,7 +37,6 @@ function SigninUserBox() {
         });
 
     useEffect(() => {
-        console.log(userInfoState)
         if (getTokenFromLocalStorage()) {
             setIsLoggedIn(true);
         }

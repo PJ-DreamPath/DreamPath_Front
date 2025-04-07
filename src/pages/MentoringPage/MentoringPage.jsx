@@ -11,17 +11,15 @@ import { useRecoilState } from 'recoil';
 import { sideMenuBoxMentoringState } from '../../atoms/sideMenuBox';
 import { useQueryClient } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
+import { useUpdatePostViewCountMutation } from '../../mutations/postMutation';
 
 export default function MentoringPage({}) {
     const navigation = useNavigate();
-
     // user data
     const queryClient = useQueryClient();
     const loginUserData = queryClient.getQueryData(['userMeQuery']);
 
-    useEffect(() => {
-        console.log(loginUserData);
-    }, [loginUserData?.data]);
+   
 
     // 셀렉트 박스 옵션
     const orderSelectOptions = [
@@ -106,7 +104,6 @@ export default function MentoringPage({}) {
                 })
             );
 
-            console.log('newArray', newArray);
 
             setPostList(newArray);
         }
@@ -137,6 +134,11 @@ export default function MentoringPage({}) {
     useEffect(() => {
         getPostList.refetch();
     }, []);
+
+    const updateViewCount = useUpdatePostViewCountMutation();
+    const handlePostDetailOnClick = async (e) => {
+        await updateViewCount.mutateAsync(e);
+    }
 
     return (
         <>
@@ -251,7 +253,8 @@ export default function MentoringPage({}) {
                                 starPoint={post.starPoint}
                                 createdAt={post.createdAt}
                                 category={post.categoryNameKor}
-                                onClick={() => {
+                                onClick={ async () => {
+                                    await handlePostDetailOnClick(post.postId);
                                     navigation(
                                         `/service/mentoring/${post.postId}`
                                     );

@@ -5,7 +5,6 @@ export const getSearchPointPurchaseListApi = async (params) => await api.get("/a
 
 
 export const pointChargeApi = async (params) => {
-    console.log(params)
     return await api.post(`/api/point/purchase?pointId`, {
         pointId: params.pointId,
         mid: params.mid,

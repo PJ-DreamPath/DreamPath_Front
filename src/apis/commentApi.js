@@ -4,12 +4,10 @@ export const updateCommentApi = async (params) =>
     await api.put(`/api/comments/${params.commentId}`, params)
 
 export const deleteCommentApi = async (params) => {
-    console.log("params", params)
     return await api.delete(`/api/comments/${params.commentId}?userId=${params.userId}`)
 }
 
 export const saveCommentApi = async (params) => {
-        console.log(params);
     return await api.post(`/api/comment`, params)
 } 
 

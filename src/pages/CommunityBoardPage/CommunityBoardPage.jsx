@@ -12,6 +12,7 @@ import { GrView } from 'react-icons/gr';
 import { FaRegCommentDots } from 'react-icons/fa';
 import moment from 'moment/moment';
 import { useQueryClient } from '@tanstack/react-query';
+import { useUpdatePostViewCountMutation } from '../../mutations/postMutation';
 
 export default function CommunityBoardPage({}) {
     const navigation = useNavigate();
@@ -79,7 +80,6 @@ export default function CommunityBoardPage({}) {
 
     useEffect(() => {
         if (postList && postList.data && postList.data.data) {
-            console.log('postList', postList);
 
             if (!postList?.isLoading) {
                 const currentPage = postList.data.data.page || 1;
@@ -99,9 +99,14 @@ export default function CommunityBoardPage({}) {
     }, [postList?.data]);
 
     useEffect(() => {
-        console.log(postList);
         postList.refetch();
     }, []);
+
+        const updateViewCount = useUpdatePostViewCountMutation();
+        const handlePostDetailOnClick = async (e) => {
+            await updateViewCount.mutateAsync(e);
+        }
+    
 
     return (
         <>
@@ -183,11 +188,13 @@ export default function CommunityBoardPage({}) {
                             postList.data?.data.postList.map((board, idx) => (
                                 <tr key={`communityboard_${idx}`}>
                                     <td
-                                        onClick={() => {
+                                        onClick={async () => {
+                                            
                                             if (!loginUser) {
                                                 alert('로그인 후 이용해주세요');
                                                 return;
                                             }
+                                            await handlePostDetailOnClick(board.postId);
                                             navigation(
                                                 `/communityboard/${board.postId}`
                                             );

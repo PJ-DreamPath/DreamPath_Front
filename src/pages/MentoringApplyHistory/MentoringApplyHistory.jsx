@@ -28,10 +28,7 @@ function MentoringApplyHistory(props) {
         searchText,
     });
 
-    useEffect(()=>{
-        console.log(mentoringHistoryQuery);
-    },[mentoringHistoryQuery?.data])
-
+   
     const [searchInputValue, setSearchInputValue] = useState('');
     const handleSearchButtonOnClick = () => {
         searchParams.set('page', 1);
@@ -53,8 +50,7 @@ function MentoringApplyHistory(props) {
                 newPageNumbers = [...newPageNumbers, i];
             }
             setPageNumbers(newPageNumbers);
-            console.log(mentoringHistoryQuery);
-            console.log("!!!!");
+            
         }
     }, [mentoringHistoryQuery.data]);
 
@@ -73,7 +69,6 @@ function MentoringApplyHistory(props) {
     };
 
     const handleTitleOnClick = (postId) => {
-        console.log(postId);
         navigate(`/service/mentoring/${postId}`);
     };
 

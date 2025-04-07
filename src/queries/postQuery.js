@@ -19,7 +19,6 @@ export const useGetPostsInfinityScroll = (boardId, search) =>
     useInfiniteQuery({
         queryKey: ['useGetPostsInfinityScroll', boardId, search],
         queryFn: async ({ pageParam = 1 }) => {
-            console.log('search', search);
 
             const params = {
                 page: pageParam,
