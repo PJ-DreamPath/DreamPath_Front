@@ -27,7 +27,6 @@ const AdminPostSearchPage = () => {
     });
 
     useEffect(() => {
-        console.log(loginUser);
         
         if(loginUser?.data?.data.roleName !== "ROLE_ADMIN") {
             navigation("/home");

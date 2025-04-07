@@ -22,10 +22,7 @@ export default function SideMenuBox({}) {
     const queryClient = useQueryClient();
     const loginUser = queryClient.getQueryData(['userMeQuery'])?.data;
 
-    useEffect(() => {
-        console.log('loginUser', loginUser);
-    }, [loginUser]);
-
+    
     // path를 가져와서 마이페이지, cms 또는 멘토링 인지 구별 하기 위함
     const fullPath = useParams();
 

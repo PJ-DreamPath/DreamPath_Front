@@ -144,19 +144,25 @@ export default function PostDetailPage({}) {
     const clickLike = usePostLikeMutation();
     const cancleLike = usePostLikeCancelMutation();
 
-    function handlelikeBtnOnClick() {
+    const [ likeState, setLikeState ] = useState(false);
+
+    function handlelikeBtnOnClick () {
+    setLikeState(true);
         if (isMyLike?.data?.data === undefined || isMyLike?.data?.data === '') {
-            clickLike.mutateAsync(post.postId).then((resp) => {
+            clickLike.mutateAsync(post.postId).then( async (resp) => {
                 if (resp.status === 200) {
-                    isMyLike.refetch();
-                    postDetail.refetch();
+                    await isMyLike.refetch();
+                    await postDetail.refetch();
+                    setLikeState(false);
                 }
-            });
+            })
         } else {
-            cancleLike.mutateAsync(post.postId).then((resp) => {
+            cancleLike.mutateAsync(post.postId).then( async (resp) => {
                 if (resp.status === 200) {
-                    isMyLike.refetch();
-                    postDetail.refetch();
+                    await isMyLike.refetch();
+                    await postDetail.refetch();
+                    
+                    setLikeState(false);
                 }
             });
         }
@@ -174,14 +180,12 @@ export default function PostDetailPage({}) {
             })
             .then(async () => {
                 Swal.fire('이메일 전송에 성공했습니다.');
-                console.log('리패치전', apply);
                 await queryClient.invalidateQueries({
                     queryKey: ['useGetMentoringApplyHistoryQuery'],
                 });
                 await apply.refetch();
                 setIsLoading(true);
                 await loginUserData.refetch();
-                console.log('리패치후', apply);
             });
     };
 
@@ -260,9 +264,7 @@ export default function PostDetailPage({}) {
         useGetComments?.refetch();
     }, [searchParams]);
 
-    useEffect(() => {
-        console.log(useGetComments);
-    }, [useGetComments.data]);
+    
 
     const handlePageNumbersOnClick = (pageNumber) => {
         searchParams.set('page', pageNumber);
@@ -573,6 +575,7 @@ export default function PostDetailPage({}) {
                         type="button"
                         css={s.likeBtn}
                         onClick={handlelikeBtnOnClick}
+                        disabled={likeState}
                     >
                         {isMyLike?.data?.data === undefined ||
                         isMyLike?.data?.data === '' ? (
@@ -592,6 +595,7 @@ export default function PostDetailPage({}) {
                         type="button"
                         css={s.likeBtn}
                         onClick={handlelikeBtnOnClick}
+                        disabled={likeState}
                     >
                         {isMyLike?.data?.data === undefined ||
                         isMyLike?.data?.data === '' ? (

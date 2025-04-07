@@ -32,9 +32,8 @@ function MyMentoring(props) {
         order,
         searchText,
     });
-    useEffect(() => {
-        console.log(searchMyMentoringList);
-    }, searchMyMentoringList?.data)
+    
+
     const [searchInputValue, setSearchInputValue] = useState('');
     const handleSearchButtonOnClick = () => {
         searchParams.set('page', 1);
@@ -81,7 +80,6 @@ function MyMentoring(props) {
 
     const delPost = useDelPostMutation();
     async function handleDelBtnOnClick(postId) {
-        console.log(postId);
 
         const result = await Swal.fire({
             title: '게시글 삭제',

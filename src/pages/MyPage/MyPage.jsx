@@ -146,10 +146,8 @@ function MyPage(props) {
 
     const handelConfirmButtonOnClick = async () => {
         await confirmPhoneNumberMutation.mutateAsync(phoneNumberInputValue).then((response) => {
-            console.log(response);
             Swal.fire(response.data);
         }).catch((error) => {
-            console.log(error);
             Swal.fire(error.data);
         });
     }

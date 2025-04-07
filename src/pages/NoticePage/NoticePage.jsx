@@ -9,6 +9,7 @@ import { IoSearch } from 'react-icons/io5';
 import Select from 'react-select';
 import { useUserMeQuery } from '../../queries/userQuery';
 import { GrView } from 'react-icons/gr';
+import { useUpdatePostViewCountMutation } from '../../mutations/postMutation';
 
 function NoticePage({}) {
     const navigation = useNavigate();
@@ -100,6 +101,11 @@ function NoticePage({}) {
 
     const roleName = data?.data?.roleName;
 
+    const updateViewCount = useUpdatePostViewCountMutation();
+        const handlePostDetailOnClick = async (e) => {
+            await updateViewCount.mutateAsync(e);
+        }
+
     return (
         <div css={s.container}>
             <div css={s.topBox}>
@@ -175,13 +181,14 @@ function NoticePage({}) {
                                     <tr key={`noticePost${index}`}>
                                         <td
                                             className="titleName"
-                                            onClick={() => {
+                                            onClick={ async () => {
                                                 if (!data) {
                                                     alert(
                                                         '로그인 후 이용해주세요'
                                                     );
                                                     return;
                                                 }
+                                                await handlePostDetailOnClick(post.postId);
                                                 navigation(
                                                     `/notice/${post.postId}`
                                                 );

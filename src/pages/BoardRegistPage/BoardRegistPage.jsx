@@ -77,9 +77,6 @@ export default function BoardRegistPage({}) {
                     content: quill.root.innerHTML,
                 }));
             });
-
-            console.log(registData.content);
-            console.log('여기', loginUser);
         }
     }, [isLoad]);
 
@@ -162,9 +159,6 @@ export default function BoardRegistPage({}) {
         // setIsLoad(true);
     }, [pathNm]);
 
-    useEffect(() => {
-        console.log('isLoad', isLoad);
-    }, [isLoad]);
 
     useEffect(() => {
         if (!!post && !!pathNm.postid) {
@@ -347,11 +341,9 @@ export default function BoardRegistPage({}) {
         }));
     }, [board]);
 
-    console.log(pathNm, 'pathNm');
 
     useEffect(() => {
         if (pathNm.boardName.includes('notice')) {
-            console.log('Asd', loginUser);
 
             if (
                 loginUser?.data?.data &&

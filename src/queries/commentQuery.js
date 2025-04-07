@@ -6,7 +6,6 @@ export const usegGetCommentsQuery = (postId, params) =>
     useQuery({
         queryKey: ["usegGetCommentsQuery", postId, params],
         queryFn: async () => {
-            console.log("usegGetCommentsQuery", postId);
             
             return await getCommentsApi(postId, params)},
         enabled: postId !== 0,

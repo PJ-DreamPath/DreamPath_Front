@@ -3,6 +3,7 @@ import {
     delPostApi,
     postLikeApi,
     postLikeCancelApi,
+    postViewCountApi,
     registPostApi,
     updatePostApi,
 } from '../apis/postApi';
@@ -20,6 +21,13 @@ export const useUpdatePostMutation = () =>
         mutationFn: updatePostApi,
         retry: 0,
     });
+
+export const useUpdatePostViewCountMutation = () => 
+    useMutation({
+        mutationKey: ['useUpdatePostViewCountMutation'],
+        mutationFn: postViewCountApi,
+        retry: 0,
+    })
 
 // 페이지 삭제
 export const useDelPostMutation = () =>

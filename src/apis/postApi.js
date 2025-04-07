@@ -16,6 +16,10 @@ export const postsApi = async (boardId, params) =>
 export const postDetailApi = async (postId) =>
     await api.get(`/api/post/${postId}`);
 
+// 조회수 업데이트 U
+export const postViewCountApi = async (postId) => 
+    await api.put(`/api/post/${postId}`);
+
 // 수정 U
 export const updatePostApi = async (params) =>
     await api.put(`/api/posts/${params.postId}`, params.formData, {
