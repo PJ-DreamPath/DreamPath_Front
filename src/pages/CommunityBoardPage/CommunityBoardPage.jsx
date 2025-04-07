@@ -154,6 +154,10 @@ export default function CommunityBoardPage({}) {
                     <button
                         type="button"
                         onClick={() => {
+                            if(!loginUser) {
+                                alert("로그인 후 이용하세요");
+                                return;
+                            }
                             navigation('/service/communityboard/regist');
                         }}
                     >

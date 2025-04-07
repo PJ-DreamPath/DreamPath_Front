@@ -48,6 +48,10 @@ const MentiUserBox = () => {
         setIsModalOpen(false);
     }
 
+    useEffect(() => {
+        console.log(totalApplyMentoring);
+    },[totalApplyMentoring?.data])
+
     
 
     return (

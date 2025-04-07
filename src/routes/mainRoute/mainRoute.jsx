@@ -10,6 +10,7 @@ import CommunityBoardPage from '../../pages/CommunityBoardPage/CommunityBoardPag
 import AuthenticatedRoute from '../AuthenticatedRoute/AuthenticatedRoute';
 import PostDetailPage from '../../pages/PostDetailPage/PostDetailPage';
 import SideMenuBox from '../../components/common/SideMenuBox/SideMenuBox';
+import { useGetMentoringApplyHistoryQuery } from '../../queries/userQuery';
 
 function MainRoute() {
     const navigate = useNavigate();
@@ -19,6 +20,13 @@ function MainRoute() {
             navigate('/home');
         }
     }, [path]);
+
+    useGetMentoringApplyHistoryQuery({
+            page: 1,
+            limitCount: 10,
+            order: 'desc',
+            searchText: '',
+        });
 
     return (
         <>
