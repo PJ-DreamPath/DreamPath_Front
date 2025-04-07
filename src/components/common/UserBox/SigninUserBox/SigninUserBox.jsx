@@ -15,6 +15,7 @@ import AdminBox from '../AdminBox/AdminBox';
 import MentoUserBox from '../MentoUserBox/MentoUserBox';
 import MentiUserBox from '../MentiUserBox/MentiUserBox';
 import { useGetMentoringApplyHistoryQuery } from '../../../../queries/userQuery';
+import { useGetAdminUsers } from '../../../../queries/adminQuery';
 
 function SigninUserBox() {
     const navigate = useNavigate();
@@ -23,6 +24,11 @@ function SigninUserBox() {
     const [searchParams] = useSearchParams();
     const [isLoggedIn, setIsLoggedIn] = useState(!!getTokenFromLocalStorage());
     const userInfoState = queryClient.getQueryState(['userMeQuery']);
+    // const totalUser = queryClient.getQueryData(["useGetAdminUsers"])
+    useGetAdminUsers({
+        page: 1,
+        limitCount: 15,
+    })
 
     const [inputValue, setInputValue] = useState({
         username: searchParams.get('username') || '',

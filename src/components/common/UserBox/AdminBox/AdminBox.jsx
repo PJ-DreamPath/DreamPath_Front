@@ -7,23 +7,32 @@ import { setTokenLocalStorage } from '../../../../configs/axiosConfig';
 import { useQueryClient } from '@tanstack/react-query';
 import { useUserMeQuery } from '../../../../queries/userQuery';
 import { useGetAdminUsers } from '../../../../queries/adminQuery';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import moment from 'moment';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { userTotalCountAtom } from '../../../../atoms/userTotalAtom';
 
 const AdminBox = () => {
     const navigate = useNavigate();
-    const loginUser = useUserMeQuery();
-
-    const { data: adminUserList } = useGetAdminUsers({
-        page: 1,
-        limitCount: 15,
-    });
-
-    const totalUser = adminUserList?.data?.userList?.[0]?.totalUser;
-    
-
     const queryClient = useQueryClient();
     const loginUserData = queryClient.getQueryData(['userMeQuery']);
+    const adminUserListState = queryClient.getQueryState(["useGetAdminUsers"]);
+
+    const [params, setParams] = useState({
+            page: 1,
+            limitCount: 15,
+            order: 'desc',
+            searchText: '',
+        });
+
+    const adminUserList = useGetAdminUsers(params);
+
+    const totalUser = useRecoilValue(userTotalCountAtom);
+
+    const setUserTotalCount = useSetRecoilState(userTotalCountAtom);
+    useEffect(() => {
+        setUserTotalCount(adminUserList?.data?.data.totalElements);
+    },[adminUserList?.data])
 
     const createdAt = moment(loginUserData.data.createdAt).format("YYYY-MM-DD");
 

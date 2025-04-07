@@ -13,6 +13,7 @@ import MyPage from '../../pages/MyPage/MyPage';
 import AdminPage from '../../pages/AdminPage/AdminPage';
 import MyMentoring from '../../pages/MyMentoringPage/MyMentoring';
 import MentoringApplyHistory from '../../pages/MentoringApplyHistory/MentoringApplyHistory';
+import { useGetAdminUsers } from '../../queries/adminQuery';
 
 function AuthenticatedRoute(props) {
     const navigate = useNavigate();
@@ -22,6 +23,10 @@ function AuthenticatedRoute(props) {
     const apply = queryClient.getQueryData([
         'useGetMentoringApplyHistoryQuery',
     ]);
+    useGetAdminUsers({
+        page: 1,
+        limitCount: 15,
+});
 
     useEffect(() => {
         if (principalState.status === 'error') {
@@ -29,6 +34,8 @@ function AuthenticatedRoute(props) {
             navigate('/home');
         }
     }, [principalState.status]);
+
+
 
 
 

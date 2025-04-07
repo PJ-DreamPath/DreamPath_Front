@@ -10,6 +10,7 @@ import {
 } from './queries/userQuery';
 import HomeRoute from './routes/HomeRoute.jsx/HomeRoute';
 import AuthRoute from './routes/authRoute/AuthRoute';
+import { useGetAdminUsers } from './queries/adminQuery';
 
 function App() {
     const user = useUserMeQuery();
@@ -18,6 +19,11 @@ function App() {
         limitCount: 10,
         order: 'desc',
         searchText: '',
+    });
+    
+    useGetAdminUsers({
+            page: 1,
+            limitCount: 15,
     });
     return (
         <>
