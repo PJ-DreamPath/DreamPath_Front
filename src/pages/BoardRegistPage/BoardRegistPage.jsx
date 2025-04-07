@@ -159,7 +159,6 @@ export default function BoardRegistPage({}) {
         // setIsLoad(true);
     }, [pathNm]);
 
-
     useEffect(() => {
         if (!!post && !!pathNm.postid) {
             setRegistData({
@@ -194,7 +193,9 @@ export default function BoardRegistPage({}) {
 
     const [isClick, setIsClick] = useState(true);
     async function handleRegistPostBtnOnClick() {
-        if(isClick ===false){return;}
+        if (isClick === false) {
+            return;
+        }
         setIsClick(false);
 
         if (!registData.title || registData.title.replace(/\s+/g, '') === '') {
@@ -255,6 +256,19 @@ export default function BoardRegistPage({}) {
                 });
                 setIsClick(true);
 
+                return;
+            } else if (
+                moment(registData.endDate).format('YYYY-MM-DD') <
+                moment().format('YYYY-MM-DD')
+            ) {
+                await Swal.fire({
+                    titleText:
+                        '멘토링 종료 날짜는 오늘보다 이전일 수 없습니다.',
+                    icon: 'error',
+                    timer: 1000,
+                    showConfirmButton: false,
+                });
+                setIsClick(true);
                 return;
             }
         }
@@ -341,10 +355,8 @@ export default function BoardRegistPage({}) {
         }));
     }, [board]);
 
-
     useEffect(() => {
         if (pathNm.boardName.includes('notice')) {
-
             if (
                 loginUser?.data?.data &&
                 loginUser.data?.data.roleName !== 'ROLE_ADMIN'
