@@ -70,7 +70,7 @@ export default function PostDetailPage({}) {
     }, [boardList.data]);
 
     // user data
-    const loginUserData = useUserMeQuery();
+    const loginUserData = queryClient.getQueryData(['userMeQuery']);
     const apply = useGetMentoringApplyHistoryQuery({
         page: 1,
         limitCount: 10,
