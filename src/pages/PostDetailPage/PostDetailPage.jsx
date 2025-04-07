@@ -32,7 +32,10 @@ import {
 } from '../../mutations/mentoringCommentMutation';
 import { usegGetCommentsQuery } from '../../queries/commentQuery';
 import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
-import { useGetMentoringApplyHistoryQuery, useUserMeQuery } from '../../queries/userQuery';
+import {
+    useGetMentoringApplyHistoryQuery,
+    useUserMeQuery,
+} from '../../queries/userQuery';
 import { api } from '../../configs/axiosConfig';
 
 export default function PostDetailPage({}) {
@@ -67,7 +70,7 @@ export default function PostDetailPage({}) {
     }, [boardList.data]);
 
     // user data
-    const loginUserData = queryClient.getQueryData(['userMeQuery']);
+    const loginUserData = useUserMeQuery();
     const apply = useGetMentoringApplyHistoryQuery({
         page: 1,
         limitCount: 10,
@@ -161,23 +164,26 @@ export default function PostDetailPage({}) {
 
     // 신청 클릭
     const mentoringApply = useMentoringApplyMutation();
-    const [ isLoading, setIsLoading ] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleOnApplyButtonOnClick = async ()  => {
-        
-            await mentoringApply.mutateAsync({
+    const handleOnApplyButtonOnClick = async () => {
+        await mentoringApply
+            .mutateAsync({
                 postId: post.postId,
                 email: post.user.email,
-            }).then(async() => {
-                Swal.fire('이메일 전송에 성공했습니다.');
-                console.log("리패치전", apply);
-                queryClient.invalidateQueries('apply');
-                await apply.refetch();
-                console.log("리패치후", apply);
-                setIsLoading(true);
-                loginUserData.refetch();
             })
-    }
+            .then(async () => {
+                Swal.fire('이메일 전송에 성공했습니다.');
+                console.log('리패치전', apply);
+                await queryClient.invalidateQueries({
+                    queryKey: ['useGetMentoringApplyHistoryQuery'],
+                });
+                await apply.refetch();
+                setIsLoading(true);
+                await loginUserData.refetch();
+                console.log('리패치후', apply);
+            });
+    };
 
     // 삭제 클릭
     const delPost = useDelPostMutation();
@@ -428,7 +434,6 @@ export default function PostDetailPage({}) {
                         starPoint: -1,
                     });
                 } else {
-                    
                     await Swal.fire({
                         title: '등록 실패',
                         text: '후기 등록이 실패되었습니다.',
@@ -463,7 +468,6 @@ export default function PostDetailPage({}) {
                 console.error('파일 다운로드 오류:', error);
             });
     };
-
 
     return !postDetail.isLoading ? (
         <>
