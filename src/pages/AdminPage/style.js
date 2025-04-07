@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-
+// 윈도우 ㄱ깃허브 주석
 export const profileSection = css`
     background: #fff;
     padding: 7rem;
