@@ -81,6 +81,7 @@ function AdminPage(props) {
 
     const handlePasswordInputOnChange = (e) => {
         setPasswordValue(e.target.value);
+        
     };
 
     const handlePasswordUpdateButtonOnClick = async () => {

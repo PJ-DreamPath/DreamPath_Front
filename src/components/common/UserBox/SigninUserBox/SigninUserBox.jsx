@@ -14,6 +14,7 @@ import {
 import AdminBox from '../AdminBox/AdminBox';
 import MentoUserBox from '../MentoUserBox/MentoUserBox';
 import MentiUserBox from '../MentiUserBox/MentiUserBox';
+import { useGetMentoringApplyHistoryQuery } from '../../../../queries/userQuery';
 
 function SigninUserBox() {
     const navigate = useNavigate();
@@ -27,6 +28,13 @@ function SigninUserBox() {
         username: searchParams.get('username') || '',
         password: '',
     });
+
+    useGetMentoringApplyHistoryQuery({
+            page: 1,
+            limitCount: 10,
+            order: 'desc',
+            searchText: '',
+        });
 
     useEffect(() => {
         console.log(userInfoState)

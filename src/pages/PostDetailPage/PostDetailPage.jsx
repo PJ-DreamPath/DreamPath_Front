@@ -32,7 +32,7 @@ import {
 } from '../../mutations/mentoringCommentMutation';
 import { usegGetCommentsQuery } from '../../queries/commentQuery';
 import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
-import { useGetMentoringApplyHistoryQuery } from '../../queries/userQuery';
+import { useGetMentoringApplyHistoryQuery, useUserMeQuery } from '../../queries/userQuery';
 import { api } from '../../configs/axiosConfig';
 
 export default function PostDetailPage({}) {
@@ -43,6 +43,7 @@ export default function PostDetailPage({}) {
 
     const deleteCommentMutation = useDeleteCommentMutation();
     const saveCommentMutation = useSaveCommentMutation();
+    const queryClient = useQueryClient();
 
     // notice인지 mentring인지 communityBoard인지 구분하기 위함!
     const fullPath = useParams();
@@ -66,7 +67,6 @@ export default function PostDetailPage({}) {
     }, [boardList.data]);
 
     // user data
-    const queryClient = useQueryClient();
     const loginUserData = queryClient.getQueryData(['userMeQuery']);
     const apply = useGetMentoringApplyHistoryQuery({
         page: 1,
@@ -164,22 +164,20 @@ export default function PostDetailPage({}) {
     const [ isLoading, setIsLoading ] = useState(false);
 
     const handleOnApplyButtonOnClick = async ()  => {
-        try{
+        
             await mentoringApply.mutateAsync({
                 postId: post.postId,
                 email: post.user.email,
-            });
-        
-        Swal.fire('이메일 전송에 성공했습니다.');
-        apply.refetch();
-        setIsLoading(true);
-        loginUserData.refetch();
-    }catch(error){
-        console.error("신청 오류:", error);
+            }).then(async() => {
+                Swal.fire('이메일 전송에 성공했습니다.');
+                console.log("리패치전", apply);
+                queryClient.invalidateQueries('apply');
+                await apply.refetch();
+                console.log("리패치후", apply);
+                setIsLoading(true);
+                loginUserData.refetch();
+            })
     }
-                // alert('123123');
-                // navigate(0);    
-    };
 
     // 삭제 클릭
     const delPost = useDelPostMutation();
@@ -465,6 +463,7 @@ export default function PostDetailPage({}) {
                 console.error('파일 다운로드 오류:', error);
             });
     };
+
 
     return !postDetail.isLoading ? (
         <>
