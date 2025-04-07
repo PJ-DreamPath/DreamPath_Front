@@ -19,7 +19,7 @@ function NoticePage({}) {
     const orderSelectOptions = [
         { value: 'desc', label: '최신순' },
         { value: 'asc', label: '오래된순' },
-        { value: 'likeDesc', label: '좋아요많은순' },
+        // { value: 'likeDesc', label: '좋아요많은순' },
     ];
 
     const [searchParams, setSearchParams] = useSearchParams();
@@ -102,9 +102,9 @@ function NoticePage({}) {
     const roleName = data?.data?.roleName;
 
     const updateViewCount = useUpdatePostViewCountMutation();
-        const handlePostDetailOnClick = async (e) => {
-            await updateViewCount.mutateAsync(e);
-        }
+    const handlePostDetailOnClick = async (e) => {
+        await updateViewCount.mutateAsync(e);
+    };
 
     return (
         <div css={s.container}>
@@ -125,7 +125,10 @@ function NoticePage({}) {
                                 }
                             }}
                         />
-                        <IoSearch onClick={handleSearchOnClick} style={{cursor: 'pointer'}} />
+                        <IoSearch
+                            onClick={handleSearchOnClick}
+                            style={{ cursor: 'pointer' }}
+                        />
                     </div>
                     <Select
                         options={orderSelectOptions}
@@ -181,14 +184,16 @@ function NoticePage({}) {
                                     <tr key={`noticePost${index}`}>
                                         <td
                                             className="titleName"
-                                            onClick={ async () => {
+                                            onClick={async () => {
                                                 if (!data) {
                                                     alert(
                                                         '로그인 후 이용해주세요'
                                                     );
                                                     return;
                                                 }
-                                                await handlePostDetailOnClick(post.postId);
+                                                await handlePostDetailOnClick(
+                                                    post.postId
+                                                );
                                                 navigation(
                                                     `/notice/${post.postId}`
                                                 );
