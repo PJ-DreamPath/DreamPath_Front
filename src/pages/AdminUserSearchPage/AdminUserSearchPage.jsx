@@ -8,11 +8,16 @@ import { useGetAdminUsers } from '../../queries/adminQuery';
 import { FaRegTrashCan } from 'react-icons/fa6';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useUserMeQuery } from '../../queries/userQuery';
+import { useQueryClient } from '@tanstack/react-query';
+import { useSetRecoilState } from 'recoil';
+import { userTotalCountAtom } from '../../atoms/userTotalAtom';
 
 const AdminUserSearchPage = () => {
     const navigation = useNavigate();
     const pathNm = useParams();
     const loginUser = useUserMeQuery();
+
+    const queryClient = useQueryClient();
 
     const [users, setUsers] = useState([]);
 
@@ -40,10 +45,13 @@ const AdminUserSearchPage = () => {
     }, [searchParams]);
 
     const adminUserList = useGetAdminUsers(params);
+    const setUserTotalCount = useSetRecoilState(userTotalCountAtom);
 
     const [pageNumbers, setPageNumbers] = useState([]);
 
     useEffect(() => {
+        console.log("adminUserList", adminUserList);
+        
         if (!adminUserList?.isLoading) {
             const currentPage = adminUserList?.data?.data.page || 1;
             const totalPages = adminUserList?.data?.data.totalPages || 1;
@@ -55,7 +63,7 @@ const AdminUserSearchPage = () => {
             for (let i = startIndex; i <= endIndex; i++) {
                 newPageNumbers = [...newPageNumbers, i];
             }
-
+            setUserTotalCount(adminUserList.data.data.totalElements);
             setPageNumbers(newPageNumbers);
         }
     }, [adminUserList?.data]);
@@ -66,18 +74,30 @@ const AdminUserSearchPage = () => {
     };
 
     const deleteUser = async (userId) => {
-        if (!window.confirm('정말 삭제하시겠습니까?')) return;
+        if (!window.confirm('정말 삭제하시겠습니까?')) {
+            return;
+        };
 
-        try {
-            await api.delete(`/api/admin/users/${userId}`);
+        api.delete(`/api/admin/users/${userId}`).then(async () => {
+
+            const refetch22 = await adminUserList.refetch();
+
+            console.log("Arefetch22",refetch22);
+            
+
+
             alert('삭제되었습니다.');
             setUsers(users.filter((user) => user.userId !== userId));
-            adminUserList.refetch();
-        } catch (error) {
+
+        }).catch ( (error) =>  {
             console.error('삭제 오류', error);
             alert('삭제 실패! 다시 시도해주세요.');
-        }
-    };
+        
+        });
+            
+           
+    }
+        
 
     const { data } = useUserMeQuery();
 
@@ -140,8 +160,9 @@ const AdminUserSearchPage = () => {
                                     <td css={s.tableCell}>
                                         <button
                                             css={s.deleteButton}
-                                            onClick={() =>
-                                                deleteUser(user.userId)
+                                            onClick={async () =>{
+                                                await deleteUser(user.userId).then(() => adminUserList.refetch());
+                                            }
                                             }
                                         >
                                             <FaRegTrashCan />

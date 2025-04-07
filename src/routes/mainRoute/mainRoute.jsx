@@ -11,6 +11,7 @@ import AuthenticatedRoute from '../AuthenticatedRoute/AuthenticatedRoute';
 import PostDetailPage from '../../pages/PostDetailPage/PostDetailPage';
 import SideMenuBox from '../../components/common/SideMenuBox/SideMenuBox';
 import { useGetMentoringApplyHistoryQuery } from '../../queries/userQuery';
+import { useGetAdminUsers } from '../../queries/adminQuery';
 
 function MainRoute() {
     const navigate = useNavigate();
@@ -26,6 +27,10 @@ function MainRoute() {
             limitCount: 10,
             order: 'desc',
             searchText: '',
+        });
+    useGetAdminUsers({
+            page: 1,
+            limitCount: 15,
         });
 
     return (
